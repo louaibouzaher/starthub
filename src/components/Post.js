@@ -41,7 +41,7 @@ export const Post = ({ user, content, time, picture }) => {
           (picture ? 'py-2 px-5 max-w-max rounded-lg bg-white ' : '')
         }
       >
-        <UserAvatar link={user.avatar} size={'20'} />
+        <UserAvatar link={user.avatar} size={'16'} />
         <div className="ml-4 flex flex-col items-start">
           <div className="text-dark font-bold">
             {' '}

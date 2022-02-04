@@ -10,7 +10,7 @@ export const SectionIndexer = ({ sections, section, changeSection }) => {
             key={s.id}
             className={
               'text-center text-dark p-2 m-2 font-bold rounded-lg cursor-pointer flex justify-center items-center ' +
-              (section === s.id ? 'opacity-30 bg-gray-200' : 'opacity-100')
+              (section !== s.id ? 'opacity-30 bg-gray-200' : 'opacity-100')
             }
             style={{
               width: '' + 100 / sections.length + '%',
