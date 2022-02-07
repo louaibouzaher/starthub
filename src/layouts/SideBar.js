@@ -61,7 +61,7 @@ export const SideBar = ({ section, setIsOverlayOpen }) => {
   return (
     <div className="absolute left-10 top-28 z-10 px-4 my-2 w-1/5 h-screen flex flex-col justify-start items-start">
       <Button
-        OnClick={() => {
+        onClick={() => {
           setIsOverlayOpen(true)
         }}
         label={`New ${section.substring(0, section.length - 1)}`}

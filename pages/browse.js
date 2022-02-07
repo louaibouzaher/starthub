@@ -38,7 +38,7 @@ function Browse() {
       <Head>
         <title>Home - StartHub</title>
       </Head>
-      <OverlayWindow isOpen={isOverlayOpen}>
+      <OverlayWindow isOpen={isOverlayOpen} setIsOpen={setIsOverlayOpen}>
         <AddPost />
       </OverlayWindow>
       <Navbar

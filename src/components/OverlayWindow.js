@@ -1,6 +1,9 @@
+import React, { useEffect } from 'react'
 import { Button } from './Button'
 
 export default function OverlayWindow({ children, isOpen, setIsOpen }) {
+  useEffect(() => {}, [isOpen])
+
   return (
     <div
       className={

@@ -26,21 +26,27 @@ export const Navbar = ({ isConnected, connectedUser }) => {
               <Button
                 label="Browse"
                 btnStyle={'text-dark mx-2 '}
-                action={() => console.log('Browse')}
+                onClick={() => {
+                  console.log('Browse')
+                }}
               />
             </Link>
             <Link href="/login" passHref>
               <Button
                 label="Login"
                 btnStyle={'bg-green border-green border-2 text-white shadow-md mx-2 '}
-                action={() => console.log('Login')}
+                onClick={() => {
+                  console.log('Login')
+                }}
               />
             </Link>
             <Link href="/signup" passHref>
               <Button
                 label="Sign up"
                 btnStyle={'bg-white border-2 border-dark text-dark shadow-md mx-2'}
-                action={() => console.log('Sign Up')}
+                onClick={() => {
+                  console.log('Signup')
+                }}
               />
             </Link>
           </>
