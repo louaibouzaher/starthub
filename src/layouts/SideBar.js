@@ -19,7 +19,7 @@ function valuetext(value) {
   return `${value}$`
 }
 
-export const SideBar = ({ section }) => {
+export const SideBar = ({ section, setIsOverlayOpen }) => {
   const fields = [
     {
       title: 'Software Engineering',
@@ -61,6 +61,9 @@ export const SideBar = ({ section }) => {
   return (
     <div className="absolute left-10 top-28 z-10 px-4 my-2 w-1/5 h-screen flex flex-col justify-start items-start">
       <Button
+        OnClick={() => {
+          setIsOverlayOpen(true)
+        }}
         label={`New ${section.substring(0, section.length - 1)}`}
         btnStyle={
           'bg-white border-purple border-2 text-purple w-full text-center hover:bg-purple hover:text-white'
