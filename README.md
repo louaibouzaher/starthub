@@ -69,3 +69,6 @@ Before you begin, you need to install Node.Js.
     $ git push origin username/feature-abc
    ```
 4. Create a pull request here.
+
+# Webhooks
+This repository sends activity logs to our team Discord server on `#github-logs` channel.
