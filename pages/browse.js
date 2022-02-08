@@ -16,6 +16,7 @@ import { connectedUser } from '../src/data/user'
 import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
 import { AddPost } from '../src/components/AddPost'
+import { AddDemo } from '../src/components/AddDemo'
 
 function Browse() {
   const [section, setSection] = useState(0)
@@ -39,7 +40,7 @@ function Browse() {
         <title>Home - StartHub</title>
       </Head>
       <OverlayWindow isOpen={isOverlayOpen} setIsOpen={setIsOverlayOpen}>
-        <AddPost />
+        {section === 0 ? <AddPost /> : <AddDemo />}
       </OverlayWindow>
       <Navbar
         connectedUser={connectedUser}

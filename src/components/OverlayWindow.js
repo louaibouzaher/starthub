@@ -12,14 +12,14 @@ export default function OverlayWindow({ children, isOpen, setIsOpen }) {
       }
     >
       <div
-        className="relative bg-white rounded-xl shadow-xl w-1/2 p-6 pb-24"
+        className="relative bg-white rounded-xl shadow-xl w-1/2 p-8 pb-24"
         style={{
           minHeight: 200,
         }}
       >
         {children}
 
-        <div className="absolute mt-10 right-8 bottom-8">
+        <div className="absolute flex flex-row mt-10 right-8 bottom-8">
           <Button
             label="Cancel"
             btnStyle="border-2 border-dark mx-2"
