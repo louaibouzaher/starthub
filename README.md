@@ -70,5 +70,5 @@ Before you begin, you need to install Node.Js.
    ```
 4. Create a pull request here.
 
-# Webhooks
+## Webhooks
 This repository sends activity logs to our team Discord server on `#github-logs` channel.
