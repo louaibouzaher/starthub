@@ -13,11 +13,15 @@ import { SideBar } from '../src/layouts/SideBar'
 import { posts } from '../src/data/posts'
 import { demos } from '../src/data/demos'
 import { connectedUser } from '../src/data/user'
+import Head from 'next/head'
+import OverlayWindow from '../src/components/OverlayWindow'
+import { AddPost } from '../src/components/AddPost'
+import { AddDemo } from '../src/components/AddDemo'
 
 function Browse() {
   const [section, setSection] = useState(0)
   const [userConnected, setUserConnected] = useState(true)
-
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const sections = [
     {
       id: 0,
@@ -32,13 +36,23 @@ function Browse() {
   ]
   return (
     <>
+      <Head>
+        <title>Home - StartHub</title>
+      </Head>
+      <OverlayWindow isOpen={isOverlayOpen} setIsOpen={setIsOverlayOpen}>
+        {section === 0 ? <AddPost /> : <AddDemo />}
+      </OverlayWindow>
       <Navbar
         connectedUser={connectedUser}
         isConnected={userConnected}
         setUserConnected={setUserConnected}
       />
 
-      <SideBar section={sections[section].title} />
+      <SideBar
+        section={sections[section].title}
+        setIsOverlayOpen={setIsOverlayOpen}
+        setIsOpen={setIsOverlayOpen}
+      />
       <div className="App w-full flex flex-col justify-start items-center pt-24">
         <Feed>
           <div className="text-4xl mt-6">

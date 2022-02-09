@@ -18,8 +18,8 @@ export const Hero = () => {
             <Button
               label="I have a Startup"
               btnStyle={'bg-green text-white border-2 border-green mx-2'}
-              action={() => {
-                return 0
+              onClick={() => {
+                console.log('Startuper')
               }}
             />
           </Link>
@@ -27,8 +27,8 @@ export const Hero = () => {
             <Button
               label="I'm an Investor"
               btnStyle="bg-white border-2 border-dark text-dark mx-2"
-              action={() => {
-                return 0
+              onClick={() => {
+                console.log('Investor')
               }}
             />
           </Link>

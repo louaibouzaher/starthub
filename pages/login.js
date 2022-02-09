@@ -1,5 +1,12 @@
-import React from 'react'
+import Head from 'next/head'
 
-export default function LogIn() {
-  return <div>Login Page</div>
+export default function Login() {
+  return (
+    <>
+      <Head>
+        <title>Login - StartHub</title>
+      </Head>
+      <div className="w-full h-screen flex justify-center items-center">Login Page</div>
+    </>
+  )
 }

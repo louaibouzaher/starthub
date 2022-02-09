@@ -1,5 +1,12 @@
-import React from 'react'
+import Head from 'next/head'
 
-export default function SignUp() {
-  return <div>Sign Up page</div>
+export default function Signup() {
+  return (
+    <>
+      <Head>
+        <title>Signup - StartHub</title>
+      </Head>
+      <div className="w-full h-screen flex justify-center items-center">Signup Page</div>
+    </>
+  )
 }
