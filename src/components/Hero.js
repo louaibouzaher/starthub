@@ -4,8 +4,8 @@ import { Button } from './Button'
 
 export const Hero = () => {
   return (
-    <div className="h-screen w-full flex justify-center items-center p-20 overflow-x-hidden">
-      <div className="flex flex-col w-1/2 p-10 justify-center items-start">
+    <div className=" flex justify-center items-center p-20 overflow-x-hidden">
+      <div className="flex flex-col w-1/2 justify-center items-start">
         <div className="text-left font-sans text-7xl text-dark ">
           The Place For <br /> <span className="text-green">Growing</span> Startups
         </div>
@@ -13,7 +13,7 @@ export const Hero = () => {
           Join a community of entrepreneurs and businessmen shaping the market.
         </div>
 
-        <div className="flex flex-row mt-5">
+        <div className="flex flex-row mt-7">
           <Link href="/browse" passHref>
             <Button
               label="I have a Startup"
@@ -35,7 +35,7 @@ export const Hero = () => {
         </div>
       </div>
       <HeroImage
-        className={'flex flex-col w-1/2 justify-center items-center scale-125'}
+        className={'flex flex-col w-1/2  justify-center items-center scale-95'}
       />
     </div>
   )
