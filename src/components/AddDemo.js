@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField'
 import { countries } from '../data/countries'
 
 export const AddDemo = () => {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0)
 
   const [demo, setDemo] = useState({
     title: '',
@@ -29,10 +29,9 @@ export const AddDemo = () => {
 
   const handleChange = (e) => {
     console.log(demo)
-    const value = e.target.value
     setDemo({
       ...demo,
-      [e.target.name]: value,
+      [e.target.name]: e.target.value,
     })
   }
 
