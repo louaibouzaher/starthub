@@ -1,5 +1,5 @@
 export const space = {
-  name: 'Tech Startup Weekend',
+  name: 'Techstars Startup Weekend',
   description:
     'Startup Weekend is a three-day program where aspiring entrepreneurs can experience startup life. In hundreds of cities around the world.',
   logo: 'https://www.fold.lv/uploads/2014/01/Startup-Weekend-00-1007x1106.png',

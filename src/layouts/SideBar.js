@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { Button } from '../components/Button'
 import Checkbox from '../assets/icons/Checkbox'
+import Cross from '../assets/icons/Cross'
 import Slider from '@mui/material/Slider'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import { countries } from '../data/countries'
-
+import tailwindConfig from '../../tailwind.config'
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#4340FC',
+      main: tailwindConfig.theme.extend.colors.purple,
     },
   },
 })
@@ -61,6 +62,13 @@ export const SideBar = ({ section, setIsOverlayOpen }) => {
   return (
     <div className="absolute left-10 top-28 z-10 px-4 my-2 w-1/5 h-screen flex flex-col justify-start items-start">
       <Button
+        rightIcon
+        Icon={() => (
+          <Cross
+            color={tailwindConfig.theme.extend.colors.purple}
+            className={'rotate-45'}
+          />
+        )}
         onClick={() => {
           setIsOverlayOpen(true)
         }}
