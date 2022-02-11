@@ -24,7 +24,7 @@ export const SpaceMain = () => {
         </p>
       </div>
       <div className="flex justify-center items-center mt-5">
-        <Link href="/browse" passHref>
+        <Link href="/spaces/1" passHref>
           <Button
             label="Create A Space"
             btnStyle={'bg-green text-white border-2 border-green mx-2'}

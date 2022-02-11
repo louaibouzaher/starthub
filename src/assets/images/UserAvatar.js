@@ -1,7 +1,12 @@
-export default function UserAvatar({ link, size }) {
+export default function UserAvatar({ link, sizing, className }) {
   return (
     <div
-      className={`h-16 w-16 rounded-full border-2 border-white shadow-md `}
+      className={
+        ` rounded-full border-2 border-white shadow-md ` +
+        (sizing ? '' : 'h-16 w-16') +
+        ' ' +
+        className
+      }
       style={{
         backgroundImage: 'url(' + link + ')',
         backgroundSize: 'cover',
