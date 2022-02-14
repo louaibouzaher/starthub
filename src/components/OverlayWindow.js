@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
-import { Button } from './Button'
+import { connect } from 'react-redux'
 
-export default function OverlayWindow({ children, isOpen, setIsOpen }) {
-  useEffect(() => {}, [isOpen])
-
+function OverlayWindow({ children, toggleOverlay, overlayWindow }) {
   return (
     <div
       className={
         'bg-black bg-opacity-40 z-50 w-full h-screen flex justify-center items-center ' +
-        (isOpen ? 'fixed' : 'hidden')
+        (overlayWindow.isOpen ? 'fixed' : 'hidden')
       }
     >
       <div
@@ -17,8 +15,22 @@ export default function OverlayWindow({ children, isOpen, setIsOpen }) {
           minHeight: 200,
         }}
       >
-        <div onClick={() => setIsOpen(false)}>Temporary Close</div> {children}
+        <div onClick={() => toggleOverlay()}>Temporary Close</div> {children}
       </div>
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    overlayWindow: state.overlayWindow,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleOverlay: () => dispatch(toggleOverlay()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OverlayWindow)

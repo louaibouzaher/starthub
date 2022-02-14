@@ -8,7 +8,7 @@ import { Feed } from '../src/layouts/Feed'
 import { Post } from '../src/components/Post'
 import { SectionIndexer } from '../src/components/SectionIndexer'
 import { Demo } from '../src/components/Demo'
-import { SideBar } from '../src/layouts/SideBar'
+import SideBar from '../src/layouts/SideBar'
 
 import { demos } from '../src/data/demos'
 import { connectedUser } from '../src/data/user'

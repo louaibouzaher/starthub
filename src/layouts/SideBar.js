@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
-import { Button } from '../components/Button'
-import Checkbox from '../assets/icons/Checkbox'
-import Cross from '../assets/icons/Cross'
 import Slider from '@mui/material/Slider'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
+import { connect } from 'react-redux'
+
+import { toggleOverlay } from '../store/overlayWindow/overlayWindow.actions'
+import { Button } from '../components/Button'
+import Checkbox from '../assets/icons/Checkbox'
+import Cross from '../assets/icons/Cross'
 import { countries } from '../data/countries'
 import tailwindConfig from '../../tailwind.config'
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -20,7 +24,7 @@ function valuetext(value) {
   return `${value}$`
 }
 
-export const SideBar = ({ section, setIsOverlayOpen }) => {
+const SideBar = ({ section, toggleOverlay }) => {
   const fields = [
     {
       title: 'Software Engineering',
@@ -70,7 +74,7 @@ export const SideBar = ({ section, setIsOverlayOpen }) => {
           />
         )}
         onClick={() => {
-          setIsOverlayOpen(true)
+          toggleOverlay()
         }}
         label={`New ${section.substring(0, section.length - 1)}`}
         btnStyle={
@@ -144,3 +148,17 @@ export const SideBar = ({ section, setIsOverlayOpen }) => {
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    overlayWindow: state.overlayWindow,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleOverlay: () => dispatch(toggleOverlay()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar)

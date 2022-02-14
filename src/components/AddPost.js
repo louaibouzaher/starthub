@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-
 import { connect } from 'react-redux'
+
 import { connectedUser } from '../data/user'
 import { addPost } from '../store/Posts/posts.actions'
+import { toggleOverlay } from '../store/overlayWindow/overlayWindow.actions'
 import { Button } from './Button'
-const AddPost = ({ addPost }) => {
+
+const AddPost = ({ addPost, toggleOverlay }) => {
   const [post, setPost] = useState({
     title: '',
     content: '',
@@ -27,6 +29,7 @@ const AddPost = ({ addPost }) => {
 
   const handleSubmit = () => {
     addPost({ ...post, time: new Date().toUTCString(), user: connectedUser })
+    toggleOverlay()
   }
 
   const labelUpload = 'Seems empty here 🤔'
@@ -72,7 +75,11 @@ const AddPost = ({ addPost }) => {
         </div>
       </div>
       <div className="absolute flex flex-row mt-10 right-8 bottom-8">
-        <Button label="Cancel" btnStyle="border-2 border-dark mx-2" />
+        <Button
+          label="Cancel"
+          btnStyle="border-2 border-dark mx-2"
+          onClick={() => toggleOverlay()}
+        />
         <Button
           label="Share"
           btnStyle="bg-purple text-white border-2 border-purple mx-2"
@@ -86,12 +93,14 @@ const AddPost = ({ addPost }) => {
 const mapStateToProps = (state) => {
   return {
     posts: state.posts,
+    overlayWindow: state.overlayWindow,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addPost: (post) => dispatch(addPost(post)),
+    toggleOverlay: () => dispatch(toggleOverlay()),
   }
 }
 
