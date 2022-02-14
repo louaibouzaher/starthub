@@ -17,20 +17,7 @@ export default function OverlayWindow({ children, isOpen, setIsOpen }) {
           minHeight: 200,
         }}
       >
-        {children}
-
-        <div className="absolute flex flex-row mt-10 right-8 bottom-8">
-          <Button
-            label="Cancel"
-            btnStyle="border-2 border-dark mx-2"
-            onClick={() => setIsOpen(false)}
-          />
-          <Button
-            label="Share"
-            btnStyle="bg-purple text-white border-2 border-purple mx-2"
-            onClick={() => setIsOpen(false)}
-          />
-        </div>
+        <div onClick={() => setIsOpen(false)}>Temporary Close</div> {children}
       </div>
     </div>
   )

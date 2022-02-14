@@ -10,15 +10,16 @@ import { SectionIndexer } from '../src/components/SectionIndexer'
 import { Demo } from '../src/components/Demo'
 import { SideBar } from '../src/layouts/SideBar'
 
-import { posts } from '../src/data/posts'
 import { demos } from '../src/data/demos'
 import { connectedUser } from '../src/data/user'
 import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
-import { AddPost } from '../src/components/AddPost'
+import AddPost from '../src/components/AddPost'
 import { AddDemo } from '../src/components/AddDemo'
 
-function Browse() {
+import { connect } from 'react-redux'
+
+function Browse({ posts }) {
   const [section, setSection] = useState(0)
   const [userConnected, setUserConnected] = useState(true)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
@@ -82,4 +83,14 @@ function Browse() {
   )
 }
 
-export default Browse
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Browse)
