@@ -93,11 +93,6 @@ const SideBar = ({ section, toggleOverlay }) => {
         }
       />
       <div className="ml-2 mt-6 text-purple font-bold">Filter Results</div>
-      <div>
-        {selectedFields.map((f) => (
-          <div> {fields[f - 1].title} </div>
-        ))}
-      </div>
       <div className="w-full my-2 p-4 bg-white shadow-md rounded-md text-dark">
         <div className="my-2 font-bold">Industry</div>
 
@@ -108,7 +103,7 @@ const SideBar = ({ section, toggleOverlay }) => {
               className="flex my-1 items-center"
               onClick={() => handleCheckbox(f.id)}
             >
-              <input type={'checkbox'} />
+              <input type={'checkbox'} checked={selectedFields.includes(f.id)} />
               <span className="mx-1">{f.title}</span>
             </div>
           )
