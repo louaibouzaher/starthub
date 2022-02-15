@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { connectedUser } from '../data/user'
 import { addPost } from '../store/Posts/posts.actions'
-import { toggleOverlay } from '../store/overlayWindow/overlayWindow.actions'
+import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from './Button'
 
 const AddPost = ({ addPost, toggleOverlay }) => {
