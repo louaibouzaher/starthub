@@ -1,7 +1,7 @@
 import { TOGGLE_OVERLAY } from './overlayWindow.types'
 
 const INITIAL_STATE = {
-  isOpen: true,
+  isOpen: false,
 }
 
 const reducer = (state = INITIAL_STATE, action) => {

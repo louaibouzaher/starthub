@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 
 function OverlayWindow({ children, toggleOverlay, overlayWindow }) {
   return (
@@ -15,7 +16,7 @@ function OverlayWindow({ children, toggleOverlay, overlayWindow }) {
           minHeight: 200,
         }}
       >
-        <div onClick={() => toggleOverlay()}>Temporary Close</div> {children}
+        {children}
       </div>
     </div>
   )

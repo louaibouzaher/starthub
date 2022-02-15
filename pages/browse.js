@@ -54,10 +54,10 @@ function Browse({ posts }) {
         setIsOverlayOpen={setIsOverlayOpen}
         setIsOpen={setIsOverlayOpen}
       />
-      <div className="App w-full flex flex-col justify-start items-center pt-24">
+      <div className="App w-full flex flex-col justify-start items-center pt-16">
         <Feed>
           <div className="text-4xl mt-6">
-            Welcome back, <span className="text-purple">{connectedUser.firstName}.</span>{' '}
+            Hello, <span className="text-purple">{connectedUser.firstName}.</span>{' '}
           </div>
           <div className="mt-2 font-thin">
             Here are some of the top selections for you.

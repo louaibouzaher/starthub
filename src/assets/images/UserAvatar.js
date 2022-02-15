@@ -3,7 +3,7 @@ export default function UserAvatar({ link, sizing, className }) {
     <div
       className={
         ` rounded-full border-2 border-white shadow-md ` +
-        (sizing ? '' : 'h-16 w-16') +
+        (sizing ? '' : 'h-12 w-12') +
         ' ' +
         className
       }

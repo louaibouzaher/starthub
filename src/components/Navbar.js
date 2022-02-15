@@ -11,7 +11,7 @@ export const Navbar = ({ isConnected, connectedUser }) => {
   return (
     <div
       className={
-        'z-50 fixed w-full h-24 shadow-sm flex justify-between items-center px-20 py-6 ' +
+        'z-50 fixed w-full h-16 shadow-lg flex justify-between items-center px-20 py-6 ' +
         (isConnected ? 'bg-purple' : 'bg-white')
       }
     >
