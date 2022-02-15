@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField'
 
 import { connectedUser } from '../data/user'
 import { addProject } from '../store/Projects/projects.actions'
-import { toggleOverlay } from '../store/overlayWindow/overlayWindow.actions'
+import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from './Button'
 import ButtonArrow from '../assets/icons/ButtonArrow'
 import { countries } from '../data/countries'

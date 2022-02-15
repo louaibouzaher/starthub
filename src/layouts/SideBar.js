@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import { connect } from 'react-redux'
 
-import { toggleOverlay } from '../store/overlayWindow/overlayWindow.actions'
+import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from '../components/Button'
 import { countries } from '../data/countries'
 import tailwindConfig from '../../tailwind.config'
