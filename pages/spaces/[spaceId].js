@@ -3,15 +3,15 @@ import { useRouter } from 'next/router'
 import { space } from '../../src/data/space'
 import { connectedUser } from '../../src/data/user'
 import { posts } from '../../src/data/posts'
-import { demos } from '../../src/data/demos'
+import { projects } from '../../src/data/projects'
 import Cross from '../../src/assets/icons/Cross'
-import DemosIcon from '../../src/assets/icons/DemosIcon'
-import MilestonesIcon from '../../src/assets/icons/MilestonesIcon'
+import ProjectsIcon from '../../src/assets/icons/ProjectsIcon'
+import PostsIcon from '../../src/assets/icons/PostsIcon'
 import { Navbar } from '../../src/components/Navbar'
 import { Button } from '../../src/components/Button'
 import { SectionIndexer } from '../../src/components/SectionIndexer'
 import { Post } from '../../src/components/Post'
-import { Demo } from '../../src/components/Demo'
+import { Project } from '../../src/components/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 
 const Space = () => {
@@ -22,13 +22,13 @@ const Space = () => {
   const sections = [
     {
       id: 0,
-      title: 'Milestones',
-      Icon: () => <MilestonesIcon />,
+      title: 'Posts',
+      Icon: () => <PostsIcon />,
     },
     {
       id: 1,
-      title: 'Demos',
-      Icon: () => <DemosIcon />,
+      title: 'Projects',
+      Icon: () => <ProjectsIcon />,
     },
   ]
 
@@ -141,7 +141,7 @@ const Space = () => {
                 content={post.content}
               />
             ))}
-          {section === 1 && demos.map((demo) => <Demo demo={demo} user={demo.user} />)}
+          {section === 1 && projects.map((p) => <Project project={p} user={p.user} />)}
         </div>
       </div>
     </>

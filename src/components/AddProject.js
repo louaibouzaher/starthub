@@ -1,17 +1,22 @@
 import React, { useState } from 'react'
-import { Button } from './Button'
-import ButtonArrow from '../assets/icons/ButtonArrow'
+import { connect } from 'react-redux'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
+
+import { connectedUser } from '../data/user'
+import { addProject } from '../store/Projects/projects.actions'
+import { toggleOverlay } from '../store/overlayWindow/overlayWindow.actions'
+import { Button } from './Button'
+import ButtonArrow from '../assets/icons/ButtonArrow'
 import { countries } from '../data/countries'
 
-export const AddDemo = () => {
+const AddProject = ({ addProject, toggleOverlay }) => {
   const [step, setStep] = useState(0)
 
-  const [demo, setDemo] = useState({
+  const [Project, setProject] = useState({
     title: '',
     description: '',
     tags: '',
@@ -28,20 +33,25 @@ export const AddDemo = () => {
   const [isDatePickerDisabled, setIsDatePickerDisabled] = useState(false)
 
   const handleChange = (e) => {
-    console.log(demo)
-    setDemo({
-      ...demo,
+    console.log(Project)
+    setProject({
+      ...Project,
       [e.target.name]: e.target.value,
     })
   }
 
   const handleFile = (e) => {
     console.log(e)
-    setDemo({ ...demo, video: e.target.files[0] })
+    setProject({ ...Project, video: e.target.files[0] })
     // TODO: Upload file and send it to backend
     // const fr = new FileReader()
     // fr.onload = () => {
     // }
+  }
+
+  const handleSubmit = () => {
+    addProject({ ...Project, time: new Date().toUTCString(), user: connectedUser })
+    toggleOverlay()
   }
 
   const labelUpload = 'Seems empty here 🤔'
@@ -130,8 +140,10 @@ export const AddDemo = () => {
                 disabled={isDatePickerDisabled}
                 label="Select Date"
                 inputFormat="MM/dd/yyyy"
-                value={demo.establishedOn}
-                onChange={(newValue) => setDemo({ ...demo, establishedOn: newValue })}
+                value={Project.establishedOn}
+                onChange={(newValue) =>
+                  setProject({ ...Project, establishedOn: newValue })
+                }
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
@@ -142,9 +154,9 @@ export const AddDemo = () => {
                 (isDatePickerDisabled ? 'bg-purple text-white shadow-lg' : 'text-purple')
               }
               onClick={() => {
-                setDemo({
-                  ...demo,
-                  isEstablished: !demo.isEstablished,
+                setProject({
+                  ...Project,
+                  isEstablished: !Project.isEstablished,
                   establishedOn: null,
                 })
                 setIsDatePickerDisabled(!isDatePickerDisabled)
@@ -165,15 +177,43 @@ export const AddDemo = () => {
             <label> Location </label>
             <Autocomplete
               disablePortal
-              id="combo-box-demo"
+              id="combo-box-Project"
               options={countries}
               sx={{ width: 300 }}
-              onChange={(e) => setDemo({ ...demo, location: e.target.innerHTML })}
+              onChange={(e) => setProject({ ...Project, location: e.target.innerHTML })}
               renderInput={(params) => <TextField {...params} label="Select a country" />}
             />{' '}
           </div>
         </div>
       )}
+      <div className="absolute flex flex-row mt-10 right-8 bottom-8">
+        <Button
+          label="Cancel"
+          btnStyle="border-2 border-dark mx-2"
+          onClick={() => toggleOverlay()}
+        />
+        <Button
+          label="Share"
+          btnStyle="bg-purple text-white border-2 border-purple mx-2"
+          onClick={handleSubmit}
+        />
+      </div>
     </>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts,
+    overlayWindow: state.overlayWindow,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProject: (project) => dispatch(addProject(project)),
+    toggleOverlay: () => dispatch(toggleOverlay()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddProject)

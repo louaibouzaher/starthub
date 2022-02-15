@@ -1,4 +1,4 @@
-export const demos = [
+export const projects = [
   {
     user: {
       firstName: 'Andrew',
@@ -16,7 +16,7 @@ export const demos = [
     `,
     video: 'https://youtu.be/ASfhYIyzTQQ',
     field: 'VTC',
-    tags: ['Tech', 'Delivery', 'Urban'],
+    tags: 'Tech,Delivery,Urban',
     location: 'Beirut, Lebanon',
     numberOfEmployees: 20,
     ageInMonths: 12,
@@ -38,7 +38,7 @@ export const demos = [
     `,
     video: 'https://youtu.be/30BKvLCEdkQ',
     field: 'VTC',
-    tags: ['Tech', 'Linux', 'Software'],
+    tags: 'Tech, Linux,Software',
     location: 'Paris, France',
     numberOfEmployees: 20,
     ageInMonths: 12,

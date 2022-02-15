@@ -1,38 +1,37 @@
 import React, { useState } from 'react'
 
-import MilestonesIcon from '../src/assets/icons/MilestonesIcon'
-import DemosIcon from '../src/assets/icons/DemosIcon'
+import PostsIcon from '../src/assets/icons/PostsIcon'
+import ProjectsIcon from '../src/assets/icons/ProjectsIcon'
 
 import { Navbar } from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
 import { Post } from '../src/components/Post'
 import { SectionIndexer } from '../src/components/SectionIndexer'
-import { Demo } from '../src/components/Demo'
+import { Project } from '../src/components/Project'
 import SideBar from '../src/layouts/SideBar'
 
-import { demos } from '../src/data/demos'
 import { connectedUser } from '../src/data/user'
 import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
-import { AddDemo } from '../src/components/AddDemo'
+import AddProject from '../src/components/AddProject'
 
 import { connect } from 'react-redux'
 
-function Browse({ posts }) {
+function Browse({ posts, projects }) {
   const [section, setSection] = useState(0)
   const [userConnected, setUserConnected] = useState(true)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const sections = [
     {
       id: 0,
-      title: 'Milestones',
-      Icon: () => <MilestonesIcon />,
+      title: 'Posts',
+      Icon: () => <PostsIcon />,
     },
     {
       id: 1,
-      title: 'Demos',
-      Icon: () => <DemosIcon />,
+      title: 'Projects',
+      Icon: () => <ProjectsIcon />,
     },
   ]
   return (
@@ -41,7 +40,7 @@ function Browse({ posts }) {
         <title>Home - StartHub</title>
       </Head>
       <OverlayWindow isOpen={isOverlayOpen} setIsOpen={setIsOverlayOpen}>
-        {section === 0 ? <AddPost /> : <AddDemo />}
+        {section === 0 ? <AddPost /> : <AddProject />}
       </OverlayWindow>
       <Navbar
         connectedUser={connectedUser}
@@ -74,9 +73,10 @@ function Browse({ posts }) {
                 time={post.time}
                 picture={post.picture}
                 content={post.content}
+                title={post.title}
               />
             ))}
-          {section === 1 && demos.map((demo) => <Demo demo={demo} user={demo.user} />)}
+          {section === 1 && projects.map((p) => <Project project={p} user={p.user} />)}
         </Feed>
       </div>
     </>
@@ -86,6 +86,7 @@ function Browse({ posts }) {
 const mapStateToProps = (state) => {
   return {
     posts: state.posts,
+    projects: state.projects,
   }
 }
 

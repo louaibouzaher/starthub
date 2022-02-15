@@ -7,7 +7,7 @@ import Saved from '../assets/icons/Saved'
 import UserAvatar from '../assets/images/UserAvatar'
 import { Button } from './Button'
 
-export const Post = ({ user, content, time, picture }) => {
+export const Post = ({ user, content, time, picture, title }) => {
   return (
     <div
       className={
@@ -58,11 +58,15 @@ export const Post = ({ user, content, time, picture }) => {
           />
         )}
       </div>
-
+      <div className={'mt-4 p-2 w-3/4 text-left text-lg font-bold '}>
+        {!picture && title}
+      </div>
       <div
-        className={'mt-4 p-2 w-3/4 text-left text-lg ' + (picture ? 'text-white ' : '')}
+        className={
+          'mt-4 p-2 w-3/4 text-left ' + (picture ? 'text-white text-lg' : 'text-sm')
+        }
       >
-        {content}
+        {picture ? title : content}
       </div>
     </div>
   )
