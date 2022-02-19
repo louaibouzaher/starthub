@@ -6,7 +6,7 @@ const INITIAL_STATE = [
       firstName: 'Andrew',
       lastName: 'Garfield',
       position: 'PR Manager',
-      avatar:
+      picture:
         'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
     },
     title: 'The New Uber Is Here!',
@@ -28,7 +28,7 @@ const INITIAL_STATE = [
       firstName: 'Emma',
       lastName: 'Stone',
       position: 'CEO',
-      avatar:
+      picture:
         'https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
     },
     title: 'Time to switch to Zorin OS',

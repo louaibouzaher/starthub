@@ -1,1 +1,3 @@
 export const TOGGLE_OVERLAY = 'TOGGLE_OVERLAY'
+
+export const CHANGE_CHILD = 'CHANGE_CHILD'
