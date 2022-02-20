@@ -9,7 +9,7 @@ import { Button } from './Button'
 import { connectedUser } from '../data/user'
 export const Post = ({ user, content, time, picture, title, isOwnPost }) => {
   // TODO: Remove
-  const isOwnPost = isOwnPost || user.firstName == connectedUser.firstName
+  const showFollow = isOwnPost || user.firstName == connectedUser.firstName
   return (
     <div
       className={
@@ -45,7 +45,7 @@ export const Post = ({ user, content, time, picture, title, isOwnPost }) => {
             {time}
           </div>
         </div>
-        {!isOwnPost && Math.floor(Math.random() * 2) === 0 && (
+        {!showFollow && Math.floor(Math.random() * 2) === 0 && (
           <Button
             label={'Follow'}
             btnStyle={

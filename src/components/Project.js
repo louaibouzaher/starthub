@@ -12,7 +12,7 @@ import { connectedUser } from '../data/user'
 
 export const Project = ({ user, content, time, picture, project, isOwnProject }) => {
   // TODO: Remove
-  const isOwnProject = isOwnProject || user.firstName == connectedUser.firstName
+  const showFollow = isOwnProject || user.firstName == connectedUser.firstName
   return (
     <div
       className={
@@ -64,7 +64,7 @@ export const Project = ({ user, content, time, picture, project, isOwnProject })
           </div>
           <div className={'text-xs opacity-50'}>{user.position}</div>
         </div>
-        {!isOwnProject && (
+        {!showFollow && (
           <Button
             label={'Follow'}
             btnStyle={
