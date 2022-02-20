@@ -137,9 +137,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleSection: () => dispatch(toggleSection()),
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Space)
