@@ -10,7 +10,7 @@ import Location from '../assets/icons/Location'
 import { Button } from './Button'
 import { connectedUser } from '../data/user'
 
-export const Project = ({ user, content, time, picture, project, isOwnProject }) => {
+export const Project = ({ user, project, isOwnProject }) => {
   // TODO: Remove
   const showFollow = isOwnProject || user.firstName == connectedUser.firstName
   return (
@@ -49,12 +49,10 @@ export const Project = ({ user, content, time, picture, project, isOwnProject })
       <div className="flex flex-row mt-2 items-center">
         <Location /> <span className="mx-1">{project.location}</span>
       </div>
-      <div className="w-4/5 flex justify-center items-center rounded-xl mt-6 overflow-hidden">
+      <div className="w-4/5 flex justify-start items-center rounded-xl mt-6 overflow-hidden">
         <ReactPlayer url={project.video} muted={true} />
       </div>
-
       <div className={'mt-4 p-2 w-3/4 text-left text-sm '}>{project.description}</div>
-
       <div className="flex flex-row w-full items-center mt-2 ">
         <UserAvatar link={user.picture} size={'20'} />
         <div className="ml-4 flex flex-col items-start">
