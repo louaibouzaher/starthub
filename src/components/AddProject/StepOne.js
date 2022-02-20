@@ -20,6 +20,7 @@ export default function StepOne({
           <label>Title</label>
           <input
             type="text"
+            placeholder="What would you like to name the project?"
             className="border-2 border-dark p-2 rounded-md"
             value={Project.title}
             name="title"
@@ -33,6 +34,7 @@ export default function StepOne({
               resize: 'none',
             }}
             className="h-36 border-2 border-dark p-4 rounded-md"
+            placeholder="Provide clear and consise description of your idea."
             name="description"
             value={Project.description}
             onChange={handleChange}

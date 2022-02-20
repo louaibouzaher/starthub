@@ -6,7 +6,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
-import { labelUpload } from '../../data/general'
+import { industry, labelUpload } from '../../data/general'
 
 export default function StepTwo({
   handleSubmit,
@@ -21,7 +21,19 @@ export default function StepTwo({
   return (
     <>
       <div className="flex flex-col w-full ">
-        <div className="flex w-full justify-start items-center">
+        <div className="flex flex-col w-1/2 mt-4">
+          <label> Industry </label>
+          <Autocomplete
+            disablePortal
+            id="combo-box-Project"
+            options={industry}
+            sx={{ width: 300 }}
+            value={Project.industry}
+            onChange={(e) => setProject({ ...Project, industry: e.target.innerHTML })}
+            renderInput={(params) => <TextField {...params} label="Select an industry" />}
+          />{' '}
+        </div>
+        <div className="flex w-full justify-start items-center mt-6">
           <label className="mr-4">My startup was established on</label>{' '}
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDatePicker
