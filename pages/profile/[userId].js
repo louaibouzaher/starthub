@@ -1,34 +1,19 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { connect } from 'react-redux'
 
+import SectionIndexer from '../../src/components/SectionIndexer'
 import { Navbar } from '../../src/components/Navbar'
-import ProjectsIcon from '../../src/assets/icons/ProjectsIcon'
-import PostsIcon from '../../src/assets/icons/PostsIcon'
-import { SectionIndexer } from '../../src/components/SectionIndexer'
 import { Post } from '../../src/components/Post'
 import { Project } from '../../src/components/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 import { connectedUser } from '../../src/data/user'
 import { Button } from '../../src/components/Button'
-export default function Profile() {
+
+function Profile({ sectionIndexer }) {
   const router = useRouter()
   const { spaceId } = router.query
-
-  const [section, setSection] = useState(0)
-
-  const sections = [
-    {
-      id: 0,
-      title: 'Posts',
-      Icon: () => <PostsIcon />,
-    },
-    {
-      id: 1,
-      title: 'Projects',
-      Icon: () => <ProjectsIcon />,
-    },
-  ]
 
   return (
     <>
@@ -88,29 +73,35 @@ export default function Profile() {
           </div>
         </div>
         <div className="w-full my-4 min-h-screen rounded-md">
-          <SectionIndexer
-            section={section}
-            changeSection={setSection}
-            sections={sections}
-          />
-          {section === 0 &&
-            connectedUser.posts.map((post) => (
-              <Post
-                user={post.user}
-                time={post.time}
-                picture={post.picture}
-                content={post.content}
-                title={post.title}
-                isOwnPost
-              />
-            ))}
-          {section === 1 &&
-            connectedUser.projects.map((p) => (
-              <Project project={p} user={p.user} isOwnProject />
-            ))}
+          <SectionIndexer />
+          {sectionIndexer.id === 0
+            ? connectedUser.posts.map((post) => (
+                <Post
+                  user={post.user}
+                  time={post.time}
+                  picture={post.picture}
+                  content={post.content}
+                  title={post.title}
+                  isOwnPost
+                />
+              ))
+            : connectedUser.projects.map((p) => (
+                <Project project={p} user={p.user} isOwnProject />
+              ))}
         </div>
       </div>
       )
     </>
   )
 }
+const mapStateToProps = (state) => {
+  return {
+    sectionIndexer: state.sectionIndexer,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

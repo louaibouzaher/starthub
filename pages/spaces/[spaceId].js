@@ -1,36 +1,22 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+import { connect } from 'react-redux'
+
 import { space } from '../../src/data/space'
 import { connectedUser } from '../../src/data/user'
 import { posts } from '../../src/data/posts'
 import { projects } from '../../src/data/projects'
 import Cross from '../../src/assets/icons/Cross'
-import ProjectsIcon from '../../src/assets/icons/ProjectsIcon'
-import PostsIcon from '../../src/assets/icons/PostsIcon'
 import { Navbar } from '../../src/components/Navbar'
 import { Button } from '../../src/components/Button'
-import { SectionIndexer } from '../../src/components/SectionIndexer'
+import SectionIndexer from '../../src/components/SectionIndexer'
 import { Post } from '../../src/components/Post'
 import { Project } from '../../src/components/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 
-const Space = () => {
-  const [section, setSection] = useState(0)
+const Space = ({ sectionIndexer }) => {
   const router = useRouter()
   const { spaceId } = router.query
-
-  const sections = [
-    {
-      id: 0,
-      title: 'Posts',
-      Icon: () => <PostsIcon />,
-    },
-    {
-      id: 1,
-      title: 'Projects',
-      Icon: () => <ProjectsIcon />,
-    },
-  ]
 
   return (
     <>
@@ -127,25 +113,33 @@ const Space = () => {
           <div className="text-xl text-dark mb-10 mt-2">
             Check the latest updates about this space.
           </div>
-          <SectionIndexer
-            section={section}
-            changeSection={setSection}
-            sections={sections}
-          />
-          {section === 0 &&
-            posts.map((post) => (
-              <Post
-                user={post.user}
-                time={post.time}
-                picture={post.picture}
-                content={post.content}
-              />
-            ))}
-          {section === 1 && projects.map((p) => <Project project={p} user={p.user} />)}
+          <SectionIndexer />
+          {sectionIndexer.id === 0
+            ? posts.map((post) => (
+                <Post
+                  user={post.user}
+                  time={post.time}
+                  picture={post.picture}
+                  content={post.content}
+                />
+              ))
+            : projects.map((p) => <Project project={p} user={p.user} />)}
         </div>
       </div>
     </>
   )
 }
 
-export default Space
+const mapStateToProps = (state) => {
+  return {
+    sectionIndexer: state.sectionIndexer,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleSection: () => dispatch(toggleSection()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Space)

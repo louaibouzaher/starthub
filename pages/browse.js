@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-
-import PostsIcon from '../src/assets/icons/PostsIcon'
-import ProjectsIcon from '../src/assets/icons/ProjectsIcon'
+import { connect } from 'react-redux'
 
 import { Navbar } from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
 import { Post } from '../src/components/Post'
-import { SectionIndexer } from '../src/components/SectionIndexer'
+import SectionIndexer from '../src/components/SectionIndexer'
 import { Project } from '../src/components/Project'
 import SideBar from '../src/layouts/SideBar'
 
@@ -16,32 +14,18 @@ import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
 import AddProject from '../src/components/AddProject'
 
-import { connect } from 'react-redux'
-
-function Browse({ posts, projects }) {
-  const [section, setSection] = useState(0)
+function Browse({ posts, projects, sectionIndexer }) {
   const [submitted, setSubmitted] = useState(false)
   const [userConnected, setUserConnected] = useState(true)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
-  const sections = [
-    {
-      id: 0,
-      title: 'Posts',
-      Icon: () => <PostsIcon />,
-    },
-    {
-      id: 1,
-      title: 'Projects',
-      Icon: () => <ProjectsIcon />,
-    },
-  ]
+
   return (
     <>
       <Head>
         <title>Home - StartHub</title>
       </Head>
       <OverlayWindow isOpen={isOverlayOpen} setIsOpen={setIsOverlayOpen}>
-        {section === 0 ? (
+        {sectionIndexer.id === 0 ? (
           <AddPost setSubmitted={setSubmitted} />
         ) : (
           <AddProject setSubmitted={setSubmitted} />
@@ -54,7 +38,7 @@ function Browse({ posts, projects }) {
       />
 
       <SideBar
-        section={sections[section].title}
+        section={sectionIndexer.title}
         setIsOverlayOpen={setIsOverlayOpen}
         setIsOpen={setIsOverlayOpen}
       />
@@ -66,22 +50,18 @@ function Browse({ posts, projects }) {
           <div className="mt-2 font-thin">
             Here are some of the top selections for you.
           </div>
-          <SectionIndexer
-            section={section}
-            changeSection={setSection}
-            sections={sections}
-          />
-          {section === 0 &&
-            posts.map((post) => (
-              <Post
-                user={post.user}
-                time={post.time}
-                picture={post.picture}
-                content={post.content}
-                title={post.title}
-              />
-            ))}
-          {section === 1 && projects.map((p) => <Project project={p} user={p.user} />)}
+          <SectionIndexer />
+          {sectionIndexer.id === 0
+            ? posts.map((post) => (
+                <Post
+                  user={post.user}
+                  time={post.time}
+                  picture={post.picture}
+                  content={post.content}
+                  title={post.title}
+                />
+              ))
+            : projects.map((p) => <Project project={p} user={p.user} />)}
         </Feed>
       </div>
       {submitted && (
@@ -97,6 +77,7 @@ const mapStateToProps = (state) => {
   return {
     posts: state.posts,
     projects: state.projects,
+    sectionIndexer: state.sectionIndexer,
   }
 }
 
