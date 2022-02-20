@@ -8,7 +8,7 @@ import Saved from '../assets/icons/Saved'
 import UserAvatar from '../assets/images/UserAvatar'
 import Location from '../assets/icons/Location'
 import { Button } from './Button'
-export const Project = ({ user, content, time, picture, project }) => {
+export const Project = ({ user, content, time, picture, project, isOwnProject }) => {
   return (
     <div
       className={
@@ -60,12 +60,14 @@ export const Project = ({ user, content, time, picture, project }) => {
           </div>
           <div className={'text-xs opacity-50'}>{user.position}</div>
         </div>
-        <Button
-          label={'Follow'}
-          btnStyle={
-            'border-2 border-green text-green text-sm ml-6 hover:bg-green hover:text-white'
-          }
-        />
+        {!isOwnProject && (
+          <Button
+            label={'Follow'}
+            btnStyle={
+              'border-2 border-green text-green text-sm ml-6 hover:bg-green hover:text-white'
+            }
+          />
+        )}
       </div>
     </div>
   )

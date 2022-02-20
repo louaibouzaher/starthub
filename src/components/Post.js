@@ -7,7 +7,7 @@ import Saved from '../assets/icons/Saved'
 import UserAvatar from '../assets/images/UserAvatar'
 import { Button } from './Button'
 
-export const Post = ({ user, content, time, picture, title }) => {
+export const Post = ({ user, content, time, picture, title, isOwnPost }) => {
   return (
     <div
       className={
@@ -49,7 +49,7 @@ export const Post = ({ user, content, time, picture, title }) => {
           </div>
           <div className={'text-xs opacity-50 '}>{time}</div>
         </div>
-        {Math.floor(Math.random() * 2) === 0 && (
+        {!isOwnPost && Math.floor(Math.random() * 2) === 0 && (
           <Button
             label={'Follow'}
             btnStyle={
