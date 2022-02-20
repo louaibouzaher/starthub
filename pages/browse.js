@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
 import { Navbar } from '../src/components/Navbar'
@@ -13,35 +13,35 @@ import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
 import AddProject from '../src/components/AddProject'
+import { changeChild } from '../src/store/OverlayWindow/overlayWindow.actions'
 
-function Browse({ posts, projects, sectionIndexer }) {
+function Browse({ posts, projects, sectionIndexer, changeChild }) {
   const [submitted, setSubmitted] = useState(false)
   const [userConnected, setUserConnected] = useState(true)
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false)
+
+  useEffect(() => {
+    changeChild(
+      sectionIndexer.id === 0 ? (
+        <AddPost setSubmitted={setSubmitted} />
+      ) : (
+        <AddProject setSubmitted={setSubmitted} />
+      )
+    )
+  }, [sectionIndexer.id])
 
   return (
     <>
       <Head>
         <title>Home - StartHub</title>
       </Head>
-      <OverlayWindow isOpen={isOverlayOpen} setIsOpen={setIsOverlayOpen}>
-        {sectionIndexer.id === 0 ? (
-          <AddPost setSubmitted={setSubmitted} />
-        ) : (
-          <AddProject setSubmitted={setSubmitted} />
-        )}
-      </OverlayWindow>
+      <OverlayWindow />
       <Navbar
         connectedUser={connectedUser}
         isConnected={userConnected}
         setUserConnected={setUserConnected}
       />
 
-      <SideBar
-        section={sectionIndexer.title}
-        setIsOverlayOpen={setIsOverlayOpen}
-        setIsOpen={setIsOverlayOpen}
-      />
+      <SideBar section={sectionIndexer.title} />
       <div className="App w-full flex flex-col justify-start items-center pt-16">
         <Feed>
           <div className="text-4xl mt-6">
@@ -82,7 +82,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    changeChild: (newChild) => dispatch(changeChild(newChild)),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Browse)
