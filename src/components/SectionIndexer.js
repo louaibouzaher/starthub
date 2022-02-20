@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { toggleSection } from '../store/sectionIndexer/sectionIndexer.actions'
+import { toggleSection } from '../store/SectionIndexer/sectionIndexer.actions'
 import { sections } from '../store/SectionIndexer/sectionIndexer.reducer'
 
 const SectionIndexer = ({ toggleSection, sectionIndexer }) => {
