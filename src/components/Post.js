@@ -6,8 +6,10 @@ import Share from '../assets/icons/Share'
 import Saved from '../assets/icons/Saved'
 import UserAvatar from '../assets/images/UserAvatar'
 import { Button } from './Button'
-
+import { connectedUser } from '../data/user'
 export const Post = ({ user, content, time, picture, title, isOwnPost }) => {
+  // TODO: Remove
+  const isOwnPost = isOwnPost || user.firstName == connectedUser.firstName
   return (
     <div
       className={
@@ -41,7 +43,7 @@ export const Post = ({ user, content, time, picture, title, isOwnPost }) => {
           (picture ? 'py-2 px-5 max-w-max rounded-lg bg-white ' : '')
         }
       >
-        <UserAvatar link={user.avatar} size={'16'} />
+        <UserAvatar link={user.avatar || user.picture} size={'16'} />
         <div className="ml-4 flex flex-col items-start">
           <div className="text-dark font-bold">
             {' '}

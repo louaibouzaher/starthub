@@ -1,23 +1,14 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import Autocomplete from '@mui/material/Autocomplete'
-import TextField from '@mui/material/TextField'
 
 import { connectedUser } from '../data/user'
 import { addProject } from '../store/Projects/projects.actions'
 import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
-import { Button } from './Button'
-import ButtonArrow from '../assets/icons/ButtonArrow'
-import { countries } from '../data/countries'
 import StepTwo from './AddProject/StepTwo'
 import StepOne from './AddProject/StepOne'
 
-const AddProject = ({ addProject, toggleOverlay }) => {
+const AddProject = ({ addProject, toggleOverlay, setSubmitted }) => {
   const [step, setStep] = useState(0)
-
   const [Project, setProject] = useState({
     title: '',
     description: '',
@@ -51,6 +42,11 @@ const AddProject = ({ addProject, toggleOverlay }) => {
     addProject({ ...Project, time: new Date().toUTCString(), user: connectedUser })
     setStep(0)
     toggleOverlay()
+    setProject({})
+    setSubmitted(true)
+    setTimeout(() => {
+      setSubmitted(false)
+    }, 3000)
   }
 
   return (

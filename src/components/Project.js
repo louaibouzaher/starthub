@@ -8,7 +8,11 @@ import Saved from '../assets/icons/Saved'
 import UserAvatar from '../assets/images/UserAvatar'
 import Location from '../assets/icons/Location'
 import { Button } from './Button'
+import { connectedUser } from '../data/user'
+
 export const Project = ({ user, content, time, picture, project, isOwnProject }) => {
+  // TODO: Remove
+  const isOwnProject = isOwnProject || user.firstName == connectedUser.firstName
   return (
     <div
       className={

@@ -6,7 +6,7 @@ import { addPost } from '../store/Posts/posts.actions'
 import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from './Button'
 
-const AddPost = ({ addPost, toggleOverlay }) => {
+const AddPost = ({ addPost, toggleOverlay, setSubmitted }) => {
   const [post, setPost] = useState({
     title: '',
     content: '',
@@ -30,6 +30,11 @@ const AddPost = ({ addPost, toggleOverlay }) => {
   const handleSubmit = () => {
     addPost({ ...post, time: new Date().toUTCString(), user: connectedUser })
     toggleOverlay()
+    setPost({})
+    setSubmitted(true)
+    setTimeout(() => {
+      setSubmitted(false)
+    }, 3000)
   }
 
   const labelUpload = 'Seems empty here 🤔'

@@ -20,6 +20,7 @@ import { connect } from 'react-redux'
 
 function Browse({ posts, projects }) {
   const [section, setSection] = useState(0)
+  const [submitted, setSubmitted] = useState(false)
   const [userConnected, setUserConnected] = useState(true)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const sections = [
@@ -40,7 +41,11 @@ function Browse({ posts, projects }) {
         <title>Home - StartHub</title>
       </Head>
       <OverlayWindow isOpen={isOverlayOpen} setIsOpen={setIsOverlayOpen}>
-        {section === 0 ? <AddPost /> : <AddProject />}
+        {section === 0 ? (
+          <AddPost setSubmitted={setSubmitted} />
+        ) : (
+          <AddProject setSubmitted={setSubmitted} />
+        )}
       </OverlayWindow>
       <Navbar
         connectedUser={connectedUser}
@@ -79,6 +84,11 @@ function Browse({ posts, projects }) {
           {section === 1 && projects.map((p) => <Project project={p} user={p.user} />)}
         </Feed>
       </div>
+      {submitted && (
+        <div className="z-50 fixed bottom-10 right-10 min-w-max py-4 px-8 flex justify-center items-center border-l-green border-l-4 bg-white rounded-sm shadow-md">
+          <div>Successfully Posted ✅</div>
+        </div>
+      )}
     </>
   )
 }
