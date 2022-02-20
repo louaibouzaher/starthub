@@ -55,7 +55,12 @@ export const Navbar = ({ isConnected, connectedUser }) => {
           <div className="flex flex-row items-center">
             <Messages className="mx-3 scale-125" />
             <Notification className="mx-3 mr-10 scale-125" />
-            <UserAvatar link={connectedUser.picture} size={'16'} />
+
+            <Link href="/profile/1" passHref>
+              <a>
+                <UserAvatar link={connectedUser.picture} className="cursor-pointer" />
+              </a>
+            </Link>
           </div>
         )}
       </div>
