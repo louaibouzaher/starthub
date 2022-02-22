@@ -6,6 +6,7 @@ import UserAvatar from '../assets/images/UserAvatar'
 import WhiteLogo from '../assets/images/WhiteLogo'
 import Messages from '../assets/icons/Messages'
 import Notification from '../assets/icons/Notification'
+import Settings from '../assets/icons/Settings'
 
 export const Navbar = ({ isConnected, connectedUser }) => {
   return (
@@ -53,9 +54,13 @@ export const Navbar = ({ isConnected, connectedUser }) => {
         )}
         {isConnected && (
           <div className="flex flex-row items-center">
-            <Messages className="mx-3 scale-125" />
-            <Notification className="mx-3 mr-10 scale-125" />
-
+            <Messages className="mx-3" />
+            <Notification className="mx-3" />
+            <Link href="/settings" passHref>
+              <a>
+                <Settings className="mx-3 mr-10" />
+              </a>
+            </Link>
             <Link href="/profile/1" passHref>
               <a>
                 <UserAvatar link={connectedUser.picture} className="cursor-pointer" />
