@@ -16,19 +16,10 @@ export const Hero = () => {
         <div className="flex flex-row mt-7">
           <Link href="/browse" passHref>
             <Button
-              label="I have a Startup"
+              label="Join The Community"
               btnStyle={'bg-green text-white border-2 border-green mx-2'}
               onClick={() => {
-                console.log('Startuper')
-              }}
-            />
-          </Link>
-          <Link href="/browse" passHref>
-            <Button
-              label="I'm an Investor"
-              btnStyle="bg-white border-2 border-dark text-dark mx-2"
-              onClick={() => {
-                console.log('Investor')
+                console.log('Join the community')
               }}
             />
           </Link>
