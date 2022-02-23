@@ -340,5 +340,5 @@ const db = [
 
 export const tailwindToHex = (color) => {
   const code = color.split('-')
-  return db.find((c) => c.variant == code[0]).shades[parseInt(code[1][1])]
+  return db.find((c) => c.variant == code[0]).shades[parseInt(code[1][0])]
 }

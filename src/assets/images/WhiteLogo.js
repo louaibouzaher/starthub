@@ -1,7 +1,7 @@
-export default function WhiteLogo() {
+export default function WhiteLogo({ width }) {
   return (
     <svg
-      width="158"
+      width={width ? width : '140'}
       height="29"
       viewBox="0 0 158 29"
       fill="none"

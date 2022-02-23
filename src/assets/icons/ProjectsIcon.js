@@ -1,4 +1,4 @@
-export default function DemosIcon() {
+export default function ProjectsIcon() {
   return (
     <div className="mx-1">
       <svg

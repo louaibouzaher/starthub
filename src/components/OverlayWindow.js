@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react'
-import { Button } from './Button'
+import React from 'react'
+import { connect } from 'react-redux'
+import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 
-export default function OverlayWindow({ children, isOpen, setIsOpen }) {
-  useEffect(() => {}, [isOpen])
-
+function OverlayWindow({ children, toggleOverlay, overlayWindow }) {
   return (
     <div
       className={
-        'bg-black bg-opacity-40 z-50 w-full h-screen flex justify-center items-center ' +
-        (isOpen ? 'fixed' : 'hidden')
+        'bg-black bg-opacity-40 w-full h-screen flex justify-center items-center ' +
+        (overlayWindow.isOpen ? 'fixed' : 'hidden')
       }
+      style={{
+        zIndex: 100,
+      }}
     >
       <div
         className="relative bg-white rounded-xl shadow-xl w-1/2 p-8 pb-24"
@@ -17,21 +19,22 @@ export default function OverlayWindow({ children, isOpen, setIsOpen }) {
           minHeight: 200,
         }}
       >
-        {children}
-
-        <div className="absolute flex flex-row mt-10 right-8 bottom-8">
-          <Button
-            label="Cancel"
-            btnStyle="border-2 border-dark mx-2"
-            onClick={() => setIsOpen(false)}
-          />
-          <Button
-            label="Share"
-            btnStyle="bg-purple text-white border-2 border-purple mx-2"
-            onClick={() => setIsOpen(false)}
-          />
-        </div>
+        {overlayWindow.currentChild}
       </div>
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    overlayWindow: state.overlayWindow,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleOverlay: () => dispatch(toggleOverlay()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OverlayWindow)

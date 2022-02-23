@@ -1,4 +1,4 @@
-export default function MilestoneIcon() {
+export default function PostIcon() {
   return (
     <div className="mx-1">
       <svg

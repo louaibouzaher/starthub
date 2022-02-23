@@ -1,4 +1,4 @@
-export default function Cross({ className, color }) {
+export default function Settings({ className, color }) {
   return (
     <div className={className}>
       <svg
@@ -9,15 +9,22 @@ export default function Cross({ className, color }) {
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M16 16L8 8"
-          stroke={color ? color : 'white'}
+          d="M6 21H18"
+          stroke={color}
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
         />
         <path
-          d="M16 8L7.99997 16"
-          stroke={color ? color : 'white'}
+          d="M12 3L12 17"
+          stroke={color}
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M17 12L12 17L7 12"
+          stroke={color}
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"

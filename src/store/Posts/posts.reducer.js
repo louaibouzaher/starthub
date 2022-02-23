@@ -1,4 +1,6 @@
-export const posts = [
+import { ADD_POST, DELETE_POST } from './posts.types'
+
+const INITIAL_STATE = [
   {
     user: {
       firstName: 'Emma',
@@ -52,3 +54,20 @@ export const posts = [
     time: Math.floor(Math.random() * 15) + 1 + ' hours ago',
   },
 ]
+
+const reducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case ADD_POST:
+      return [action.payload, ...state]
+
+    // case DELETE_POST:
+    //   return [
+    //     ...state,
+    //   ]
+
+    default:
+      return state
+  }
+}
+
+export default reducer
