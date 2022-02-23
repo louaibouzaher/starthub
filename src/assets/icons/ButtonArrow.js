@@ -1,5 +1,4 @@
 export default function ButtonArrow({ className, color }) {
-  console.log(color)
   return (
     <div className={className}>
       <svg

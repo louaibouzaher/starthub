@@ -5,12 +5,14 @@ import { connectedUser } from '../data/user'
 import { addPost } from '../store/Posts/posts.actions'
 import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from './Button'
+import { Downloader, Uploader } from '../firebase/Helpers'
 
 const AddPost = ({ addPost, toggleOverlay, setSubmitted }) => {
   const [post, setPost] = useState({
     title: '',
     content: '',
     picture: null,
+    file: null,
   })
   const handleChange = (e) => {
     setPost({
@@ -20,15 +22,20 @@ const AddPost = ({ addPost, toggleOverlay, setSubmitted }) => {
   }
 
   const handleFile = (e) => {
-    setPost({ ...post, image: e.target.files[0] })
-    // TODO: Upload file and send it to backend
-    // const fr = new FileReader()
-    // fr.onload = () => {
-    // }
+    setPost({ ...post, file: e.target.files[0] })
   }
 
-  const handleSubmit = () => {
-    addPost({ ...post, time: new Date().toUTCString(), user: connectedUser })
+  const handleSubmit = async () => {
+    const pictureRef = post.file ? await Uploader(post.file) : null
+    const pictureLink = post.file ? await Downloader(pictureRef) : null
+
+    addPost({
+      ...post,
+      time: new Date().toUTCString(),
+      user: connectedUser,
+      picture: pictureLink,
+    })
+
     toggleOverlay()
     setPost({})
     setSubmitted(true)
@@ -68,7 +75,7 @@ const AddPost = ({ addPost, toggleOverlay, setSubmitted }) => {
             type="file"
             id="file"
             className="hidden"
-            onChange={(e) => handleFile(e)}
+            onChange={handleFile}
           />
           <label
             for="file"
@@ -76,7 +83,7 @@ const AddPost = ({ addPost, toggleOverlay, setSubmitted }) => {
           >
             Upload an image
           </label>
-          <div className="mx-2 text-xs"> {post.image?.name || labelUpload}</div>
+          <div className="mx-2 text-xs"> {post.file?.name || labelUpload}</div>
         </div>
       </div>
       <div className="absolute flex flex-row mt-10 right-8 bottom-8">

@@ -6,6 +6,7 @@ import { addProject } from '../store/Projects/projects.actions'
 import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import StepTwo from './AddProject/StepTwo'
 import StepOne from './AddProject/StepOne'
+import { Uploader, Downloader } from '../firebase/Helpers'
 
 const AddProject = ({ addProject, toggleOverlay, setSubmitted }) => {
   const [step, setStep] = useState(0)
@@ -22,7 +23,6 @@ const AddProject = ({ addProject, toggleOverlay, setSubmitted }) => {
   const [file, setFile] = useState(null)
 
   const handleChange = (e) => {
-    console.log(Project)
     setProject({
       ...Project,
       [e.target.name]: e.target.value,
@@ -30,16 +30,19 @@ const AddProject = ({ addProject, toggleOverlay, setSubmitted }) => {
   }
 
   const handleFile = (e) => {
-    console.log(e)
-    setProject({ ...Project, video: e.target.files[0] })
-    // TODO: Upload file and send it to backend
-    // const fr = new FileReader()
-    // fr.onload = () => {
-    // }
+    setProject({ ...Project, file: e.target.files[0] })
   }
 
-  const handleSubmit = () => {
-    addProject({ ...Project, time: new Date().toUTCString(), user: connectedUser })
+  const handleSubmit = async () => {
+    const videoRef = Project.file ? await Uploader(Project.file, true) : null
+    const videoLink = Project.file ? await Downloader(videoRef) : null
+
+    addProject({
+      ...Project,
+      time: new Date().toUTCString(),
+      user: connectedUser,
+      video: videoLink || Project.video,
+    })
     setStep(0)
     toggleOverlay()
     setProject({})
@@ -57,7 +60,10 @@ const AddProject = ({ addProject, toggleOverlay, setSubmitted }) => {
           Project={Project}
           setProject={setProject}
           setStep={setStep}
+          file={file}
+          setFile={setFile}
           toggleOverlay={toggleOverlay}
+          handleFile={handleFile}
         />
       )}
       {step === 1 && (

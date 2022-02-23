@@ -30,7 +30,7 @@ export const Project = ({ user, project, isOwnProject }) => {
       <div className="text-4xl text-dark font-bold">{project.title}</div>
       <div className="flex mt-2">
         {project.tags
-          .split(',')
+          ?.split(',')
           .filter((t) => t.length > 0)
           .map((t) => {
             return (
@@ -50,7 +50,13 @@ export const Project = ({ user, project, isOwnProject }) => {
         <Location /> <span className="mx-1">{project.location}</span>
       </div>
       <div className="w-4/5 flex justify-start items-center rounded-xl mt-6 overflow-hidden">
-        <ReactPlayer url={project.video} muted={true} />
+        {project.video.includes('youtu.be') || project.video.includes('youtube') ? (
+          <ReactPlayer url={project.video} muted={true} />
+        ) : (
+          <video className="w-full" controls>
+            <source src={project.video} type="video/mp4" muted></source>
+          </video>
+        )}
       </div>
       <div className={'mt-4 p-2 w-3/4 text-left text-sm '}>{project.description}</div>
       <div className="flex flex-row w-full items-center mt-2 ">
