@@ -10,7 +10,7 @@ export default function Login() {
         <title>Login - StartHub</title>
       </Head>
       <div class="h-screen w-full bg-gradient-to-br from-blue-600 to-indigo-600 flex flex-col justify-center items-center ">
-        <div className=" w-4.5 h-24 stroke-cyan-500 scale-150">
+        <div className=" w-4.5 h-24 scale-150">
           <WhiteLogo className={' justify-center items-center  '} />
         </div>
 
@@ -40,19 +40,19 @@ export default function Login() {
               </div>
             </div>
 
-            <div className="tx-2xl w-full bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-md">
+            <div className=" w-full py-1 mt-10 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-md">
               <Link href="/browse" passHref>
                 <Button
                   label="Login"
-                  btnStyle={'mt-5  py-2 text-indigo-100  tracking-wide'}
+                  btnStyle={' text-white tx-2xl tracking-wide'}
                   onClick={() => {
                     console.log('Login')
                   }}
                 />
               </Link>
             </div>
-            <div className='px-14 mt-10 '>
-              <p>New to StartHub? <span className='hover:text-blue-900 font-semibold active:text-blue-400'><Link href='/signup'className> SignUp</Link></span></p>
+            <div className='px-12 mt-10 '>
+              <p>New to StartHub? <span className='hover:text-blue-900 font-semibold active:text-blue-400 px-2 '><Link href='/signup'className> SignUp</Link></span></p>
             </div>
           </div>
         </form>
