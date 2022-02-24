@@ -9,10 +9,17 @@ import UserAvatar from '../assets/images/UserAvatar'
 import Location from '../assets/icons/Location'
 import { Button } from './Button'
 import { connectedUser } from '../data/user'
+import { reactionsColors } from '../data/general'
 
 export const Project = ({ user, project, isOwnProject }) => {
   // TODO: Remove
   const showFollow = isOwnProject || user.firstName == connectedUser.firstName
+  const reactions = [
+    Math.floor(Math.random() * 2),
+    Math.floor(Math.random() * 2),
+    Math.floor(Math.random() * 2),
+    Math.floor(Math.random() * 2),
+  ]
   return (
     <div
       className={
@@ -20,12 +27,6 @@ export const Project = ({ user, project, isOwnProject }) => {
       }
     >
       <Dots isDark className="absolute top-8 right-8 scale-125" />
-      <div className="flex flex-col absolute bottom-16 right-10 scale-125">
-        <Heart isClicked={Math.floor(Math.random() * 2)} className="my-1" />
-        <Comment isCommented={Math.floor(Math.random() * 2)} className="my-1" />
-        <Share isClicked={Math.floor(Math.random() * 2)} className="my-1" />
-        <Saved isClicked={Math.floor(Math.random() * 2)} className="my-1" />
-      </div>
 
       <div className="text-4xl text-dark font-bold">{project.title}</div>
       <div className="flex mt-2">
@@ -78,6 +79,44 @@ export const Project = ({ user, project, isOwnProject }) => {
             }
           />
         )}
+      </div>
+      <div className={'flex flex-row mt-7 text-sm font-light'}>
+        <Heart isClicked={reactions[0]} className="mx-1" />
+        <div
+          className="mr-2"
+          style={{
+            color: reactions[0] ? reactionsColors.like : reactionsColors.disabled,
+          }}
+        >
+          Like
+        </div>
+        <Comment isCommented={reactions[1]} className="mx-1" />
+        <div
+          className=" mr-2"
+          style={{
+            color: reactions[1] ? reactionsColors.comment : reactionsColors.disabled,
+          }}
+        >
+          Comment
+        </div>
+        <Share isClicked={reactions[2]} className="mx-1" />
+        <div
+          className=" mr-2"
+          style={{
+            color: reactions[2] ? reactionsColors.share : reactionsColors.disabled,
+          }}
+        >
+          Share
+        </div>
+        <Saved isClicked={reactions[3]} className="mx-1" />
+        <div
+          className=" mr-2"
+          style={{
+            color: reactions[3] ? reactionsColors.save : reactionsColors.disabled,
+          }}
+        >
+          Save
+        </div>
       </div>
     </div>
   )

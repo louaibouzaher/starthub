@@ -26,3 +26,11 @@ export const industry = [
     code: 6,
   },
 ]
+
+export const reactionsColors = {
+  disabled: '#7B8699',
+  like: '#FF5B83',
+  comment: '#0A1F44',
+  share: '#00DB7D',
+  save: '#44DDFF',
+}

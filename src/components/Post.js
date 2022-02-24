@@ -7,9 +7,16 @@ import Saved from '../assets/icons/Saved'
 import UserAvatar from '../assets/images/UserAvatar'
 import { Button } from './Button'
 import { connectedUser } from '../data/user'
+import { reactionsColors } from '../data/general'
 export const Post = ({ user, content, time, picture, title, isOwnPost }) => {
   // TODO: Remove
   const showFollow = isOwnPost || user.firstName == connectedUser.firstName
+  const reactions = [
+    Math.floor(Math.random() * 2),
+    Math.floor(Math.random() * 2),
+    Math.floor(Math.random() * 2),
+    Math.floor(Math.random() * 2),
+  ]
   return (
     <div
       className={
@@ -64,11 +71,43 @@ export const Post = ({ user, content, time, picture, title, isOwnPost }) => {
       >
         {picture ? title : content}
       </div>
-      <div className={'flex flex-row mt-4 '}>
-        <Heart isClicked={Math.floor(Math.random() * 2)} className="mx-1" />
-        <Comment isCommented={Math.floor(Math.random() * 2)} className="mx-1" />
-        <Share isClicked={Math.floor(Math.random() * 2)} className="mx-1" />
-        <Saved isClicked={Math.floor(Math.random() * 2)} className="mx-1" />
+      <div className={'flex flex-row mt-6 text-sm font-light'}>
+        <Heart isClicked={reactions[0]} className="mx-1" />
+        <div
+          className="mr-2"
+          style={{
+            color: reactions[0] ? reactionsColors.like : reactionsColors.disabled,
+          }}
+        >
+          Like
+        </div>
+        <Comment isCommented={reactions[1]} className="mx-1" />
+        <div
+          className="mr-2"
+          style={{
+            color: reactions[1] ? reactionsColors.comment : reactionsColors.disabled,
+          }}
+        >
+          Comment
+        </div>
+        <Share isClicked={reactions[2]} className="mx-1" />
+        <div
+          className="mr-2"
+          style={{
+            color: reactions[2] ? reactionsColors.share : reactionsColors.disabled,
+          }}
+        >
+          Share
+        </div>
+        <Saved isClicked={reactions[3]} className="mx-1" />
+        <div
+          className="mr-2"
+          style={{
+            color: reactions[3] ? reactionsColors.save : reactionsColors.disabled,
+          }}
+        >
+          Save
+        </div>
       </div>
     </div>
   )
