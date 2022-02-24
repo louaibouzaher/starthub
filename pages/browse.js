@@ -5,7 +5,7 @@ import { Navbar } from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
 import { Post } from '../src/components/Post'
 import SectionIndexer from '../src/components/SectionIndexer'
-import { Project } from '../src/components/Project'
+import Project from '../src/components/Project'
 import SideBar from '../src/layouts/SideBar'
 
 import { connectedUser } from '../src/data/user'

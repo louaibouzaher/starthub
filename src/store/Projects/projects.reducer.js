@@ -1,7 +1,9 @@
+import { postProject, deleteProject } from './projects.api'
 import { ADD_PROJECT, DELETE_PROJECT } from './projects.types'
 
 const INITIAL_STATE = [
   {
+    id: 12323,
     user: {
       firstName: 'Andrew',
       lastName: 'Garfield',
@@ -24,6 +26,7 @@ const INITIAL_STATE = [
     ageInMonths: 12,
   },
   {
+    id: 13234235,
     user: {
       firstName: 'Emma',
       lastName: 'Stone',
@@ -50,12 +53,16 @@ const INITIAL_STATE = [
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_PROJECT:
-      return [action.payload, ...state]
+      const newProject = { ...action.payload }
+      postProject(action.payload).then((r) => {
+        newProject.id = r
+      })
+      console.log(newProject)
+      return [newProject, ...state]
 
-    // case DELETE_PROJECT:
-    //   return [
-    //     ...state,
-    //   ]
+    case DELETE_PROJECT:
+      deleteProject(action.id)
+      return state.filter((p) => p.id !== action.id)
 
     default:
       return state

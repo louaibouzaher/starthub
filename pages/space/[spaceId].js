@@ -11,7 +11,7 @@ import { Navbar } from '../../src/components/Navbar'
 import { Button } from '../../src/components/Button'
 import SectionIndexer from '../../src/components/SectionIndexer'
 import { Post } from '../../src/components/Post'
-import { Project } from '../../src/components/Project'
+import Project from '../../src/components/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 
 const Space = ({ sectionIndexer }) => {

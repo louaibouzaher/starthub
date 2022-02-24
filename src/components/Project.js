@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactPlayer from 'react-player'
+import { connect } from 'react-redux'
+
+import tailwindConfig from '../../tailwind.config'
 import Dots from '../assets/icons/Dots'
 import Heart from '../assets/icons/Heart'
 import Comment from '../assets/icons/Comment'
 import Share from '../assets/icons/Share'
 import Saved from '../assets/icons/Saved'
+import Delete from '../assets/icons/Delete'
+import Edit from '../assets/icons/Edit'
 import UserAvatar from '../assets/images/UserAvatar'
 import Location from '../assets/icons/Location'
 import { Button } from './Button'
 import { connectedUser } from '../data/user'
 import { reactionsColors } from '../data/general'
+import { deleteProject } from '../store/Projects/projects.actions'
 
-export const Project = ({ user, project, isOwnProject }) => {
+const Project = ({ user, project, isOwnProject, deleteProject }) => {
+  const [isDotsListOpen, setIsDotsListOpen] = useState(false)
   // TODO: Remove
   const showFollow = isOwnProject || user.firstName == connectedUser.firstName
   const reactions = [
@@ -20,13 +27,48 @@ export const Project = ({ user, project, isOwnProject }) => {
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
   ]
+
+  const handleDelete = () => {
+    setIsDotsListOpen(false)
+    deleteProject(project.id)
+  }
+
   return (
     <div
       className={
         'relative m-4 p-10 rounded-lg shadow-lg flex flex-col items-start justify-between bg-white'
       }
     >
-      <Dots isDark className="absolute top-8 right-8 scale-125" />
+      <div className="absolute flex flex-col items-end top-8 right-8">
+        <Dots
+          isDark
+          className="scale-125"
+          onClick={() => setIsDotsListOpen(!isDotsListOpen)}
+        />
+        {isDotsListOpen && (
+          <div className="text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
+            <div
+              className="cursor-pointer flex my-1"
+              onClick={() => console.log('edit project')}
+            >
+              <Edit color={tailwindConfig.theme.extend.colors.dark} />
+              <div className="mx-1"> Edit Project</div>
+            </div>
+            <div
+              className="bg-dark rounded-full opacity-5"
+              style={{
+                height: 2,
+              }}
+            >
+              {' '}
+            </div>
+            <div className="cursor-pointer flex my-1" onClick={() => handleDelete()}>
+              <Delete color={tailwindConfig.theme.extend.colors.dark} />
+              <div className="mx-1"> Delete Permanently</div>
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="text-4xl text-dark font-bold">{project.title}</div>
       <div className="flex mt-2">
@@ -121,3 +163,15 @@ export const Project = ({ user, project, isOwnProject }) => {
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {}
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteProject: (projectId) => dispatch(deleteProject(projectId)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Project)

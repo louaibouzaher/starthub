@@ -1,7 +1,7 @@
-export default function Dots({ isDark, className }) {
+export default function Dots({ isDark, className, onClick }) {
   if (isDark) {
     return (
-      <div className={'cursor-pointer ' + className}>
+      <div className={'cursor-pointer ' + className} onClick={onClick}>
         {isDark ? (
           <svg
             width="21"
