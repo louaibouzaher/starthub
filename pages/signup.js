@@ -1,12 +1,200 @@
+import React, { useEffect, useState } from 'react'
+
 import Head from 'next/head'
+import WhiteLogo from '../src/assets/images/WhiteLogo'
+import { Button } from '../src/components/Button'
+import Link from 'next/link'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
 
 export default function Signup() {
+  const [state, setState] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    passwordStrength: false,
+    passwordNotMatching: false,
+  })
+
+  const handleChange = (e) => {
+    switch (e.target.name) {
+      case 'firstName':
+        if (!e.target.value.match(/^[a-z ,.'-]+$/i)) {
+          setErrors({ ...errors, firstName: true })
+        } else {
+          setErrors({ ...errors, firstName: false })
+        }
+        break
+      case 'lastName':
+        if (!e.target.value.match(/^[a-z ,.'-]+$/i)) {
+          setErrors({ ...errors, lastName: true })
+        } else {
+          setErrors({ ...errors, lastName: false })
+        }
+        break
+      case 'email':
+        if (!e.target.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+          setErrors({ ...errors, email: true })
+        } else {
+          setErrors({ ...errors, email: false })
+        }
+        break
+      case 'password':
+        if (!e.target.value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+          setErrors({ ...errors, passwordStrength: true })
+        } else {
+          setErrors({ ...errors, passwordStrength: false })
+        }
+        break
+      default:
+        break
+    }
+
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  useEffect(() => {
+    if (state.password !== state.confirmPassword) {
+      setErrors({ ...errors, passwordNotMatching: true })
+    } else {
+      setErrors({ ...errors, passwordNotMatching: false })
+    }
+  }, [state.confirmPassword, state.password])
+
   return (
     <>
       <Head>
-        <title>Signup - StartHub</title>
+        <title>Sign Up - StartHub</title>
       </Head>
-      <div className="w-full h-screen flex justify-center items-center">Signup Page</div>
+      <div class="h-screen w-full text-dark bg-purple flex flex-col justify-center items-center ">
+        <div className=" w-4.5 h-12 scale-150">
+          <WhiteLogo className={' justify-center items-center  '} />
+        </div>
+
+        <form>
+          <div class="flex flex-col justify-center items-center bg-white px-10 py-8 rounded-xl w-full shadow-md max-w mt-10">
+            <div>
+              <h1 class="text-center mb-6 text-2xl  text-dark">Create An Account</h1>
+              <div className="flex-row flex ">
+                <div>
+                  <label for="fname" class="block mb-1 text-dark ">
+                    First Name
+                  </label>
+                  <input
+                    value={state.firstName}
+                    name="firstName"
+                    onChange={handleChange}
+                    type="text"
+                    class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  />
+                  <div className="text-red-600 text-sm h-4">
+                    {errors.firstName && 'First name is required'}
+                  </div>
+                </div>
+                <div className="px-6">
+                  <label for="lname" class="block mb-1 text-dark ">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    onChange={handleChange}
+                    class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  />
+
+                  <div className="text-red-600 text-sm h-4">
+                    {errors.lastName && 'Last name is required'}
+                  </div>
+                </div>
+              </div>
+              <div className="flex-row flex mt-2">
+                <div>
+                  <label for="email" class="block mb-1 text-dark ">
+                    Email
+                  </label>
+                  <input
+                    type="text"
+                    name="email"
+                    onChange={handleChange}
+                    class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  />
+
+                  <div className="text-red-600 text-sm h-4 ">
+                    {errors.email && 'Please enter a valid email'}
+                  </div>
+                </div>
+              </div>
+              <div className="flex-row flex mt-2">
+                <div>
+                  <label for="password" class="block mb-1 text-dark ">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    onChange={handleChange}
+                    class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  />
+                  {errors.passwordStrength && (
+                    <div className="text-red-600 text-sm ">
+                      • Contains at two uppercase letters
+                      <br />
+                      • Contains at least 8 characters
+                      <br />• Contains at least one digit
+                    </div>
+                  )}
+                </div>
+                <div className="px-6">
+                  <label for="password" class="block mb-1 text-dark ">
+                    Confirm Password
+                  </label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    onChange={handleChange}
+                    class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  />
+                  {errors.passwordNotMatching && (
+                    <div className="text-red-600 text-sm "> Passwords not matching. </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className=" w-60 py-1 mt-10 bg-purple rounded-md">
+              <Link href="/browse" passHref>
+                <Button
+                  label="Create Account"
+                  btnStyle={' text-white tx-9xl'}
+                  onClick={() => {
+                    console.log('Create Account')
+                  }}
+                />
+              </Link>
+            </div>
+            <div className=" mt-10 flex- ">
+              <p>
+                Have an Account?
+                <span className="hover:text-purple px-2 ">
+                  <Link href="/login">Login</Link>
+                </span>
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
     </>
   )
 }
