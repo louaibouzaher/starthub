@@ -72,6 +72,16 @@ export default function StepTwo({
           />
           <span>$</span>
         </div>
+        <div className="flex w-full items-center mt-4">
+          <div className="mr-4  min-w-max">Number of Employee</div>
+          <input
+            type="number"
+            className="border-2 border-dark  rounded-md text-purple text-center w-20"
+            name="employeenumber"
+            value={Project.employeenumber}
+            onChange={handleChange}
+          />
+        </div>
         <div className="flex flex-col w-1/2 mt-4">
           <label> Location </label>
           <Autocomplete
