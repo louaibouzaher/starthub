@@ -133,7 +133,7 @@ export default function Signup() {
                 </div>
                 <div className="px-8">
                   <FormControl>
-                    <FormLabel className="demo-row-radio-buttons-group-label text-gray-600">
+                    <FormLabel className=" demo-row-radio-buttons-group-label text-gray-600">
                       Gender
                     </FormLabel>
                     <RadioGroup
@@ -164,7 +164,10 @@ export default function Signup() {
                   />
                   {errors.passwordStrength && (
                     <div className="text-red-600">
-                      <pre>-Two  UpperCase Letters<br></br>-At least 8 characters <br></br>-Contain Number</pre>
+                      <pre>
+                        -Two UpperCase Letters<br></br>-At least 8 characters <br></br>
+                        -Contain Number
+                      </pre>
                     </div>
                   )}
                 </div>
@@ -179,7 +182,6 @@ export default function Signup() {
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
                     placeholder="Enter again to validate"
                   />
-                  
                 </div>
               </div>
             </div>
