@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Head from 'next/head'
 import WhiteLogo from '../src/assets/images/WhiteLogo'
@@ -56,8 +56,6 @@ export default function Signup() {
           setErrors({ ...errors, passwordStrength: false })
         }
         break
-
-
       default:
         break
     }
@@ -66,28 +64,33 @@ export default function Signup() {
       ...state,
       [e.target.name]: e.target.value,
     })
-    console.log(state)
   }
+
+  useEffect(() => {
+    if (state.password !== state.confirmPassword) {
+      setErrors({ ...errors, passwordNotMatching: true })
+    } else {
+      setErrors({ ...errors, passwordNotMatching: false })
+    }
+  }, [state.confirmPassword, state.password])
 
   return (
     <>
       <Head>
         <title>Sign Up - StartHub</title>
       </Head>
-      <div class="h-screen w-full bg-gradient-to-br from-blue-600 to-indigo-600 flex flex-col justify-center items-center ">
+      <div class="h-screen w-full text-dark bg-purple flex flex-col justify-center items-center ">
         <div className=" w-4.5 h-12 scale-150">
           <WhiteLogo className={' justify-center items-center  '} />
         </div>
 
         <form>
-          <div class="bg-white px-10 py-8 rounded-xl w-full shadow-md max-w">
+          <div class="flex flex-col justify-center items-center bg-white px-10 py-8 rounded-xl w-full shadow-md max-w mt-10">
             <div>
-              <h1 class="text-center space-y-4 text-2xl font-semibold text-black-600">
-                Create An Account
-              </h1>
+              <h1 class="text-center mb-6 text-2xl  text-dark">Create An Account</h1>
               <div className="flex-row flex ">
                 <div>
-                  <label for="fname" class="block mb-1 text-gray-600 font-semibold">
+                  <label for="fname" class="block mb-1 text-dark ">
                     First Name
                   </label>
                   <input
@@ -97,12 +100,12 @@ export default function Signup() {
                     type="text"
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
                   />
-                  {errors.firstName && (
-                    <div className="text-red-600"> Name is Required </div>
-                  )}
+                  <div className="text-red-600 text-sm h-4">
+                    {errors.firstName && 'First name is required'}
+                  </div>
                 </div>
                 <div className="px-6">
-                  <label for="lname" class="block mb-1 text-gray-600 font-semibold">
+                  <label for="lname" class="block mb-1 text-dark ">
                     Last Name
                   </label>
                   <input
@@ -111,14 +114,15 @@ export default function Signup() {
                     onChange={handleChange}
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
                   />
-                  {errors.firstName && (
-                    <div className="text-red-600">Name is Required </div>
-                  )}
+
+                  <div className="text-red-600 text-sm h-4">
+                    {errors.lastName && 'Last name is required'}
+                  </div>
                 </div>
               </div>
-              <div className="flex-row flex ">
+              <div className="flex-row flex mt-2">
                 <div>
-                  <label for="email" class="block mb-1 text-gray-600 font-semibold">
+                  <label for="email" class="block mb-1 text-dark ">
                     Email
                   </label>
                   <input
@@ -127,33 +131,15 @@ export default function Signup() {
                     onChange={handleChange}
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
                   />
-                  {errors.email && (
-                    <div className="text-red-600"> Please enter a valid email </div>
-                  )}
-                </div>
-                <div className="px-8">
-                  <FormControl>
-                    <FormLabel className=" demo-row-radio-buttons-group-label text-gray-600">
-                      Gender
-                    </FormLabel>
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="row-radio-buttons-group"
-                    >
-                      <FormControlLabel
-                        value="female"
-                        control={<Radio />}
-                        label="Female"
-                      />
-                      <FormControlLabel value="male" control={<Radio />} label="Male" />
-                    </RadioGroup>
-                  </FormControl>
+
+                  <div className="text-red-600 text-sm h-4 ">
+                    {errors.email && 'Please enter a valid email'}
+                  </div>
                 </div>
               </div>
-              <div className="flex-row flex ">
+              <div className="flex-row flex mt-2">
                 <div>
-                  <label for="password" class="block mb-1 text-gray-600 font-semibold">
+                  <label for="password" class="block mb-1 text-dark ">
                     Password
                   </label>
                   <input
@@ -163,16 +149,16 @@ export default function Signup() {
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
                   />
                   {errors.passwordStrength && (
-                    <div className="text-red-600">
-                      <pre>
-                        -Two UpperCase Letters<br></br>-At least 8 characters <br></br>
-                        -Contain Number
-                      </pre>
+                    <div className="text-red-600 text-sm ">
+                      • Contains at two uppercase letters
+                      <br />
+                      • Contains at least 8 characters
+                      <br />• Contains at least one digit
                     </div>
                   )}
                 </div>
                 <div className="px-6">
-                  <label for="password" class="block mb-1 text-gray-600 font-semibold">
+                  <label for="password" class="block mb-1 text-dark ">
                     Confirm Password
                   </label>
                   <input
@@ -180,29 +166,29 @@ export default function Signup() {
                     name="confirmPassword"
                     onChange={handleChange}
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
-                    placeholder="Enter again to validate"
                   />
+                  {errors.passwordNotMatching && (
+                    <div className="text-red-600 text-sm "> Passwords not matching. </div>
+                  )}
                 </div>
               </div>
             </div>
-            <div className=" ml-28 w-60 py-1 mt-10 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-md">
-              <Link href="/login" passHref>
+            <div className=" w-60 py-1 mt-10 bg-purple rounded-md">
+              <Link href="/browse" passHref>
                 <Button
                   label="Create Account"
-                  btnStyle={' text-white tx-9xl tracking-wide'}
+                  btnStyle={' text-white tx-9xl'}
                   onClick={() => {
                     console.log('Create Account')
                   }}
                 />
               </Link>
             </div>
-            <div className="ml-36 mt-10 ">
+            <div className=" mt-10 flex- ">
               <p>
                 Have an Account?
-                <span className="hover:text-blue-900 font-semibold active:text-blue-400 px-2 ">
-                  <Link href="/login" className>
-                    Sign In
-                  </Link>
+                <span className="hover:text-purple px-2 ">
+                  <Link href="/login">Login</Link>
                 </span>
               </p>
             </div>
