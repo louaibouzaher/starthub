@@ -36,7 +36,7 @@ const Project = ({ user, project, isOwnProject, deleteProject }) => {
   return (
     <div
       className={
-        'relative m-4 p-10 rounded-lg shadow-lg flex flex-col items-start justify-between bg-white'
+        'relative m-4 p-10 rounded-lg font-inter shadow-lg flex flex-col items-start justify-between bg-white'
       }
     >
       <div className="absolute flex flex-col items-end top-8 right-8">

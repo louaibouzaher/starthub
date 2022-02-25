@@ -6,7 +6,7 @@ function OverlayWindow({ children, toggleOverlay, overlayWindow }) {
   return (
     <div
       className={
-        'bg-black bg-opacity-40 w-full h-screen flex justify-center items-center ' +
+        'bg-black bg-opacity-40 w-full h-screen flex justify-center items-center font-inter ' +
         (overlayWindow.isOpen ? 'fixed' : 'hidden')
       }
       style={{

@@ -5,7 +5,7 @@ import { sections } from '../store/SectionIndexer/sectionIndexer.reducer'
 
 const SectionIndexer = ({ toggleSection, sectionIndexer }) => {
   return (
-    <div className=" m-4 h-14 bg-gray-100 shadow-md flex flex-row justify-center items-center">
+    <div className=" m-4 h-14 bg-gray-100 shadow-md font-inter flex flex-row justify-center items-center">
       {sections.map((s) => {
         return (
           <div

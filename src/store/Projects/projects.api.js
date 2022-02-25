@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 import { API_BASEURL } from '../../../appConfig'
 
 export const postProject = (project) => {

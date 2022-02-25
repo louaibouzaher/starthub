@@ -79,7 +79,7 @@ export default function Signup() {
       <Head>
         <title>Sign Up - StartHub</title>
       </Head>
-      <div class="h-screen w-full text-dark bg-purple flex flex-col justify-center items-center ">
+      <div class="h-screen w-full text-dark bg-purple flex flex-col font-inter justify-center items-center ">
         <div className=" w-4.5 h-12 scale-150">
           <WhiteLogo className={' justify-center items-center  '} />
         </div>

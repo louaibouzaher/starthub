@@ -42,7 +42,7 @@ function Browse({ posts, projects, sectionIndexer, changeChild }) {
       />
 
       <SideBar section={sectionIndexer.title} />
-      <div className="App w-full flex flex-col justify-start items-center pt-16">
+      <div className="App w-full flex flex-col font-inter justify-start items-center pt-16">
         <Feed>
           <div className="text-4xl mt-6">
             Hello, <span className="text-purple">{connectedUser.firstName}.</span>{' '}

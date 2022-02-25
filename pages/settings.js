@@ -55,7 +55,7 @@ export default function Settings() {
             ))}
           </div>
         </div>
-        <div className="w-full flex flex-col justify-start items-start pt-24 pb-10 px-44">
+        <div className="w-full flex flex-col justify-start font-inter items-start pt-24 pb-10 px-44">
           <div className="my-2 flex justify-end w-full">
             <Button
               btnStyle="mx-1 bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white "

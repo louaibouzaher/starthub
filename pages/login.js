@@ -9,7 +9,7 @@ export default function Login() {
       <Head>
         <title>Login - StartHub</title>
       </Head>
-      <div class="h-screen w-full bg-purple flex flex-col justify-center items-center ">
+      <div class="h-screen w-full bg-purple flex flex-col justify-center font-inter items-center ">
         <div className=" w-4.5 h-24 scale-150">
           <WhiteLogo className={' justify-center items-center '} />
         </div>

@@ -20,7 +20,7 @@ export const Post = ({ user, content, time, picture, title, isOwnPost }) => {
   return (
     <div
       className={
-        'relative m-4 p-10 rounded-lg shadow-md flex flex-col items-start ' +
+        'relative m-4 p-10 rounded-lg shadow-md flex flex-col items-start font-inter ' +
         (picture == null ? ' bg-white justify-start' : 'justify-end')
       }
       style={{

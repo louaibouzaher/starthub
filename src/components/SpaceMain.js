@@ -4,7 +4,7 @@ import { Button } from './Button'
 
 export const SpaceMain = () => {
   return (
-    <div className="h-screen flex flex-col justify-center items-center  p-2 overflow-x-hidden">
+    <div className="h-screen flex flex-col justify-center items-center  p-2 font-inter overflow-x-hidden">
       <div classNmae="h-3/4 w-full flex items-start  overflow-x-hidden">
         <SpaceMainImage
           className={'flex flex-col w-full justify-left items-center scale-120'}
@@ -14,7 +14,7 @@ export const SpaceMain = () => {
         Create your own space to host Startup competitions, entrepreneurship forums and
         more!
       </div>
-      <div className="py-4 flex justify-center items-center text-dark font-normal">
+      <div className="py-4 flex justify-center items-center text-dark ">
         <p>
           <span className="m-20">Manage Participating Teams 🎯</span>
           <br></br>

@@ -20,7 +20,7 @@ export const Navbar = ({ isConnected, connectedUser }) => {
         <div className="cursor-pointer">{isConnected ? <WhiteLogo /> : <MainLogo />}</div>
       </Link>
 
-      <div className="flex flex-row ">
+      <div className="flex flex-row font-inter ">
         {!isConnected && (
           <>
             <Link href="/browse" passHref>
