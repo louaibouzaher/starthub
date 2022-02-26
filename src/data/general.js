@@ -34,3 +34,53 @@ export const reactionsColors = {
   share: '#00DB7D',
   save: '#44DDFF',
 }
+
+export const users = [
+  {
+    picture: 'https://randomuser.me/api/portraits/men/1.jpg',
+    firstName: 'Jhon',
+    lastName: 'Doe',
+  },
+  {
+    picture: 'https://randomuser.me/api/portraits/women/2.jpg',
+    firstName: 'Jane',
+    lastName: 'Doe',
+  },
+  {
+    picture: 'https://randomuser.me/api/portraits/men/3.jpg',
+    firstName: 'Jhon',
+    lastName: 'Doe',
+  },
+  {
+    picture: 'https://randomuser.me/api/portraits/men/4.jpg',
+    firstName: 'Jhon',
+    lastName: 'Doe',
+  },
+  {
+    picture: 'https://randomuser.me/api/portraits/men/5.jpg',
+    firstName: 'Jhon',
+    lastName: 'Doe',
+  },
+  {
+    picture: 'https://randomuser.me/api/portraits/women/6.jpg',
+    firstName: 'Jane',
+    lastName: 'Doe',
+  },
+  {
+    picture: 'https://randomuser.me/api/portraits/women/7.jpg',
+    firstName: 'Jane',
+    lastName: 'Doe',
+  },
+  {
+    picture: 'https://randomuser.me/api/portraits/women/8.jpg',
+    firstName: 'Jane',
+    lastName: 'Doe',
+  },
+]
+
+export const sampleComments = [
+  'I love the idea 🚀',
+  'Seems promising! Keep it up 💪',
+  'Can I know more ? ',
+  'Interesting invesment opportunity 💵 ',
+]

@@ -15,6 +15,8 @@ import Location from '../assets/icons/Location'
 import { Button } from './Button'
 import { connectedUser } from '../data/user'
 import { reactionsColors } from '../data/general'
+import Link from 'next/link'
+import ButtonArrow from '../assets/icons/ButtonArrow'
 import {
   deleteProject,
   setAddProjectState,
@@ -149,43 +151,58 @@ const Project = ({
           />
         )}
       </div>
-      <div className={'flex flex-row mt-7 text-sm font-light'}>
-        <Heart isClicked={reactions[0]} className="mx-1" />
-        <div
-          className="mr-2"
-          style={{
-            color: reactions[0] ? reactionsColors.like : reactionsColors.disabled,
-          }}
-        >
-          Like
+      <div
+        className={
+          'w-full flex flex-row justify-between items-center mt-7 text-sm font-light'
+        }
+      >
+        <div className="flex">
+          <Heart isClicked={reactions[0]} className="mx-1" />
+          <div
+            className="mr-2"
+            style={{
+              color: reactions[0] ? reactionsColors.like : reactionsColors.disabled,
+            }}
+          >
+            Like
+          </div>
+          <Comment isCommented={reactions[1]} className="mx-1" />
+          <div
+            className=" mr-2"
+            style={{
+              color: reactions[1] ? reactionsColors.comment : reactionsColors.disabled,
+            }}
+          >
+            Comment
+          </div>
+          <Share isClicked={reactions[2]} className="mx-1" />
+          <div
+            className=" mr-2"
+            style={{
+              color: reactions[2] ? reactionsColors.share : reactionsColors.disabled,
+            }}
+          >
+            Share
+          </div>
+          <Saved isClicked={reactions[3]} className="mx-1" />
+          <div
+            className=" mr-2"
+            style={{
+              color: reactions[3] ? reactionsColors.save : reactionsColors.disabled,
+            }}
+          >
+            Save
+          </div>
         </div>
-        <Comment isCommented={reactions[1]} className="mx-1" />
-        <div
-          className=" mr-2"
-          style={{
-            color: reactions[1] ? reactionsColors.comment : reactionsColors.disabled,
-          }}
-        >
-          Comment
-        </div>
-        <Share isClicked={reactions[2]} className="mx-1" />
-        <div
-          className=" mr-2"
-          style={{
-            color: reactions[2] ? reactionsColors.share : reactionsColors.disabled,
-          }}
-        >
-          Share
-        </div>
-        <Saved isClicked={reactions[3]} className="mx-1" />
-        <div
-          className=" mr-2"
-          style={{
-            color: reactions[3] ? reactionsColors.save : reactionsColors.disabled,
-          }}
-        >
-          Save
-        </div>
+        <Link href={'/project/' + project.id}>
+          <div className="text-purple flex items-center cursor-pointer">
+            <div>Learn more</div>
+            <ButtonArrow
+              className={'-rotate-90'}
+              color={tailwindConfig.theme.extend.colors.purple}
+            />
+          </div>
+        </Link>
       </div>
     </div>
   )
