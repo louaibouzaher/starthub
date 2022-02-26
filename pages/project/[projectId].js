@@ -1,8 +1,11 @@
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { connect } from 'react-redux'
 import { projects } from '../../src/data/projects'
 import { connectedUser } from '../../src/data/user'
 import { Navbar } from '../../src/components/Navbar'
+import OverlayWindow from '../../src/components/OverlayWindow'
+import SendMessage from '../../src/components/SendMessage'
 import { Button } from '../../src/components/Button'
 import Saved from '../../src/assets/icons/Saved'
 import Share from '../../src/assets/icons/Share'
@@ -10,12 +13,14 @@ import Heart from '../../src/assets/icons/Heart'
 import Comment from '../../src/assets/icons/Comment'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 import { reactionsColors, sampleComments, users } from '../../src/data/general'
-
+import { toggleOverlay } from '../../src/store/OverlayWindow/overlayWindow.actions'
 import { PublicationComment } from '../../src/components/PublicationDetails/PublicationComment'
 import ReactPlayer from 'react-player'
 import Location from '../../src/assets/icons/Location'
+import { changeChild } from '../../src/store/OverlayWindow/overlayWindow.actions'
+import Head from 'next/head'
 
-const Project = ({}) => {
+const Project = ({ toggleOverlay, changeChild }) => {
   const router = useRouter()
   const { projectId } = router.query
   const reactions = [
@@ -24,18 +29,42 @@ const Project = ({}) => {
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
   ]
+
+  useEffect(() => {
+    changeChild(<SendMessage userTo={projects[0].user} />)
+  }, [])
+
   return (
     <>
+      <Head>
+        <title>{projects[0].title}</title>
+      </Head>
+      <OverlayWindow />
       <Navbar isConnected connectedUser={connectedUser} />
-      <div className="py-10 px-36 App w-full flex flex-col justify-start items-start">
-        <div className=" w-full flex justify-between mb-4 text-4xl text-dark font-bold pt-16  ">
+      <div className="pt-20 pb-10 px-36 App w-full flex flex-col justify-start items-start">
+        <div className="flex flex-row w-full items-center mt-2 ">
+          <UserAvatar link={projects[0].user.avatar} size={'20'} />
+          <div className="ml-4 flex flex-col items-start">
+            <div className="text-dark font-bold">
+              {' '}
+              {projects[0].user.firstName} {projects[0].user.lastName}
+            </div>
+            <div className={'text-xs opacity-50'}>{projects[0].user.position}</div>
+          </div>
+
+          <Button
+            label={'Follow'}
+            btnStyle={
+              'border-2 border-green text-green text-sm ml-6 hover:bg-green hover:text-white'
+            }
+          />
+        </div>
+        <div className=" w-full flex justify-between mb-4 text-4xl text-dark font-bold pt-8  ">
           <div>{projects[0].title}</div>
           <Button
             btnStyle=" w-1/4 bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white"
-            label="I am Interested"
-            onClick={() => {
-              console.log('I am Interested')
-            }}
+            label="Get In Touch"
+            onClick={() => toggleOverlay()}
           />
         </div>
         <div className="flex space-x-2 justify-start ">
@@ -157,7 +186,10 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    changeChild: (child) => dispatch(changeChild(child)),
+    toggleOverlay: () => dispatch(toggleOverlay()),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Project)
