@@ -15,11 +15,26 @@ import Location from '../assets/icons/Location'
 import { Button } from './Button'
 import { connectedUser } from '../data/user'
 import { reactionsColors } from '../data/general'
-import { deleteProject } from '../store/Projects/projects.actions'
 import Link from 'next/link'
 import ButtonArrow from '../assets/icons/ButtonArrow'
+import {
+  deleteProject,
+  setAddProjectState,
+  toggleIsEditing,
+} from '../store/Projects/projects.actions'
+import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
+import AddProject from './AddProject'
 
-const Project = ({ user, project, isOwnProject, deleteProject }) => {
+const Project = ({
+  user,
+  project,
+  isOwnProject,
+  deleteProject,
+  changeChild,
+  toggleOverlay,
+  toggleIsEditing,
+  setAddProjectState,
+}) => {
   const [isDotsListOpen, setIsDotsListOpen] = useState(false)
   // TODO: Remove
   const showFollow = isOwnProject || user.firstName == connectedUser.firstName
@@ -33,6 +48,21 @@ const Project = ({ user, project, isOwnProject, deleteProject }) => {
   const handleDelete = () => {
     setIsDotsListOpen(false)
     deleteProject(project.id)
+  }
+
+  const handleEdit = () => {
+    setIsDotsListOpen(false)
+    toggleIsEditing()
+    setAddProjectState({ ...project, user: user })
+    changeChild(
+      <AddProject
+        initialState={{ ...project, user: user }}
+        setSubmitted={(r) => {
+          console.log(r)
+        }}
+      />
+    )
+    toggleOverlay()
   }
 
   return (
@@ -49,10 +79,7 @@ const Project = ({ user, project, isOwnProject, deleteProject }) => {
         />
         {isDotsListOpen && (
           <div className="text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
-            <div
-              className="cursor-pointer flex my-1"
-              onClick={() => console.log('edit project')}
-            >
+            <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
               <Edit color={tailwindConfig.theme.extend.colors.dark} />
               <div className="mx-1"> Edit Project</div>
             </div>
@@ -188,6 +215,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteProject: (projectId) => dispatch(deleteProject(projectId)),
+    editProject: (projectId, editedProject) =>
+      dispatch(editedProject(projectId, editedProject)),
+    toggleOverlay: () => dispatch(toggleOverlay()),
+    setAddProjectState: (project) => dispatch(setAddProjectState(project)),
+    toggleIsEditing: () => dispatch(toggleIsEditing()),
+    changeChild: (child) => dispatch(changeChild(child)),
   }
 }
 
