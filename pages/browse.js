@@ -76,7 +76,7 @@ function Browse({ posts, projects, sectionIndexer, changeChild }) {
 const mapStateToProps = (state) => {
   return {
     posts: state.posts,
-    projects: state.projects,
+    projects: state.projects.list,
     sectionIndexer: state.sectionIndexer,
   }
 }

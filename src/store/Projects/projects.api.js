@@ -26,3 +26,16 @@ export const deleteProject = (projectId) => {
       throw error
     })
 }
+
+export const putProject = (projectId, editedProject) => {
+  axios
+    .put(API_BASEURL + `projects/${projectId}/`, editedProject)
+    .then((result) => {
+      console.log(result)
+      return result
+    })
+    .catch((error) => {
+      console.error(error)
+      throw error
+    })
+}
