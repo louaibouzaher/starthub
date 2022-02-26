@@ -9,10 +9,9 @@ const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SEND_MESSAGE:
       const newMessage = { ...action.payload }
-      postProject(action.payload).then((r) => {
-        newMessage.id = r
-      })
-      console.log(newMessage)
+      // postProject(action.payload).then((r) => {
+      //   newMessage.id = r
+      // })
       return { ...state, list: [newMessage, ...state.list] }
 
     default:
