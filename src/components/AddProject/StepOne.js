@@ -69,22 +69,6 @@ export default function StepOne({
           </label>
           <div className="mx-2 text-xs"> {Project.file?.name || labelUpload}</div>
         </div>
-        {/* <div className="flex flex-row items-center mt-2">
-          <input
-            accept="video/*"
-            type="file"
-            className="hidden"
-            name="file"
-            onChange={handleFile}
-          />
-          <label
-            for="file"
-            className="cursor-pointer h-10 w-1/3 mt-4 p-2 border-2 rounded-md border-purple text-center text-purple justify-center items-center"
-          >
-            Upload a video
-          </label>
-          <div className="mx-2 text-xs"> {file?.name || labelUpload}</div>
-        </div> */}
 
         <div className="flex justify-start">
           <Button

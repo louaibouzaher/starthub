@@ -10,7 +10,7 @@ import Cross from '../../src/assets/icons/Cross'
 import { Navbar } from '../../src/components/Navbar'
 import { Button } from '../../src/components/Button'
 import SectionIndexer from '../../src/components/SectionIndexer'
-import { Post } from '../../src/components/Post'
+import Post from '../../src/components/Post'
 import Project from '../../src/components/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 
@@ -115,14 +115,7 @@ const Space = ({ sectionIndexer }) => {
           </div>
           <SectionIndexer />
           {sectionIndexer.id === 0
-            ? posts.map((post) => (
-                <Post
-                  user={post.user}
-                  time={post.time}
-                  picture={post.picture}
-                  content={post.content}
-                />
-              ))
+            ? posts.map((p) => <Post post={p} user={p.user} />)
             : projects.map((p) => <Project project={p} user={p.user} />)}
         </div>
       </div>

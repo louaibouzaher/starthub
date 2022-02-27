@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import SectionIndexer from '../../src/components/SectionIndexer'
 import { Navbar } from '../../src/components/Navbar'
-import { Post } from '../../src/components/Post'
+import Post from '../../src/components/Post'
 import Project from '../../src/components/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 import { connectedUser } from '../../src/data/user'
@@ -75,16 +75,7 @@ function Profile({ sectionIndexer }) {
         <div className="w-full my-4 min-h-screen rounded-md">
           <SectionIndexer />
           {sectionIndexer.id === 0
-            ? connectedUser.posts.map((post) => (
-                <Post
-                  user={post.user}
-                  time={post.time}
-                  picture={post.picture}
-                  content={post.content}
-                  title={post.title}
-                  isOwnPost
-                />
-              ))
+            ? connectedUser.posts.map((p) => <Post post={p} user={p.user} isOwnPost />)
             : connectedUser.projects.map((p) => (
                 <Project project={p} user={p.user} isOwnProject />
               ))}

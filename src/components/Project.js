@@ -215,8 +215,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteProject: (projectId) => dispatch(deleteProject(projectId)),
-    editProject: (projectId, editedProject) =>
-      dispatch(editedProject(projectId, editedProject)),
     toggleOverlay: () => dispatch(toggleOverlay()),
     setAddProjectState: (project) => dispatch(setAddProjectState(project)),
     toggleIsEditing: () => dispatch(toggleIsEditing()),

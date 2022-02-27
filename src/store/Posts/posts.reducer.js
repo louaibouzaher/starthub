@@ -1,69 +1,104 @@
-import { ADD_POST, DELETE_POST } from './posts.types'
+import { postPost, deletePost, putPost } from './posts.api'
+import {
+  ADD_POST,
+  DELETE_POST,
+  EDIT_POST,
+  SET_ADD_POST_STATE,
+  TOGGLE_ISEDITING,
+} from './posts.types'
 
-const INITIAL_STATE = [
-  {
-    user: {
-      firstName: 'Emma',
-      lastName: 'Stone',
-      avatar:
-        'https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-    },
-    title: 'Checkout the latest news about our UNICORN 🦄',
-    content: `#MENA #Investment #TechStartup`,
-    picture:
-      'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-    time: Math.floor(Math.random() * 15) + 1 + ' hours ago',
-  },
-  {
-    title: 'This is the post Title',
-    user: {
-      firstName: 'Andrew',
-      lastName: 'Garfield',
-      avatar:
-        'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-    },
-    content: `I JUST GOT MY FIRST INVESTMENT ⚡ \n
-        #Spotify #MusicBusiness #2K22`,
+const INITIAL_STATE = {
+  isEditing: false,
+  addPostState: {
+    title: '',
+    content: '',
     picture: null,
-    time: Math.floor(Math.random() * 15) + 1 + ' hours ago',
+    file: null,
   },
-  {
-    title: 'Checkout the latest news about our UNICORN 🦄',
-    content: `#MENA #Investment #TechStartup`,
-    user: {
-      firstName: 'Emma',
-      lastName: 'Stone',
-      avatar:
-        'https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+  list: [
+    {
+      user: {
+        firstName: 'Emma',
+        lastName: 'Stone',
+        avatar:
+          'https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+      },
+      title: 'Checkout the latest news about our UNICORN 🦄',
+      content: `#MENA #Investment #TechStartup`,
+      picture:
+        'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      time: Math.floor(Math.random() * 15) + 1 + ' hours ago',
     },
-    picture:
-      'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-    time: Math.floor(Math.random() * 15) + 1 + ' hours ago',
-  },
-  {
-    title: 'This is the post Title',
-    user: {
-      firstName: 'Andrew',
-      lastName: 'Garfield',
-      avatar:
-        'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-    },
-    content: `I JUST GOT MY FIRST INVESTMENT ⚡ \n
+    {
+      title: 'This is the post Title',
+      user: {
+        firstName: 'Andrew',
+        lastName: 'Garfield',
+        avatar:
+          'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+      },
+      content: `I JUST GOT MY FIRST INVESTMENT ⚡ \n
         #Spotify #MusicBusiness #2K22`,
-    picture: null,
-    time: Math.floor(Math.random() * 15) + 1 + ' hours ago',
-  },
-]
+      picture: null,
+      time: Math.floor(Math.random() * 15) + 1 + ' hours ago',
+    },
+    {
+      title: 'Checkout the latest news about our UNICORN 🦄',
+      content: `#MENA #Investment #TechStartup`,
+      user: {
+        firstName: 'Emma',
+        lastName: 'Stone',
+        avatar:
+          'https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+      },
+      picture:
+        'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      time: Math.floor(Math.random() * 15) + 1 + ' hours ago',
+    },
+    {
+      title: 'This is the post Title',
+      user: {
+        firstName: 'Andrew',
+        lastName: 'Garfield',
+        avatar:
+          'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+      },
+      content: `I JUST GOT MY FIRST INVESTMENT ⚡ \n
+        #Spotify #MusicBusiness #2K22`,
+      picture: null,
+      time: Math.floor(Math.random() * 15) + 1 + ' hours ago',
+    },
+  ],
+}
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case ADD_POST:
-      return [action.payload, ...state]
+    case TOGGLE_ISEDITING:
+      return { ...state, isEditing: !state.isEditing }
 
-    // case DELETE_POST:
-    //   return [
-    //     ...state,
-    //   ]
+    case SET_ADD_POST_STATE:
+      return { ...state, addPostState: action.payload }
+
+    case ADD_POST:
+      const newPost = { ...action.payload }
+      postPost(action.payload).then((r) => {
+        newPost.id = r
+      })
+      console.log(newPost)
+      return { ...state, list: [newPost, ...state.list] }
+
+    case DELETE_POST:
+      deletePost(action.id)
+      return { ...state, list: state.list.filter((p) => p.id !== action.id) }
+
+    case EDIT_POST:
+      putPost(action.id, action.payload)
+      console.log(action.id)
+      const newList = state.list.filter((p) => p.id !== action.id)
+      return {
+        ...state,
+        list: [{ ...action.payload, id: action.id }, ...newList],
+      }
 
     default:
       return state

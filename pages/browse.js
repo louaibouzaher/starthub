@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
+import { changeChild } from '../src/store/OverlayWindow/overlayWindow.actions'
+
 import { Navbar } from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
-import { Post } from '../src/components/Post'
 import SectionIndexer from '../src/components/SectionIndexer'
+import Post from '../src/components/Post'
 import Project from '../src/components/Project'
 import SideBar from '../src/layouts/SideBar'
 
@@ -13,7 +15,6 @@ import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
 import AddProject from '../src/components/AddProject'
-import { changeChild } from '../src/store/OverlayWindow/overlayWindow.actions'
 
 function Browse({ posts, projects, sectionIndexer, changeChild }) {
   const [submitted, setSubmitted] = useState(false)
@@ -52,15 +53,7 @@ function Browse({ posts, projects, sectionIndexer, changeChild }) {
           </div>
           <SectionIndexer />
           {sectionIndexer.id === 0
-            ? posts.map((post) => (
-                <Post
-                  user={post.user}
-                  time={post.time}
-                  picture={post.picture}
-                  content={post.content}
-                  title={post.title}
-                />
-              ))
+            ? posts.map((p) => <Post post={p} user={p.user} />)
             : projects.map((p) => <Project project={p} user={p.user} />)}
         </Feed>
       </div>
@@ -75,7 +68,7 @@ function Browse({ posts, projects, sectionIndexer, changeChild }) {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts,
+    posts: state.posts.list,
     projects: state.projects.list,
     sectionIndexer: state.sectionIndexer,
   }
