@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
+import axios from 'axios'
 import Head from 'next/head'
 import WhiteLogo from '../src/assets/images/WhiteLogo'
 import { Button } from '../src/components/Button'
 import Link from 'next/link'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
+import { API_BASEURL } from '../appConfig'
 
 export default function Signup() {
+  const router = useRouter()
+
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
@@ -64,6 +64,25 @@ export default function Signup() {
       ...state,
       [e.target.name]: e.target.value,
     })
+  }
+
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post(API_BASEURL + 'auth/register/', {
+        username: state.email,
+        first_name: state.firstName,
+        last_name: state.lastName,
+        email: state.email,
+        password: state.password,
+        password2: state.confirmPassword,
+      })
+      console.log(res)
+      if (res.status == 201) {
+        router.push('/browse')
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   useEffect(() => {
@@ -174,15 +193,11 @@ export default function Signup() {
               </div>
             </div>
             <div className=" w-60 py-1 mt-10 bg-purple rounded-md">
-              <Link href="/browse" passHref>
-                <Button
-                  label="Create Account"
-                  btnStyle={' text-white tx-9xl'}
-                  onClick={() => {
-                    console.log('Create Account')
-                  }}
-                />
-              </Link>
+              <Button
+                label="Create Account"
+                btnStyle={' text-white tx-9xl'}
+                onClick={handleSubmit}
+              />
             </div>
             <div className=" mt-10 flex- ">
               <p>
