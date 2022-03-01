@@ -9,9 +9,7 @@ import { login } from '../src/store/User/user.actions'
 
 function Login({ login }) {
   const router = useRouter()
-  const redirect = () => {
-    router.push('/browse')
-  }
+
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -41,7 +39,9 @@ function Login({ login }) {
           username: state.email,
           password: state.password,
         },
-        redirect
+        () => {
+          router.push('/browse')
+        }
       )
     } catch (e) {
       console.log(e)
