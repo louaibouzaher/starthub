@@ -10,7 +10,7 @@ export const Hero = () => {
           The Place For <br /> <span className="text-green">Growing</span> Startups
         </div>
         <div className="w-1/2 text-left mt-5 text-dark">
-          Join a community of entrepreneurs and businessmen shaping the market.
+          Join a community of entrepreneurs and businessmen shaping the market world.
         </div>
 
         <div className="flex flex-row mt-7">
