@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { useRouter } from 'next/router'
 
 import { changeChild } from '../src/store/OverlayWindow/overlayWindow.actions'
 
@@ -16,7 +17,9 @@ import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
 import AddProject from '../src/components/AddProject'
 
-function Browse({ posts, projects, sectionIndexer, changeChild }) {
+function Browse({ posts, projects, sectionIndexer, changeChild, token }) {
+  const router = useRouter()
+
   const [submitted, setSubmitted] = useState(false)
   const [userConnected, setUserConnected] = useState(true)
 
@@ -29,6 +32,12 @@ function Browse({ posts, projects, sectionIndexer, changeChild }) {
       )
     )
   }, [sectionIndexer.id])
+
+  useEffect(() => {
+    if (!token.access) {
+      router.push('/login')
+    }
+  }, [token.access])
 
   return (
     <>
@@ -71,6 +80,7 @@ const mapStateToProps = (state) => {
     posts: state.posts.list,
     projects: state.projects.list,
     sectionIndexer: state.sectionIndexer,
+    token: state.user.token,
   }
 }
 

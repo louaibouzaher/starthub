@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-
-import axios from 'axios'
+import { connect } from 'react-redux'
+import Link from 'next/link'
 import Head from 'next/head'
+
 import WhiteLogo from '../src/assets/images/WhiteLogo'
 import { Button } from '../src/components/Button'
-import Link from 'next/link'
-import { API_BASEURL } from '../appConfig'
+import { signup } from '../src/store/User/user.actions'
 
-export default function Signup() {
+function Signup({ signup }) {
   const router = useRouter()
 
   const [state, setState] = useState({
@@ -68,18 +68,19 @@ export default function Signup() {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post(API_BASEURL + 'auth/register/', {
-        username: state.email,
-        first_name: state.firstName,
-        last_name: state.lastName,
-        email: state.email,
-        password: state.password,
-        password2: state.confirmPassword,
-      })
-      console.log(res)
-      if (res.status == 201) {
-        router.push('/browse')
-      }
+      signup(
+        {
+          username: state.email,
+          first_name: state.firstName,
+          last_name: state.lastName,
+          email: state.email,
+          password: state.password,
+          password2: state.confirmPassword,
+        },
+        () => {
+          router.push('/login')
+        }
+      )
     } catch (e) {
       console.log(e)
     }
@@ -213,3 +214,14 @@ export default function Signup() {
     </>
   )
 }
+const mapStateToProps = (state) => {
+  return {}
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signup: (payload, cb) => dispatch(signup(payload, cb)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup)

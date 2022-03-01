@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-
-import axios from 'axios'
+import { connect } from 'react-redux'
 import Head from 'next/head'
 import WhiteLogo from '../src/assets/images/WhiteLogo'
 import { Button } from '../src/components/Button'
 import Link from 'next/link'
-import { API_BASEURL } from '../appConfig'
+import { login } from '../src/store/User/user.actions'
 
-export default function Login() {
+function Login({ login }) {
   const router = useRouter()
-
+  const redirect = () => {
+    router.push('/browse')
+  }
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -27,23 +28,21 @@ export default function Login() {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     if (!state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
       setErrors({ ...errors, email: true })
       return
     } else {
       setErrors({ ...errors, email: false })
     }
-
     try {
-      const res = await axios.post(API_BASEURL + 'auth/login/', {
-        username: state.email,
-        password: state.password,
-      })
-      console.log(res)
-      if (res.status == 200) {
-        router.push('/browse')
-      }
+      login(
+        {
+          username: state.email,
+          password: state.password,
+        },
+        redirect
+      )
     } catch (e) {
       console.log(e)
     }
@@ -89,17 +88,18 @@ export default function Login() {
                   type="password"
                   class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
                 />
+                <div className="text-red-600 text-sm h-4 ">
+                  {errors.passwordWrong && 'Wrong password'}
+                </div>
               </div>
             </div>
 
             <div className=" w-full py-1 mt-6 bg-purple rounded-md text-white">
-              {/* <Link href="/browse" passHref> */}
               <Button
                 label="Login"
                 btnStyle={' text-white tx-2xl '}
                 onClick={handleSubmit}
               />
-              {/* </Link> */}
             </div>
             <div className="flex justify-center mt-10">
               <p>
@@ -117,3 +117,18 @@ export default function Login() {
     </>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    connectedUser: state.user.connectedUser,
+    token: state.user.token,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (payload, cb) => dispatch(login(payload, cb)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
