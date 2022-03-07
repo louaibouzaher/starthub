@@ -13,7 +13,6 @@ import Edit from '../assets/icons/Edit'
 import UserAvatar from '../assets/images/UserAvatar'
 import Location from '../assets/icons/Location'
 import { Button } from './Button'
-import { connectedUser } from '../data/user'
 import { reactionsColors } from '../data/general'
 import Link from 'next/link'
 import ButtonArrow from '../assets/icons/ButtonArrow'
@@ -34,10 +33,11 @@ const Project = ({
   toggleOverlay,
   toggleIsEditing,
   setAddProjectState,
+  connectedUser,
 }) => {
   const [isDotsListOpen, setIsDotsListOpen] = useState(false)
   // TODO: Remove
-  const showFollow = isOwnProject || user.firstName == connectedUser.firstName
+  const showFollow = user.id == connectedUser.id
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
@@ -209,7 +209,9 @@ const Project = ({
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    connectedUser: state.user.data.connectedUser,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,12 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import UserAvatar from '../../assets/images/UserAvatar'
-import { connectedUser } from '../../data/user'
 import Download from '../../assets/icons/Download'
 import { tailwindToHex } from '../../../tailwindColors'
 import Delete from '../../assets/icons/Delete'
 import tailwindConfig from '../../../tailwind.config'
 
-export default function PersonalInformation() {
+function PersonalInformation({ connectedUser }) {
   return (
     <div className="text-dark text-sm w-full flex flex-col justify-start items-start">
       <div className="flex items-center">
@@ -71,7 +71,7 @@ export default function PersonalInformation() {
           <div className="w-1/2 mt-2">
             <div>LinkedIn</div>
             <input
-              placeholder=""
+              value={connectedUser.linkedInUrl}
               type="text"
               className="border-2 border-dark p-1 rounded-md w-3/4"
               name="linkedin"
@@ -79,12 +79,12 @@ export default function PersonalInformation() {
             />
           </div>
           <div className="w-1/2 mt-2">
-            <div>Instagram</div>
+            <div>Twitter</div>
             <input
-              placeholder=""
+              value={connectedUser.twitterUrl}
               type="text"
               className="border-2 border-dark p-1 rounded-md w-3/4"
-              name="instagram"
+              name="twitter"
               // onChange={handleChange}
             />
           </div>
@@ -93,3 +93,18 @@ export default function PersonalInformation() {
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    connectedUser: state.user.data.connectedUser,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendMessage: (message) => dispatch(sendMessage(message)),
+    toggleOverlay: () => dispatch(toggleOverlay()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalInformation)

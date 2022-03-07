@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { connectedUser } from '../data/user'
 import {
   addPost,
   editPost,
@@ -22,6 +21,7 @@ const AddPost = ({
   isEditing,
   setAddPostState,
   toggleIsEditing,
+  connectedUser,
 }) => {
   const handleChange = (e) => {
     setAddPostState({
@@ -123,6 +123,7 @@ const mapStateToProps = (state) => {
   return {
     state: state.posts.addPostState,
     isEditing: state.posts.isEditing,
+    connectedUser: state.user.data.connectedUser,
   }
 }
 

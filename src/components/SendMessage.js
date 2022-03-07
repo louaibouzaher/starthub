@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import UserAvatar from '../assets/images/UserAvatar'
-import { connectedUser } from '../data/user'
 import { sendMessage } from '../store/Messages/messages.actions'
 import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from './Button'
 
-const SendMessage = ({ userTo, sendMessage, toggleOverlay }) => {
+const SendMessage = ({ userTo, sendMessage, toggleOverlay, connectedUser }) => {
   const [message, setMessage] = useState({
     message: '',
   })
@@ -75,7 +74,9 @@ const SendMessage = ({ userTo, sendMessage, toggleOverlay }) => {
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    connectedUser: state.user.data.connectedUser,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
