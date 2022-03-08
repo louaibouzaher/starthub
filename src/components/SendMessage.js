@@ -80,10 +80,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    sendMessage: (message) => dispatch(sendMessage(message)),
-    toggleOverlay: () => dispatch(toggleOverlay()),
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SendMessage)
