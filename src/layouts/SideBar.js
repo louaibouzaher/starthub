@@ -22,7 +22,7 @@ function valuetext(value) {
   return `${value}$`
 }
 
-const SideBar = ({ section, toggleOverlay }) => {
+const SideBar = ({ section, toggleOverlay, connectedUser }) => {
   const fields = [
     {
       title: 'Software Engineering',
@@ -83,15 +83,17 @@ const SideBar = ({ section, toggleOverlay }) => {
   }
   return (
     <div className="absolute left-10 z-10 px-4 pt-24 w-1/5 h-screen flex flex-col justify-start items-start">
-      <Button
-        onClick={() => {
-          toggleOverlay()
-        }}
-        label={`New ${section.substring(0, section.length - 1)}`}
-        btnStyle={
-          'bg-white border-purple border-2 text-purple w-full text-center hover:bg-purple hover:text-white'
-        }
-      />
+      {connectedUser.id && (
+        <Button
+          onClick={() => {
+            toggleOverlay()
+          }}
+          label={`New ${section.substring(0, section.length - 1)}`}
+          btnStyle={
+            'bg-white border-purple border-2 text-purple w-full text-center hover:bg-purple hover:text-white'
+          }
+        />
+      )}
       <div className="ml-2 mt-6 text-purple font-bold">Filter Results</div>
       <div className="w-full my-2 p-4 bg-white shadow-md rounded-md text-dark">
         <div className="my-2 font-bold">Industry</div>
@@ -181,6 +183,7 @@ const SideBar = ({ section, toggleOverlay }) => {
 const mapStateToProps = (state) => {
   return {
     overlayWindow: state.overlayWindow,
+    connectedUser: state.user.data.connectedUser,
   }
 }
 

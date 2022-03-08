@@ -37,7 +37,7 @@ const Project = ({
 }) => {
   const [isDotsListOpen, setIsDotsListOpen] = useState(false)
   // TODO: Remove
-  const showFollow = user.id == connectedUser.id
+  const showFollow = user.id != connectedUser?.id
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
@@ -142,7 +142,7 @@ const Project = ({
           </div>
           <div className={'text-xs opacity-50'}>{user.position}</div>
         </div>
-        {!showFollow && (
+        {showFollow && (
           <Button
             label={'Follow'}
             btnStyle={

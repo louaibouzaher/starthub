@@ -5,7 +5,7 @@ import { SpaceMain } from '../src/components/SpaceMain'
 function Home() {
   return (
     <>
-      <Navbar isConnected={false} />
+      <Navbar />
       <Hero />
       <SpaceMain />
     </>

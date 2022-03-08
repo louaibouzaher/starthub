@@ -34,12 +34,6 @@ function Browse({ posts, projects, sectionIndexer, changeChild, token, connected
   }, [sectionIndexer.id])
 
   useEffect(() => {
-    if (!token.access) {
-      router.push('/login')
-    }
-  }, [token.access])
-
-  useEffect(() => {
     const fetchUser = async () => {
       await store.dispatch(getCurrentUser(token.access))
     }
@@ -55,20 +49,18 @@ function Browse({ posts, projects, sectionIndexer, changeChild, token, connected
 
       <SideBar section={sectionIndexer.title} />
       <div className="App w-full flex flex-col justify-start items-center pt-16">
-        {connectedUser.id && (
-          <Feed>
-            <div className="text-4xl mt-6">
-              Hello, <span className="text-purple">{connectedUser.firstName}.</span>{' '}
-            </div>
-            <div className="mt-2 font-thin">
-              Here are some of the top selections for you.
-            </div>
-            <SectionIndexer />
-            {sectionIndexer.id === 0
-              ? posts.map((p) => <Post post={p} user={p.user} />)
-              : projects.map((p) => <Project project={p} user={p.user} />)}
-          </Feed>
-        )}
+        <Feed>
+          <div className="text-4xl mt-6">
+            Hello, <span className="text-purple">{connectedUser.firstName}</span>{' '}
+          </div>
+          <div className="mt-2 font-thin">
+            Here are some of the top selections for you.
+          </div>
+          <SectionIndexer />
+          {sectionIndexer.id === 0
+            ? posts.map((p) => <Post post={p} user={p.user} />)
+            : projects.map((p) => <Project project={p} user={p.user} />)}
+        </Feed>
       </div>
       {submitted && (
         <div className="z-50 fixed bottom-10 right-10 min-w-max py-4 px-8 flex justify-center items-center border-l-green border-l-4 bg-white rounded-sm shadow-md">

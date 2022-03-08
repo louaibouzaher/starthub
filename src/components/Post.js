@@ -38,7 +38,7 @@ const Post = ({
   const [isDotsListOpen, setIsDotsListOpen] = useState(false)
 
   // TODO: Remove
-  const showFollow = user.id === connectedUser.id
+  const showFollow = user.id != connectedUser?.id
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
@@ -128,7 +128,7 @@ const Post = ({
             {post.time}
           </div>
         </div>
-        {!showFollow && Math.floor(Math.random() * 2) === 0 && (
+        {showFollow && Math.floor(Math.random() * 2) === 0 && (
           <Button
             label={'Follow'}
             btnStyle={
