@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
+import Link from 'next/link'
 import {
   deletePost,
   setAddPostState,
@@ -12,6 +13,7 @@ import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow
 import Dots from '../assets/icons/Dots'
 import Heart from '../assets/icons/Heart'
 import Comment from '../assets/icons/Comment'
+import ButtonArrow from '../assets/icons/ButtonArrow'
 import Share from '../assets/icons/Share'
 import Saved from '../assets/icons/Saved'
 import Delete from '../assets/icons/Delete'
