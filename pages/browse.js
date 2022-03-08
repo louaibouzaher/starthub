@@ -40,7 +40,7 @@ function Browse({ posts, projects, sectionIndexer, changeChild, token, connected
   }, [token.access])
 
   useEffect(() => {
-    fetchUser = async () => {
+    const fetchUser = async () => {
       await store.dispatch(getCurrentUser(token.access))
     }
     fetchUser()
