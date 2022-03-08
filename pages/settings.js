@@ -7,8 +7,11 @@ import PersonalInformation from '../src/components/Settings/PersonalInformation'
 import PlatformPreferences from '../src/components/Settings/PlatformPreferences'
 import AccountSecurity from '../src/components/Settings/AccountSecurity'
 import { Button } from '../src/components/Button'
+import store from '../src/store'
+import { putProfile } from '../src/store/User/user.api'
+import OverlayWindow from '../src/components/OverlayWindow'
 
-function Settings() {
+function Settings({ settingsState, connectedUser }) {
   const [section, setSection] = useState(0)
 
   const settingsPages = [
@@ -25,13 +28,16 @@ function Settings() {
       id: 2,
     },
   ]
-
+  const handleSave = async () => {
+    await store.dispatch(putProfile(connectedUser.id, settingsState))
+  }
   return (
     <>
       <Head>
         <title>Settings - StartHub</title>
       </Head>
       <Navbar />
+      <OverlayWindow />
       <div className="text-dark flex">
         <div className="left-10 z-10 px-4 pt-24 w-1/5 h-screen flex flex-col justify-start items-center">
           <div className="w-full">
@@ -56,9 +62,7 @@ function Settings() {
             <Button
               btnStyle="mx-1 bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white "
               label="Save Changes"
-              onClick={() => {
-                console.log('Save Changes')
-              }}
+              onClick={handleSave}
             />
             <Button
               label="Discard"
@@ -81,7 +85,8 @@ function Settings() {
 
 const mapStateToProps = (state) => {
   return {
-    connectedUser: state.user.data.connectedUser || {},
+    connectedUser: state.user.data.connectedUser,
+    settingsState: state.user.data.settingsState,
   }
 }
 

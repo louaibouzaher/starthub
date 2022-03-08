@@ -3,6 +3,7 @@ import { API_BASEURL } from '../../../appConfig'
 import {
   getCurrentUserSuccess,
   getProfileSuccess,
+  putProfileSuccess,
   failure,
   loading,
   loginSuccess,
@@ -30,6 +31,28 @@ export const getProfile = (userId) => {
       .get(API_BASEURL + `profiles/${userId}/`)
       .then((result) => {
         dispatch(getProfileSuccess(result.data))
+        return result
+      })
+      .catch((e) => {
+        dispatch(failure(e))
+        console.log(e)
+      })
+  }
+}
+
+export const putProfile = (userId, updatedProfile) => {
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .put(API_BASEURL + `profiles/${userId}/`, {
+        ...updatedProfile,
+        profilePic: updatedProfile.picture,
+        twitter_url: updatedProfile.twitterUrl,
+        linkedin_url: updatedProfile.linkedInUrl,
+        website_url: updatedProfile.websiteUrl,
+      })
+      .then((result) => {
+        dispatch(putProfileSuccess(result.data))
         return result
       })
       .catch((e) => {

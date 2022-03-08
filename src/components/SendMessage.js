@@ -18,11 +18,11 @@ const SendMessage = ({ userTo, sendMessage, toggleOverlay, connectedUser }) => {
   }
 
   const handleSubmit = async () => {
-    sendMessage({
-      ...message,
-      time: new Date().toUTCString(),
-      user: connectedUser,
-    })
+    // sendMessage({
+    //   ...message,
+    //   time: new Date().toUTCString(),
+    //   user: connectedUser,
+    // })
     toggleOverlay()
     setMessage({ message: '' })
     // setSubmitted(true)
@@ -80,7 +80,10 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    toggleOverlay: () => dispatch(toggleOverlay()),
+    sendMessage: () => dispatch(sendMessage()),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SendMessage)

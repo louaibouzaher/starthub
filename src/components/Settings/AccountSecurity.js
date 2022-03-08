@@ -1,13 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { setSettingsState } from '../../store/User/user.actions'
 
-function AccountSecurity({ connectedUser }) {
+function AccountSecurity({ setSettingsState, settingsState }) {
+  const handleChange = (e) => {
+    setSettingsState({ ...settingsState, [e.target.name]: e.target.value })
+  }
   return (
     <div className="text-dark text-sm w-full flex flex-col justify-start items-start">
       <div className="mt-10">
         <div>Email</div>
         <input
-          value={connectedUser.email}
+          value={settingsState.email}
           type="email"
           className="border-2 border-dark p-1 rounded-md"
           name="email"
@@ -56,12 +60,14 @@ function AccountSecurity({ connectedUser }) {
 
 const mapStateToProps = (state) => {
   return {
-    connectedUser: state.user.data.connectedUser,
+    settingsState: state.user.data.settingsState,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    setSettingsState: (state) => dispatch(setSettingsState(state)),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountSecurity)

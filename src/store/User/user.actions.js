@@ -2,9 +2,11 @@ import {
   LOADING,
   FAILURE,
   GET_PROFILE_SUCCESS,
+  PUT_PROFILE_SUCCESS,
   LOGIN_SUCCESS,
   SIGNUP_SUCCESS,
   GET_CURRENT_USER_SUCCESS,
+  SET_SETTINGS_STATE,
 } from './user.types'
 
 export const loading = () => {
@@ -36,4 +38,10 @@ export const getCurrentUserSuccess = (payload) => {
 }
 export const getProfileSuccess = (payload) => {
   return { type: GET_PROFILE_SUCCESS, payload: payload }
+}
+export const putProfileSuccess = (payload) => {
+  return { type: PUT_PROFILE_SUCCESS, payload: payload }
+}
+export const setSettingsState = (payload) => {
+  return { type: SET_SETTINGS_STATE, payload: payload }
 }
