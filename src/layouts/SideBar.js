@@ -83,7 +83,7 @@ const SideBar = ({ section, toggleOverlay, connectedUser }) => {
   }
   return (
     <div className="absolute left-10 z-10 px-4 pt-24 w-1/5 h-screen flex flex-col justify-start items-start">
-      {connectedUser.id && (
+      {connectedUser?.id && (
         <Button
           onClick={() => {
             toggleOverlay()
