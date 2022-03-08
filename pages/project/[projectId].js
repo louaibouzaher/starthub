@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { connect } from 'react-redux'
 import { projects } from '../../src/data/projects'
-import { connectedUser } from '../../src/data/user'
-import { Navbar } from '../../src/components/Navbar'
+
+import Navbar from '../../src/components/Navbar'
 import OverlayWindow from '../../src/components/OverlayWindow'
 import SendMessage from '../../src/components/SendMessage'
 import { Button } from '../../src/components/Button'
@@ -40,7 +40,7 @@ const Project = ({ toggleOverlay, changeChild }) => {
         <title>{projects[0].title}</title>
       </Head>
       <OverlayWindow />
-      <Navbar isConnected connectedUser={connectedUser} />
+      <Navbar />
       <div className="pt-20 pb-10 px-36 App w-full flex flex-col justify-start items-start">
         <div className="flex flex-row w-full items-center mt-2 ">
           <UserAvatar link={projects[0].user.avatar} size={'20'} />

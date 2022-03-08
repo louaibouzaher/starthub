@@ -5,9 +5,10 @@ import Head from 'next/head'
 import WhiteLogo from '../src/assets/images/WhiteLogo'
 import { Button } from '../src/components/Button'
 import Link from 'next/link'
-import { login } from '../src/store/User/user.actions'
+import { login, getProfile, getCurrentUser } from '../src/store/User/user.api'
+import store from '../src/store'
 
-function Login({ login }) {
+function Login({ token }) {
   const router = useRouter()
 
   const [state, setState] = useState({
@@ -33,20 +34,18 @@ function Login({ login }) {
     } else {
       setErrors({ ...errors, email: false })
     }
-    try {
-      login(
-        {
-          username: state.email,
-          password: state.password,
-        },
-        () => {
-          router.push('/browse')
-        }
-      )
-    } catch (e) {
-      console.log(e)
-    }
+    await store.dispatch(
+      login({
+        username: state.email,
+        password: state.password,
+      })
+    )
   }
+  useEffect(() => {
+    if (token.access) {
+      router.push('/browse')
+    }
+  }, [token.access])
 
   return (
     <>
@@ -98,7 +97,7 @@ function Login({ login }) {
               <Button
                 label="Login"
                 btnStyle={' text-white tx-2xl '}
-                onClick={handleSubmit}
+                onClick={() => handleSubmit()}
               />
             </div>
             <div className="flex justify-center mt-10">
@@ -120,15 +119,13 @@ function Login({ login }) {
 
 const mapStateToProps = (state) => {
   return {
-    connectedUser: state.user.connectedUser,
-    token: state.user.token,
+    token: state.user.data.token,
+    connectedUser: state.user.data.connectedUser,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (payload, cb) => dispatch(login(payload, cb)),
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

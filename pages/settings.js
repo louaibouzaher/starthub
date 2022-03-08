@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import Head from 'next/head'
-import { Navbar } from '../src/components/Navbar'
-import { connectedUser } from '../src/data/user'
+import Navbar from '../src/components/Navbar'
+
 import PersonalInformation from '../src/components/Settings/PersonalInformation'
 import PlatformPreferences from '../src/components/Settings/PlatformPreferences'
-import { Button } from '../src/components/Button'
 import AccountSecurity from '../src/components/Settings/AccountSecurity'
+import { Button } from '../src/components/Button'
 
-export default function Settings() {
+function Settings() {
   const [section, setSection] = useState(0)
-  const [userConnected, setUserConnected] = useState(true)
 
   const settingsPages = [
     {
@@ -31,11 +31,7 @@ export default function Settings() {
       <Head>
         <title>Settings - StartHub</title>
       </Head>
-      <Navbar
-        connectedUser={connectedUser}
-        isConnected={userConnected}
-        setUserConnected={setUserConnected}
-      />
+      <Navbar />
       <div className="text-dark flex">
         <div className="left-10 z-10 px-4 pt-24 w-1/5 h-screen flex flex-col justify-start items-center">
           <div className="w-full">
@@ -82,3 +78,15 @@ export default function Settings() {
     </>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    connectedUser: state.user.data.connectedUser || {},
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)

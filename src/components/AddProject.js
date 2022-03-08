@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
-import { connectedUser } from '../data/user'
 import {
   addProject,
   editProject,
@@ -22,6 +21,7 @@ const AddProject = ({
   isEditing,
   setAddProjectState,
   toggleIsEditing,
+  connectedUser,
 }) => {
   const [step, setStep] = useState(0)
 
@@ -58,7 +58,6 @@ const AddProject = ({
     }
     setStep(0)
     toggleOverlay()
-    setAddProjectState({})
     setAddProjectState({})
     setSubmitted(true)
     setTimeout(() => {
@@ -98,6 +97,7 @@ const mapStateToProps = (state) => {
   return {
     state: state.projects.addProjectState,
     isEditing: state.projects.isEditing,
+    connectedUser: state.user.data.connectedUser,
   }
 }
 

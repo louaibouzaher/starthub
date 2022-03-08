@@ -4,14 +4,13 @@ import Head from 'next/head'
 import { connect } from 'react-redux'
 
 import SectionIndexer from '../../src/components/SectionIndexer'
-import { Navbar } from '../../src/components/Navbar'
+import Navbar from '../../src/components/Navbar'
 import Post from '../../src/components/Post'
 import Project from '../../src/components/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
-import { connectedUser } from '../../src/data/user'
 import { Button } from '../../src/components/Button'
 
-function Profile({ sectionIndexer }) {
+function Profile({ sectionIndexer, connectedUser }) {
   const router = useRouter()
   const { spaceId } = router.query
 
@@ -22,7 +21,7 @@ function Profile({ sectionIndexer }) {
           {connectedUser.firstName} {connectedUser.lastName} - StartHub
         </title>
       </Head>
-      <Navbar isConnected connectedUser={connectedUser} />
+      <Navbar />
       <div className=" w-full pt-20 px-60 min-h-screen text-dark">
         <div className="flex justify-center items-start  rounded-md shadow-md py-6 px-4 ">
           <UserAvatar sizing link={connectedUser.picture} className="h-32 w-32 my-2" />
@@ -75,8 +74,8 @@ function Profile({ sectionIndexer }) {
         <div className="w-full my-4 min-h-screen rounded-md">
           <SectionIndexer />
           {sectionIndexer.id === 0
-            ? connectedUser.posts.map((p) => <Post post={p} user={p.user} isOwnPost />)
-            : connectedUser.projects.map((p) => (
+            ? connectedUser.posts?.map((p) => <Post post={p} user={p.user} isOwnPost />)
+            : connectedUser.projects?.map((p) => (
                 <Project project={p} user={p.user} isOwnProject />
               ))}
         </div>
@@ -88,6 +87,7 @@ function Profile({ sectionIndexer }) {
 const mapStateToProps = (state) => {
   return {
     sectionIndexer: state.sectionIndexer,
+    connectedUser: state.user.data.connectedUser,
   }
 }
 

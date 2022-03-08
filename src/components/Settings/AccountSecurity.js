@@ -1,7 +1,7 @@
 import React from 'react'
-import { connectedUser } from '../../data/user'
+import { connect } from 'react-redux'
 
-export default function AccountSecurity() {
+function AccountSecurity({ connectedUser }) {
   return (
     <div className="text-dark text-sm w-full flex flex-col justify-start items-start">
       <div className="mt-10">
@@ -53,3 +53,15 @@ export default function AccountSecurity() {
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    connectedUser: state.user.data.connectedUser,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountSecurity)
