@@ -7,7 +7,7 @@ export const space = {
   pariticipants: [
     {
       picture: 'https://randomuser.me/api/portraits/women/1.jpg',
-      firstName: 'Jhon',
+      firstName: 'Mark',
       lastName: 'Doe',
     },
     {
@@ -17,7 +17,7 @@ export const space = {
     },
     {
       picture: 'https://randomuser.me/api/portraits/women/3.jpg',
-      firstName: 'Jhon',
+      firstName: 'Elie',
       lastName: 'Doe',
     },
     {
@@ -160,7 +160,7 @@ export const space = {
     },
     {
       picture: 'https://randomuser.me/api/portraits/women/41.jpg',
-      firstName: 'Jane',
+      firstName: 'Mark',
       lastName: 'Doe',
       experience: 'Software Engineer at Microsoft',
     },
