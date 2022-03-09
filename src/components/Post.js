@@ -37,8 +37,7 @@ const Post = ({
 }) => {
   const [isDotsListOpen, setIsDotsListOpen] = useState(false)
 
-  // TODO: Remove
-  const showFollow = user.id != connectedUser?.id
+  const isOwner = user.id == connectedUser?.id
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
@@ -81,33 +80,35 @@ const Post = ({
         backgroundBlendMode: 'darken',
       }}
     >
-      <div className="absolute flex flex-col items-end top-8 right-8">
-        <Dots
-          isDark
-          className="scale-125"
-          onClick={() => setIsDotsListOpen(!isDotsListOpen)}
-        />
-        {isDotsListOpen && (
-          <div className="text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
-            <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
-              <Edit color={tailwindConfig.theme.extend.colors.dark} />
-              <div className="mx-1"> Edit Post</div>
+      {isOwner && (
+        <div className="absolute flex flex-col items-end top-8 right-8">
+          <Dots
+            isDark
+            className="scale-125"
+            onClick={() => setIsDotsListOpen(!isDotsListOpen)}
+          />
+          {isDotsListOpen && (
+            <div className="text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
+              <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
+                <Edit color={tailwindConfig.theme.extend.colors.dark} />
+                <div className="mx-1"> Edit Post</div>
+              </div>
+              <div
+                className="bg-dark rounded-full opacity-5"
+                style={{
+                  height: 2,
+                }}
+              >
+                {' '}
+              </div>
+              <div className="cursor-pointer flex my-1" onClick={() => handleDelete()}>
+                <Delete color={tailwindConfig.theme.extend.colors.dark} />
+                <div className="mx-1"> Delete Permanently</div>
+              </div>
             </div>
-            <div
-              className="bg-dark rounded-full opacity-5"
-              style={{
-                height: 2,
-              }}
-            >
-              {' '}
-            </div>
-            <div className="cursor-pointer flex my-1" onClick={() => handleDelete()}>
-              <Delete color={tailwindConfig.theme.extend.colors.dark} />
-              <div className="mx-1"> Delete Permanently</div>
-            </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
       <div
         className={
           'flex flex-row w-full items-center ' +
@@ -128,7 +129,7 @@ const Post = ({
             {post.time}
           </div>
         </div>
-        {showFollow && Math.floor(Math.random() * 2) === 0 && (
+        {!isOwner && Math.floor(Math.random() * 2) === 0 && (
           <Button
             label={'Follow'}
             btnStyle={

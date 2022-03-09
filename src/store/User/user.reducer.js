@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   GET_CURRENT_USER_SUCCESS,
   GET_PROFILE_SUCCESS,
@@ -27,6 +28,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case LOADING:
       return { ...state, loading: true }
     case LOGIN_SUCCESS:
+      axios.defaults.headers.common = { Authorization: `Bearer ${action.payload.access}` }
       return { ...state, loading: false, data: { token: action.payload }, error: '' }
     case FAILURE:
       return { ...state, loading: false, error: action.payload }

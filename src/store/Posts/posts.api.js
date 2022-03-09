@@ -1,6 +1,22 @@
 import axios from 'axios'
 import { API_BASEURL } from '../../../appConfig'
+import { failure, loading, getPostsSuccess } from '../Posts/posts.actions'
 
+export const getPosts = () => {
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .get(API_BASEURL + `posts/`)
+      .then((result) => {
+        console.log(result)
+        dispatch(getPostsSuccess(result.data))
+      })
+      .catch((error) => {
+        dispatch(failure(error))
+        throw error
+      })
+  }
+}
 export const postPost = (post) => {
   const req = axios.post(API_BASEURL + 'posts/', post)
   return req
@@ -16,7 +32,7 @@ export const postPost = (post) => {
 
 export const deletePost = (postId) => {
   axios
-    .delete(API_BASEURL + `posts/${postId}`)
+    .delete(API_BASEURL + `posts/${postId}/`)
     .then((result) => {
       console.log(result)
       return result

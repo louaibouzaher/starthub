@@ -62,13 +62,11 @@ export const putProfile = (userId, updatedProfile) => {
   }
 }
 
-export const getCurrentUser = (token) => {
+export const getCurrentUser = () => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .get(API_BASEURL + `auth/current_user/`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .get(API_BASEURL + `auth/current_user/`)
       .then((result) => {
         dispatch(getCurrentUserSuccess(result.data))
         return result

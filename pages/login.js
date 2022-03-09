@@ -5,7 +5,7 @@ import Head from 'next/head'
 import WhiteLogo from '../src/assets/images/WhiteLogo'
 import { Button } from '../src/components/Button'
 import Link from 'next/link'
-import { login, getProfile, getCurrentUser } from '../src/store/User/user.api'
+import { login } from '../src/store/User/user.api'
 import store from '../src/store'
 
 function Login({ token }) {

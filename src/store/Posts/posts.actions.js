@@ -1,15 +1,36 @@
 import {
+  POSTS_LOADING,
+  POSTS_FAILURE,
   ADD_POST,
+  GET_POSTS,
   DELETE_POST,
   EDIT_POST,
   SET_ADD_POST_STATE,
   TOGGLE_ISEDITING,
 } from './posts.types'
 
+export const loading = () => {
+  return {
+    type: POSTS_LOADING,
+  }
+}
+export const failure = (payload) => {
+  return {
+    type: POSTS_FAILURE,
+    payload: payload,
+  }
+}
+
 export const addPost = (newPost) => {
   return {
     type: ADD_POST,
     payload: newPost,
+  }
+}
+export const getPostsSuccess = (payload) => {
+  return {
+    type: GET_POSTS,
+    payload: payload,
   }
 }
 

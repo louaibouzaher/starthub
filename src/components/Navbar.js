@@ -12,6 +12,7 @@ import store from '../store'
 import { getProfile } from '../store/User/user.api'
 
 const Navbar = ({ connectedUser }) => {
+  console.log(connectedUser)
   const isConnected = connectedUser.id != null
   useEffect(() => {
     store.dispatch(getProfile(connectedUser.id))

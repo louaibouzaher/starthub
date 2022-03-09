@@ -17,6 +17,7 @@ import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
 import AddProject from '../src/components/AddProject'
 import { getCurrentUser } from '../src/store/User/user.api'
+import { getPosts } from '../src/store/Posts/posts.api'
 
 function Browse({ posts, projects, sectionIndexer, changeChild, token, connectedUser }) {
   const router = useRouter()
@@ -35,10 +36,15 @@ function Browse({ posts, projects, sectionIndexer, changeChild, token, connected
 
   useEffect(() => {
     const fetchUser = async () => {
-      await store.dispatch(getCurrentUser(token.access))
+      await store.dispatch(getCurrentUser())
     }
     fetchUser()
   }, [token.access])
+
+  useEffect(() => {
+    store.dispatch(getPosts())
+  }, [])
+
   return (
     <>
       <Head>
@@ -58,8 +64,18 @@ function Browse({ posts, projects, sectionIndexer, changeChild, token, connected
           </div>
           <SectionIndexer />
           {sectionIndexer.id === 0
-            ? posts.map((p) => <Post post={p} user={p.user} />)
-            : projects.map((p) => <Project project={p} user={p.user} />)}
+            ? posts?.map((p) => (
+                <Post
+                  post={p}
+                  user={{
+                    id: p.owner?.id,
+                    firstName: p.owner?.first_name,
+                    lastName: p.owner?.last_name,
+                    avatar: p.profile?.profilePic,
+                  }}
+                />
+              ))
+            : projects?.map((p) => <Project project={p} user={p.user} />)}
         </Feed>
       </div>
       {submitted && (
