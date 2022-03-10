@@ -12,7 +12,7 @@ import { Button } from '../../src/components/Button'
 import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
 
-function Profile({ sectionIndexer, user = {}, connectedUser }) {
+function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
   const isOwner = connectedUser.id == user.user.id
   const router = useRouter()
 
