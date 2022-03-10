@@ -9,7 +9,7 @@ import { Button } from '../src/components/Button'
 import { signup } from '../src/store/User/user.api'
 import store from '../src/store'
 
-function Signup({}) {
+function Signup({ err }) {
   const router = useRouter()
 
   const [state, setState] = useState({
@@ -82,6 +82,11 @@ function Signup({}) {
     } catch (e) {
       console.log(e)
     }
+    setTimeout(() => {
+      if (!err) {
+        router.push('/login')
+      }
+    }, 1000)
   }
 
   useEffect(() => {
@@ -213,7 +218,9 @@ function Signup({}) {
   )
 }
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    err: state.user.error,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
