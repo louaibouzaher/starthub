@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactPlayer from 'react-player'
 import { connect } from 'react-redux'
-
+import store from '../store'
 import tailwindConfig from '../../tailwind.config'
 import Dots from '../assets/icons/Dots'
 import Heart from '../assets/icons/Heart'
@@ -16,19 +16,14 @@ import { Button } from './Button'
 import { reactionsColors } from '../data/general'
 import Link from 'next/link'
 import ButtonArrow from '../assets/icons/ButtonArrow'
-import {
-  deleteProject,
-  setAddProjectState,
-  toggleIsEditing,
-} from '../store/Projects/projects.actions'
+import { setAddProjectState, toggleIsEditing } from '../store/Projects/projects.actions'
+import { deleteProject } from '../store/Projects/projects.api'
 import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import AddProject from './AddProject'
 
 const Project = ({
   user,
   project,
-  isOwnProject,
-  deleteProject,
   changeChild,
   toggleOverlay,
   toggleIsEditing,
@@ -36,8 +31,7 @@ const Project = ({
   connectedUser,
 }) => {
   const [isDotsListOpen, setIsDotsListOpen] = useState(false)
-  // TODO: Remove
-  const showFollow = user.id != connectedUser?.id
+  const isOwner = user.id == connectedUser?.id
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
@@ -47,7 +41,7 @@ const Project = ({
 
   const handleDelete = () => {
     setIsDotsListOpen(false)
-    deleteProject(project.id)
+    store.dispatch(deleteProject(project.id))
   }
 
   const handleEdit = () => {
@@ -72,11 +66,13 @@ const Project = ({
       }
     >
       <div className="absolute flex flex-col items-end top-8 right-8">
-        <Dots
-          isDark
-          className="scale-125"
-          onClick={() => setIsDotsListOpen(!isDotsListOpen)}
-        />
+        {isOwner && (
+          <Dots
+            isDark
+            className="scale-125"
+            onClick={() => setIsDotsListOpen(!isDotsListOpen)}
+          />
+        )}
         {isDotsListOpen && (
           <div className="text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
             <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
@@ -134,7 +130,7 @@ const Project = ({
       )}
       <div className={'mt-4 p-2 w-3/4 text-left text-sm '}>{project.description}</div>
       <div className="flex flex-row w-full items-center mt-2 ">
-        <UserAvatar link={user.picture} size={'20'} />
+        <UserAvatar link={user.avatar} size={'20'} />
         <div className="ml-4 flex flex-col items-start">
           <div className="text-dark font-bold">
             {' '}
@@ -142,7 +138,7 @@ const Project = ({
           </div>
           <div className={'text-xs opacity-50'}>{user.position}</div>
         </div>
-        {showFollow && (
+        {!isOwner && (
           <Button
             label={'Follow'}
             btnStyle={

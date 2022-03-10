@@ -18,6 +18,7 @@ import AddPost from '../src/components/AddPost'
 import AddProject from '../src/components/AddProject'
 import { getCurrentUser } from '../src/store/User/user.api'
 import { getPosts } from '../src/store/Posts/posts.api'
+import { getProjects } from '../src/store/Projects/projects.api'
 
 function Browse({
   posts,
@@ -50,6 +51,7 @@ function Browse({
 
   useEffect(() => {
     store.dispatch(getPosts())
+    store.dispatch(getProjects())
   }, [])
 
   return (
@@ -82,7 +84,17 @@ function Browse({
                   }}
                 />
               ))
-            : projects?.map((p) => <Project project={p} user={p.user} />)}
+            : projects?.map((p) => (
+                <Project
+                  project={p}
+                  user={{
+                    id: p.owner?.id,
+                    firstName: p.owner?.first_name,
+                    lastName: p.owner?.last_name,
+                    avatar: p.profile?.profilePic,
+                  }}
+                />
+              ))}
         </Feed>
       </div>
       {submitted && (
