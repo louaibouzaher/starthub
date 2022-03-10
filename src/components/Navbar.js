@@ -11,12 +11,12 @@ import Settings from '../assets/icons/Settings'
 import store from '../store'
 import { getProfile } from '../store/User/user.api'
 
-const Navbar = ({ connectedUser }) => {
-  console.log(connectedUser)
-  const isConnected = connectedUser.id != null
+const Navbar = ({ connectedUser, isConnected }) => {
   useEffect(() => {
-    store.dispatch(getProfile(connectedUser.id))
-  }, [connectedUser.id])
+    if (isConnected) {
+      store.dispatch(getProfile(connectedUser.id))
+    }
+  }, [isConnected])
 
   return (
     <div
@@ -85,6 +85,8 @@ const Navbar = ({ connectedUser }) => {
 const mapStateToProps = (state) => {
   return {
     connectedUser: state.user.data.connectedUser || {},
+    isConnected: state.user.isConnected,
+    token: state.user.data.token,
   }
 }
 

@@ -1,4 +1,3 @@
-import { postPost, deletePost, putPost, getPosts } from './posts.api'
 import {
   ADD_POST,
   GET_POSTS,
@@ -84,32 +83,16 @@ const reducer = (state = INITIAL_STATE, action) => {
       return { ...state, loading: false, error: action.payload }
     case TOGGLE_ISEDITING:
       return { ...state, isEditing: !state.isEditing }
-
     case SET_ADD_POST_STATE:
       return { ...state, addPostState: action.payload }
     case GET_POSTS:
       return { ...state, loading: false, list: action.payload }
     case ADD_POST:
-      const newPost = { ...action.payload }
-      postPost(action.payload).then((r) => {
-        newPost.id = r
-      })
-      console.log(newPost)
-      return { ...state, list: [newPost, ...state.list] }
-
+      return state
     case DELETE_POST:
-      deletePost(action.id)
       return { ...state, list: state.list.filter((p) => p.id !== action.id) }
-
     case EDIT_POST:
-      putPost(action.id, action.payload)
-      console.log(action.id)
-      const newList = state.list.filter((p) => p.id != action.id)
-      return {
-        ...state,
-        list: [{ ...action.payload, id: action.id }, ...newList],
-      }
-
+      return state
     default:
       return state
   }

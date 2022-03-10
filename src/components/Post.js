@@ -2,11 +2,8 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import Link from 'next/link'
-import {
-  deletePost,
-  setAddPostState,
-  toggleIsEditing,
-} from '../store/Posts/posts.actions'
+import { setAddPostState, toggleIsEditing } from '../store/Posts/posts.actions'
+import { deletePost } from '../store/Posts/posts.api'
 
 import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 
@@ -24,11 +21,11 @@ import { reactionsColors } from '../data/general'
 import tailwindConfig from '../../tailwind.config'
 
 import AddPost from './AddPost'
+import store from '../store'
 
 const Post = ({
   user,
   post,
-  deletePost,
   changeChild,
   toggleOverlay,
   toggleIsEditing,
@@ -47,7 +44,7 @@ const Post = ({
 
   const handleDelete = () => {
     setIsDotsListOpen(false)
-    deletePost(post.id)
+    store.dispatch(deletePost(post.id))
   }
 
   const handleEdit = () => {

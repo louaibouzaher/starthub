@@ -1,27 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import {
-  addPost,
-  editPost,
-  deletePost,
-  setAddPostState,
-  toggleIsEditing,
-} from '../store/Posts/posts.actions'
+import store from '../store'
+import { setAddPostState, toggleIsEditing } from '../store/Posts/posts.actions'
+import { getPosts, postPost, putPost } from '../store/Posts/posts.api'
 import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from './Button'
 import { Downloader, Uploader } from '../firebase/Helpers'
 
 const AddPost = ({
-  addPost,
   setSubmitted,
-  editPost,
   toggleOverlay,
   state,
   isEditing,
   setAddPostState,
   toggleIsEditing,
-  connectedUser,
 }) => {
   const handleChange = (e) => {
     setAddPostState({
@@ -38,19 +31,22 @@ const AddPost = ({
     const pictureRef = state.file ? await Uploader(state.file) : null
     const pictureLink = state.file ? await Downloader(pictureRef) : null
     if (isEditing) {
-      editPost(state.id, {
-        ...state,
-        user: connectedUser,
-        pictureLink: pictureLink || null,
-      })
+      store.dispatch(
+        putPost(state.id, {
+          ...state,
+          pictureLink: pictureLink || null,
+        })
+      )
       toggleIsEditing()
     } else {
-      addPost({
-        ...state,
-        user: connectedUser,
-        picture: pictureLink,
-      })
+      store.dispatch(
+        postPost({
+          ...state,
+          picture: pictureLink,
+        })
+      )
     }
+
     toggleOverlay()
     setAddPostState({})
     setSubmitted(true)
@@ -129,9 +125,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addPost: (post) => dispatch(addPost(post)),
-    editPost: (postId, post) => dispatch(editPost(postId, post)),
-    deletePost: (postId) => dispatch(deletePost(postId)),
     toggleOverlay: () => dispatch(toggleOverlay()),
     toggleIsEditing: () => dispatch(toggleIsEditing()),
     setAddPostState: (state) => dispatch(setAddPostState(state)),

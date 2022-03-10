@@ -5,11 +5,12 @@ import Head from 'next/head'
 import WhiteLogo from '../src/assets/images/WhiteLogo'
 import { Button } from '../src/components/Button'
 import Link from 'next/link'
-import { login } from '../src/store/User/user.api'
+import { login, refreshToken } from '../src/store/User/user.api'
 import store from '../src/store'
 
-function Login({ token }) {
+function Login({ token, isConnected }) {
   const router = useRouter()
+  // localStorage.removeItem('token')
 
   const [state, setState] = useState({
     email: '',
@@ -43,9 +44,15 @@ function Login({ token }) {
   }
   useEffect(() => {
     if (token.access) {
-      router.push('/browse')
+      localStorage.setItem('token', token.access)
     }
   }, [token.access])
+
+  useEffect(() => {
+    if (isConnected) {
+      router.push('/browse')
+    }
+  }, [isConnected])
 
   return (
     <>
@@ -58,11 +65,13 @@ function Login({ token }) {
         </div>
 
         <form>
-          <div class="bg-white px-10 py-12 rounded-xl w-screen shadow-md max-w-sm">
-            <div class="space-y-4">
-              <h1 class="text-center text-2xl  text-black-600">Login to your account</h1>
+          <div className="bg-white px-10 py-12 rounded-xl w-screen shadow-md max-w-sm">
+            <div className="space-y-4">
+              <h1 className="text-center text-2xl  text-black-600">
+                Login to your account
+              </h1>
               <div>
-                <label for="email" class="block mb-1 text-gray-600 ">
+                <label for="email" className="block mb-1 text-gray-600 ">
                   Email
                 </label>
                 <input
@@ -70,14 +79,14 @@ function Login({ token }) {
                   onChange={handleChange}
                   name="email"
                   type="text"
-                  class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  className="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
                 />
                 <div className="text-red-600 text-sm h-4 ">
                   {errors.email && 'Please enter a valid email'}
                 </div>
               </div>
               <div>
-                <label for="email" class="block mb-1 text-gray-600 ">
+                <label for="email" className="block mb-1 text-gray-600 ">
                   Password
                 </label>
                 <input
@@ -85,7 +94,7 @@ function Login({ token }) {
                   onChange={handleChange}
                   name="password"
                   type="password"
-                  class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  className="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
                 />
                 <div className="text-red-600 text-sm h-4 ">
                   {errors.passwordWrong && 'Wrong password'}
@@ -120,7 +129,7 @@ function Login({ token }) {
 const mapStateToProps = (state) => {
   return {
     token: state.user.data.token,
-    connectedUser: state.user.data.connectedUser,
+    isConnected: state.user.isConnected,
   }
 }
 

@@ -8,6 +8,7 @@ import {
   loading,
   loginSuccess,
   signupSuccess,
+  refreshTokenSuccess,
 } from './user.actions'
 
 export const login = (payload) => {
@@ -24,6 +25,21 @@ export const login = (payload) => {
       })
   }
 }
+export const refreshToken = (payload) => {
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .post(API_BASEURL + 'auth/login/refresh/', payload)
+      .then((result) => {
+        dispatch(refreshTokenSuccess(result.data))
+        return result
+      })
+      .catch((e) => {
+        dispatch(failure(e))
+      })
+  }
+}
+
 export const getProfile = (userId) => {
   return function (dispatch) {
     dispatch(loading())

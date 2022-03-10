@@ -19,7 +19,14 @@ import AddProject from '../src/components/AddProject'
 import { getCurrentUser } from '../src/store/User/user.api'
 import { getPosts } from '../src/store/Posts/posts.api'
 
-function Browse({ posts, projects, sectionIndexer, changeChild, token, connectedUser }) {
+function Browse({
+  posts,
+  projects,
+  sectionIndexer,
+  changeChild,
+  isConnected,
+  connectedUser,
+}) {
   const router = useRouter()
 
   const [submitted, setSubmitted] = useState(false)
@@ -39,7 +46,7 @@ function Browse({ posts, projects, sectionIndexer, changeChild, token, connected
       await store.dispatch(getCurrentUser())
     }
     fetchUser()
-  }, [token.access])
+  }, [isConnected])
 
   useEffect(() => {
     store.dispatch(getPosts())
@@ -93,6 +100,7 @@ const mapStateToProps = (state) => {
     projects: state.projects.list,
     sectionIndexer: state.sectionIndexer,
     token: state.user.data.token,
+    isConnected: state.user.isConnected,
     connectedUser: state.user.data.connectedUser || {},
   }
 }

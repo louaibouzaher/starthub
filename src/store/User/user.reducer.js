@@ -8,10 +8,13 @@ import {
   LOADING,
   SIGNUP_SUCCESS,
   SET_SETTINGS_STATE,
+  REFRESH_TOKEN,
+  SET_TOKEN,
 } from './user.types'
 
 const INITIAL_STATE = {
   loading: true,
+  isConnected: false,
   data: {
     settingsState: {},
     connectedUser: {},
@@ -25,10 +28,26 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    // case SET_TOKEN:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     data: { token: action.payload },
+    //     error: '',
+    //     isConnected: true,
+    //   }
     case LOADING:
       return { ...state, loading: true }
     case LOGIN_SUCCESS:
       axios.defaults.headers.common = { Authorization: `Bearer ${action.payload.access}` }
+      return {
+        ...state,
+        loading: false,
+        data: { token: action.payload },
+        error: '',
+        isConnected: true,
+      }
+    case REFRESH_TOKEN:
       return { ...state, loading: false, data: { token: action.payload }, error: '' }
     case FAILURE:
       return { ...state, loading: false, error: action.payload }
@@ -39,11 +58,13 @@ const reducer = (state = INITIAL_STATE, action) => {
         data: {
           ...state.data,
           connectedUser: {
+            ...state.data.connectedUser,
             ...action.payload,
             firstName: action.payload.first_name,
             lastName: action.payload.last_name,
           },
           settingsState: {
+            ...state.data.settingsState,
             ...action.payload,
             firstName: action.payload.first_name,
             lastName: action.payload.last_name,

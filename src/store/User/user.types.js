@@ -10,3 +10,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 
 export const SET_SETTINGS_STATE = 'SET_SETTINGS_STATE'
+
+export const REFRESH_TOKEN = 'REFRESH_TOKEN'
+
+export const SET_TOKEN = 'SET_TOKEN'

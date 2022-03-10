@@ -7,6 +7,8 @@ import {
   SIGNUP_SUCCESS,
   GET_CURRENT_USER_SUCCESS,
   SET_SETTINGS_STATE,
+  REFRESH_TOKEN,
+  SET_TOKEN,
 } from './user.types'
 
 export const loading = () => {
@@ -23,6 +25,20 @@ export const failure = (payload) => {
 export const loginSuccess = (payload) => {
   return {
     type: LOGIN_SUCCESS,
+    payload: payload,
+  }
+}
+
+export const setToken = (payload) => {
+  return {
+    type: SET_TOKEN,
+    payload: payload,
+  }
+}
+
+export const refreshTokenSuccess = (payload) => {
+  return {
+    type: REFRESH_TOKEN,
     payload: payload,
   }
 }
