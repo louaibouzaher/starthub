@@ -32,7 +32,7 @@ export default function StepThree({ setStep }) {
                       sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
                       {...props}
                     >
-                      <img class=" rounded-full border-2 border-white shadow-md" loading="lazy" width="40" src={option.picture} alt="" />
+                      <img class=" rounded-full border-2 border-white shadow-md" loading="lazy" width="40" src={option.picture} />
                       {option.firstName} {option.lastName}
                     </Box>
                   )}
@@ -53,7 +53,7 @@ export default function StepThree({ setStep }) {
               <Button
                 label="Previous"
                 btnStyle="bg-white text-purple border-2 border-purple"
-                onClick={() => setStep(0)}
+                onClick={() => setStep(1)}
               />
 
               <Button
