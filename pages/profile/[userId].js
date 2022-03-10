@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { connect } from 'react-redux'
@@ -9,28 +9,30 @@ import Post from '../../src/components/Post'
 import Project from '../../src/components/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 import { Button } from '../../src/components/Button'
+import axios from 'axios'
+import { API_BASEURL } from '../../appConfig'
 
-function Profile({ sectionIndexer, connectedUser }) {
+function Profile({ sectionIndexer = { id: 0 }, user = {} }) {
   const router = useRouter()
-  const { spaceId } = router.query
+  const { userId } = router.query
 
   return (
     <>
       <Head>
         <title>
-          {connectedUser.firstName} {connectedUser.lastName} - StartHub
+          {user.firstName} {user.lastName} - StartHub
         </title>
       </Head>
       <Navbar />
       <div className=" w-full pt-20 px-60 min-h-screen text-dark">
         <div className="flex justify-center items-start  rounded-md shadow-md py-6 px-4 ">
-          <UserAvatar sizing link={connectedUser.picture} className="h-32 w-32 my-2" />
+          <UserAvatar sizing link={user.picture} className="h-32 w-32 my-2" />
           <div className="flex flex-col justify-start items-start mx-10 p-2 w-2/5">
             <div className="text-2xl p-2 font-bold">
-              {connectedUser.firstName} {connectedUser.lastName}
+              {user.firstName} {user.lastName}
             </div>
-            <div className="text-xs text-gray-400 px-2">{connectedUser.position}</div>
-            <div className="text-sm p-2 break-words">{connectedUser.biography}</div>
+            <div className="text-xs text-gray-400 px-2">{user.position}</div>
+            <div className="text-sm p-2 break-words">{user.biography}</div>
             <div className="flex w-full mt-2">
               <Button
                 btnStyle="w-1/2 bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white mx-1"
@@ -74,8 +76,8 @@ function Profile({ sectionIndexer, connectedUser }) {
         <div className="w-full my-4 min-h-screen rounded-md">
           <SectionIndexer />
           {sectionIndexer.id === 0
-            ? connectedUser.posts?.map((p) => <Post post={p} user={p.user} isOwnPost />)
-            : connectedUser.projects?.map((p) => (
+            ? user.posts?.map((p) => <Post post={p} user={p.user} isOwnPost />)
+            : user.projects?.map((p) => (
                 <Project project={p} user={p.user} isOwnProject />
               ))}
         </div>
@@ -84,15 +86,31 @@ function Profile({ sectionIndexer, connectedUser }) {
     </>
   )
 }
-const mapStateToProps = (state) => {
+
+export async function getStaticPaths() {
+  const res = await axios.get(API_BASEURL + `profiles/`)
+  const { data } = await res
+  const paths = data.map((u) => {
+    return {
+      params: { userId: `${u.user.id}` },
+    }
+  })
   return {
-    sectionIndexer: state.sectionIndexer,
-    connectedUser: state.user.data.connectedUser,
+    paths,
+    fallback: false,
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {}
+export async function getStaticProps({ params }) {
+  const user = await axios.get(API_BASEURL + `profiles/${params.userId}`).then((res) => {
+    return res.data
+  })
+
+  return {
+    props: {
+      user,
+    },
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default Profile

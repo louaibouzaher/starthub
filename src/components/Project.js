@@ -130,12 +130,16 @@ const Project = ({
       )}
       <div className={'mt-4 p-2 w-3/4 text-left text-sm '}>{project.description}</div>
       <div className="flex flex-row w-full items-center mt-2 ">
-        <UserAvatar link={user.avatar} size={'20'} />
+        <Link href={`/profile/${user.id}`} passHref>
+          <UserAvatar link={user.avatar} size={'20'} />
+        </Link>
         <div className="ml-4 flex flex-col items-start">
-          <div className="text-dark font-bold">
-            {' '}
-            {user.firstName} {user.lastName}
-          </div>
+          <Link href={`/profile/${user.id}`} passHref>
+            <div className="hover:text-purple cursor-pointer text-dark font-bold">
+              {' '}
+              {user.firstName} {user.lastName}
+            </div>
+          </Link>
           <div className={'text-xs opacity-50'}>{user.position}</div>
         </div>
         {!isOwner && (

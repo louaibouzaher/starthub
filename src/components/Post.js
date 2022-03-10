@@ -112,12 +112,21 @@ const Post = ({
           (post.picture ? 'py-2  max-w-max rounded-lg ' : '')
         }
       >
-        <UserAvatar link={user.avatar || user.picture} size={'16'} />
+        <Link href={`/profile/${user.id}`} passHref>
+          <UserAvatar link={user.avatar || user.picture} size={'16'} />
+        </Link>
         <div className="ml-4 flex flex-col items-start">
-          <div className={'font-bold ' + (post.picture ? ' text-white' : 'text-dark')}>
-            {' '}
-            {user.firstName} {user.lastName}
-          </div>
+          <Link href={`/profile/${user.id}`} passHref>
+            <div
+              className={
+                'hover:text-purple cursor-pointer font-bold ' +
+                (post.picture ? ' text-white' : 'text-dark')
+              }
+            >
+              {' '}
+              {user.firstName} {user.lastName}
+            </div>
+          </Link>
           <div
             className={
               'text-xs opacity-50 ' + (post.picture ? ' text-white' : 'text-dark')
