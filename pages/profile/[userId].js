@@ -98,12 +98,12 @@ export async function getStaticPaths() {
 
   const paths = data.map((u) => {
     return {
-      params: { userId: `${u.id}` },
+      params: { userId: `${u.user.id}` },
     }
   })
   return {
     paths,
-    fallback: true,
+    fallback: false,
   }
 }
 
