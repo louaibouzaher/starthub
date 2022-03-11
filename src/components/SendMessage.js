@@ -36,11 +36,11 @@ const SendMessage = ({ userTo, sendMessage, toggleOverlay, connectedUser }) => {
       <div className="flex flex-col">
         <div className="text-dark opacity-50 text-sm">Sending message to</div>
         <div className="flex flex-row w-full items-center mt-2 ">
-          <UserAvatar link={userTo.avatar} size={'20'} />
+          <UserAvatar link={userTo.picture} />
           <div className="ml-2 flex flex-col items-start">
             <div className="text-dark font-bold">
               {' '}
-              {userTo.firstName} {userTo.lastName}
+              {userTo.first_name} {userTo.last_name}
             </div>
           </div>
         </div>

@@ -11,15 +11,13 @@ import Heart from '../../src/assets/icons/Heart'
 import Comment from '../../src/assets/icons/Comment'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 import { reactionsColors, sampleComments, users } from '../../src/data/general'
-import { toggleOverlay } from '../../src/store/OverlayWindow/overlayWindow.actions'
 import { PublicationComment } from '../../src/components/PublicationDetails/PublicationComment'
-
-import { changeChild } from '../../src/store/OverlayWindow/overlayWindow.actions'
+import axios from 'axios'
+import { API_BASEURL } from '../../appConfig'
 import Head from 'next/head'
 
-const Post = ({ toggleOverlay, changeChild }) => {
+const Post = ({ post }) => {
   const router = useRouter()
-  const { postId } = router.query
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
@@ -30,20 +28,20 @@ const Post = ({ toggleOverlay, changeChild }) => {
   return (
     <>
       <Head>
-        <title>{posts[0].title}</title>
+        <title>{post.title}</title>
       </Head>
 
       <OverlayWindow />
       <Navbar />
       <div className="pt-20 pb-10 px-36 App w-full flex flex-col justify-start items-start">
         <div className="flex flex-row w-full items-center mt-2 ">
-          <UserAvatar link={posts[0].user.avatar} size={'20'} />
+          <UserAvatar link={post.profile.profilePic} size={'20'} />
           <div className="ml-4 flex flex-col items-start">
             <div className="text-dark font-bold">
               {' '}
-              {posts[0].user.firstName} {posts[0].user.lastName}
+              {post.owner.first_name} {post.owner.last_name}
             </div>
-            <div className={'text-xs opacity-50'}>{posts[0].user.position}</div>
+            <div className={'text-xs opacity-50'}>{post.profile.position}</div>
           </div>
 
           <Button
@@ -54,16 +52,16 @@ const Post = ({ toggleOverlay, changeChild }) => {
           />
         </div>
         <div className=" w-full flex justify-between mb-4 text-xl text-dark font-bold pt-8  ">
-          <div>{posts[0].title}</div>
+          <div>{post.title}</div>
         </div>
-        <div className="flex space-x-2  justify-start ">{posts[0].content}</div>
-        <div>
+        <div className="flex space-x-2  justify-start ">{post.content}</div>
+
+        {post.picture && (
           <img
             className="max-w-2xl h-auto rounded-lg shadow-lg mt-8"
-            src={posts[0].picture}
-            alt="logo"
+            src={post.picture}
           />
-        </div>
+        )}
 
         <div className="py-6 w-full">
           <div className={'flex flex-row mt-6 text-sm font-light'}>
@@ -122,15 +120,39 @@ const Post = ({ toggleOverlay, changeChild }) => {
   )
 }
 
+export async function getStaticPaths() {
+  const res = await axios.get(API_BASEURL + `posts/`)
+  const { data } = await res
+
+  const paths = data.map((p) => {
+    return {
+      params: { postId: `${p.id}` },
+    }
+  })
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export async function getStaticProps({ params }) {
+  const post = await axios.get(API_BASEURL + `posts/${params.postId}`).then((res) => {
+    return res.data
+  })
+
+  return {
+    props: {
+      post,
+    },
+  }
+}
+
 const mapStateToProps = (state) => {
   return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    changeChild: (child) => dispatch(changeChild(child)),
-    toggleOverlay: () => dispatch(toggleOverlay()),
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

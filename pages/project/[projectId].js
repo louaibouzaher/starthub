@@ -19,10 +19,10 @@ import ReactPlayer from 'react-player'
 import Location from '../../src/assets/icons/Location'
 import { changeChild } from '../../src/store/OverlayWindow/overlayWindow.actions'
 import Head from 'next/head'
+import axios from 'axios'
+import { API_BASEURL } from '../../appConfig'
 
-const Project = ({ toggleOverlay, changeChild }) => {
-  const router = useRouter()
-  const { projectId } = router.query
+const Project = ({ toggleOverlay, changeChild, project }) => {
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
@@ -30,26 +30,31 @@ const Project = ({ toggleOverlay, changeChild }) => {
     Math.floor(Math.random() * 2),
   ]
 
-  useEffect(() => {
-    changeChild(<SendMessage userTo={projects[0].user} />)
-  }, [])
+  const handleGetInTouch = () => {
+    toggleOverlay()
+    changeChild(
+      <SendMessage userTo={{ ...project.owner, picture: project.profile.profilePic }} />
+    )
+  }
+
+  const establishedOn = new Date(project.establishedOn)
 
   return (
     <>
       <Head>
-        <title>{projects[0].title}</title>
+        <title>{project.title}</title>
       </Head>
       <OverlayWindow />
       <Navbar />
       <div className="pt-20 pb-10 px-36 App w-full flex flex-col justify-start items-start">
         <div className="flex flex-row w-full items-center mt-2 ">
-          <UserAvatar link={projects[0].user.avatar} size={'20'} />
+          <UserAvatar link={project.profile.profilePic} size={'20'} />
           <div className="ml-4 flex flex-col items-start">
             <div className="text-dark font-bold">
               {' '}
-              {projects[0].user.firstName} {projects[0].user.lastName}
+              {project.owner.first_name} {project.owner.last_name}
             </div>
-            <div className={'text-xs opacity-50'}>{projects[0].user.position}</div>
+            <div className={'text-xs opacity-50'}>{project.profile.position}</div>
           </div>
 
           <Button
@@ -60,15 +65,15 @@ const Project = ({ toggleOverlay, changeChild }) => {
           />
         </div>
         <div className=" w-full flex justify-between mb-4 text-4xl text-dark font-bold pt-8  ">
-          <div>{projects[0].title}</div>
+          <div>{project.title}</div>
           <Button
             btnStyle=" w-1/4 bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white"
             label="Get In Touch"
-            onClick={() => toggleOverlay()}
+            onClick={handleGetInTouch}
           />
         </div>
         <div className="flex space-x-2 justify-start ">
-          {projects[0].tags
+          {project.tags
             ?.split(',')
             .filter((t) => t.length > 0)
             .map((t) => {
@@ -82,45 +87,44 @@ const Project = ({ toggleOverlay, changeChild }) => {
         </div>
         <div className="flex flex-row items-center">
           <Location className="mr-1" />{' '}
-          <span className="my-2 text-dark">{projects[0].location}</span>
+          <span className="my-2 text-dark">{project.location}</span>
         </div>
         <span className="mt-10 text-xl font-bold text-dark ">Description </span>
-        <div className={' my-2 text-dark'}>{projects[0].description}</div>
+        <div className={' my-2 text-dark'}>{project.description}</div>
         <div className="flex flex-col justify-start items-start mt-2">
           <div className=" text-xl text-dark my-2">
             <div className="my-2">
               <span className=" text-xl font-bold">Field </span>
-              <span className="text-purple">{projects[0].field}</span>
+              <span className="text-purple">{project.field}</span>
             </div>
             <div className="my-2">
               <span className=" text-xl font-bold ">Number of Employees </span>
-              <span className="text-purple">{projects[0].numberOfEmployees}</span>
+              <span className="text-purple">{project.numberOfEmployees}</span>
             </div>
             <div className="my-2">
               <span className=" text-xl font-bold ">Inception Date </span>
               <span className="text-purple">
-                {projects[0].establishedOn
-                  ? projects[0].establishedOn.getDate() +
+                {project.establishedOn
+                  ? establishedOn.getDate() +
                     '-' +
-                    projects[0].establishedOn.getMonth() +
+                    establishedOn.getMonth() +
                     '-' +
-                    projects[0].establishedOn.getFullYear()
+                    establishedOn.getFullYear()
                   : 'Not yet'}
               </span>
             </div>
             <div className="my-2">
               <span className=" text-xl font-bold">Capital </span>
-              <span className="text-purple"> {projects[0].estimatedCapital}$ </span>
+              <span className="text-purple"> {project.estimatedCapital}$ </span>
             </div>
           </div>
         </div>
         <div className="rounded-xl mt-6 mb-4 overflow-hidden">
-          {projects[0].video.includes('youtu.be') ||
-          projects[0].video.includes('youtube') ? (
-            <ReactPlayer url={projects[0].video} muted={true} />
+          {project.video.includes('youtu.be') || project.video.includes('youtube') ? (
+            <ReactPlayer url={project.video} muted={true} />
           ) : (
             <video className="w-full" controls>
-              <source src={projects[0].video} type="video/mp4" muted></source>
+              <source src={project.video} type="video/mp4" muted></source>
             </video>
           )}
         </div>
@@ -179,6 +183,35 @@ const Project = ({ toggleOverlay, changeChild }) => {
       </div>
     </>
   )
+}
+
+export async function getStaticPaths() {
+  const res = await axios.get(API_BASEURL + `projects/`)
+  const { data } = await res
+
+  const paths = data.map((p) => {
+    return {
+      params: { projectId: `${p.id}` },
+    }
+  })
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export async function getStaticProps({ params }) {
+  const project = await axios
+    .get(API_BASEURL + `projects/${params.projectId}`)
+    .then((res) => {
+      return res.data
+    })
+
+  return {
+    props: {
+      project,
+    },
+  }
 }
 
 const mapStateToProps = (state) => {
