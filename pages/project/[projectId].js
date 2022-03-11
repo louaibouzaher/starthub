@@ -185,22 +185,7 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
   )
 }
 
-export async function getStaticPaths() {
-  const res = await axios.get(API_BASEURL + `projects/`)
-  const { data } = await res
-
-  const paths = data.map((p) => {
-    return {
-      params: { projectId: `${p.id}` },
-    }
-  })
-  return {
-    paths,
-    fallback: false,
-  }
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const project = await axios
     .get(API_BASEURL + `projects/${params.projectId}`)
     .then((res) => {

@@ -92,22 +92,7 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
   )
 }
 
-export async function getStaticPaths() {
-  const res = await axios.get(API_BASEURL + `profiles/`)
-  const { data } = await res
-
-  const paths = data.map((u) => {
-    return {
-      params: { userId: `${u.user.id}` },
-    }
-  })
-  return {
-    paths,
-    fallback: false,
-  }
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const user = await axios.get(API_BASEURL + `profiles/${params.userId}`).then((res) => {
     return res.data
   })

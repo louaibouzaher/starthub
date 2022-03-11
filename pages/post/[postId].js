@@ -135,7 +135,7 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const post = await axios.get(API_BASEURL + `posts/${params.postId}`).then((res) => {
     return res.data
   })
