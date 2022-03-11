@@ -62,6 +62,7 @@ export const putProfile = (userId, updatedProfile) => {
     axios
       .put(API_BASEURL + `profiles/${userId}/`, {
         ...updatedProfile,
+        user: userId,
         profilePic: updatedProfile.picture,
         twitter_url: updatedProfile.twitterUrl,
         linkedin_url: updatedProfile.linkedInUrl,
