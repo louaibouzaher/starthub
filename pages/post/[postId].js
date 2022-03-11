@@ -120,21 +120,6 @@ const Post = ({ post }) => {
   )
 }
 
-export async function getStaticPaths() {
-  const res = await axios.get(API_BASEURL + `posts/`)
-  const { data } = await res
-
-  const paths = data.map((p) => {
-    return {
-      params: { postId: `${p.id}` },
-    }
-  })
-  return {
-    paths,
-    fallback: false,
-  }
-}
-
 export async function getServerSideProps({ params }) {
   const post = await axios.get(API_BASEURL + `posts/${params.postId}`).then((res) => {
     return res.data
