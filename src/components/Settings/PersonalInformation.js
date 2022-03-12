@@ -142,6 +142,16 @@ function PersonalInformation({
             />
           </div>
         </div>
+        <div className="w-1/2 mt-2">
+          <div>Website</div>
+          <input
+            value={settingsState.websiteUrl}
+            type="text"
+            className="border-2 border-dark p-1 rounded-md w-3/4"
+            name="websiteUrl"
+            onChange={handleChange}
+          />
+        </div>
       </div>
     </div>
   )
