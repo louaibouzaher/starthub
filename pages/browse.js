@@ -92,7 +92,7 @@ function Browse({
                     firstName: p.owner?.first_name,
                     lastName: p.owner?.last_name,
                     avatar: p.profile?.profilePic,
-                    position: p.profile.position,
+                    position: p.profile?.position,
                   }}
                 />
               ))}

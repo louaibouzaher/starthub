@@ -38,15 +38,15 @@ function Settings({ settingsState, connectedUser }) {
       </Head>
       <Navbar />
       <OverlayWindow />
-      <div className="text-dark flex">
-        <div className="left-10 z-10 px-4 pt-24 w-1/5 h-screen flex flex-col justify-start items-center">
+      <div className=" text-dark flex">
+        <div className="w-60 fixed left-10 z-10 px-4 pt-24 h-screen flex flex-col justify-start items-center">
           <div className="w-full">
             {settingsPages.map((s) => (
               <div
                 onClick={() => setSection(s.id)}
                 key={s.id}
                 className={
-                  'shadow-md text-center text-dark p-2 m-2 rounded-lg cursor-pointer flex justify-center items-center ' +
+                  'w-full shadow-md text-center text-dark p-2 m-2 rounded-lg cursor-pointer flex justify-center items-center ' +
                   (settingsPages[section].id !== s.id
                     ? 'opacity-30 bg-gray-200'
                     : 'opacity-100')
@@ -57,7 +57,7 @@ function Settings({ settingsState, connectedUser }) {
             ))}
           </div>
         </div>
-        <div className="w-full flex flex-col justify-start items-start pt-24 pb-10 px-44">
+        <div className="ml-40 w-full flex flex-col justify-start items-start pt-24 pb-10 px-44">
           <div className="my-2 flex justify-end w-full">
             <Button
               btnStyle="mx-1 bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white "
