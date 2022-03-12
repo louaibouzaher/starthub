@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import { connect } from 'react-redux'
-
+import UserAvatar from '../assets/images/UserAvatar'
 import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from '../components/Button'
 import { countries } from '../data/countries'
@@ -174,6 +174,7 @@ const SideBar = ({ section, toggleOverlay, connectedUser }) => {
           options={countries}
           sx={{ width: '95%' }}
           renderInput={(params) => <TextField {...params} label="Select a country" />}
+          
         />
       </div>
     </div>
