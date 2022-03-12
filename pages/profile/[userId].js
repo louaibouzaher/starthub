@@ -17,20 +17,13 @@ import { API_BASEURL } from '../../appConfig'
 function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
   const isOwner = connectedUser.id == user.user.id
   const router = useRouter()
-  const url = user.website_url.includes('http')
-    ? user.website_url
-    : `http://${user.website_url}`
-  const website = new URL(url).href
-
-  const linkedin_url = user.linkedin_url.includes('http')
-    ? user.linkedin_url
-    : `http://${user.linkedin_url}`
-  const linkedin = new URL(linkedin_url).href
-
-  const twitter_url = user.twitter_url.includes('http')
-    ? user.twitter_url
-    : `http://${user.twitter_url}`
-  const twitter = new URL(twitter_url).href
+  let website
+  try {
+    const url = user.website_url.includes('http')
+      ? user.website_url
+      : `http://${user.website_url}`
+    website = new URL(url).href
+  } catch (error) {}
 
   return (
     <>
@@ -72,14 +65,14 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
                 </Link>
               )}
               {user.linkedin_url && (
-                <Link href={linkedin} passHref>
+                <Link href={user.linkedin_url} passHref>
                   <a target="_blank">
                     <AiFillLinkedin size={28} />
                   </a>
                 </Link>
               )}
               {user.twitter_url && (
-                <Link href={twitter} passHref>
+                <Link href={user.twitter_url} passHref>
                   <a target="_blank">
                     <AiFillTwitterSquare size={28} />
                   </a>
