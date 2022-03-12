@@ -1,41 +1,72 @@
 import axios from 'axios'
+import store from '..'
 import { API_BASEURL } from '../../../appConfig'
+import {
+  failure,
+  loading,
+  getPostsSuccess,
+  deletePostSuccess,
+  editPostSuccess,
+  addPostSuccess,
+} from '../Posts/posts.actions'
 
+export const getPosts = () => {
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .get(API_BASEURL + `posts/`)
+      .then((result) => {
+        console.log(result)
+        dispatch(getPostsSuccess(result.data))
+      })
+      .catch((error) => {
+        dispatch(failure(error))
+      })
+  }
+}
 export const postPost = (post) => {
-  const req = axios.post(API_BASEURL + 'posts/', post)
-  return req
-    .then((result) => {
-      console.log(result)
-      return result.data.id
-    })
-    .catch((error) => {
-      console.error(error)
-      throw error
-    })
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .post(API_BASEURL + 'posts/', post)
+      .then((result) => {
+        dispatch(addPostSuccess(result.data))
+        store.dispatch(getPosts())
+      })
+      .catch((error) => {
+        dispatch(failure(error))
+      })
+  }
 }
 
 export const deletePost = (postId) => {
-  axios
-    .delete(API_BASEURL + `posts/${postId}`)
-    .then((result) => {
-      console.log(result)
-      return result
-    })
-    .catch((error) => {
-      console.error(error)
-      throw error
-    })
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .delete(API_BASEURL + `posts/${postId}/`)
+      .then((result) => {
+        dispatch(deletePostSuccess(result.data))
+        store.dispatch(getPosts())
+        return result
+      })
+      .catch((error) => {
+        dispatch(failure(error))
+      })
+  }
 }
 
 export const putPost = (postId, editedPost) => {
-  axios
-    .put(API_BASEURL + `posts/${postId}/`, editedPost)
-    .then((result) => {
-      console.log(result)
-      return result
-    })
-    .catch((error) => {
-      console.error(error)
-      throw error
-    })
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .put(API_BASEURL + `posts/${postId}/`, editedPost)
+      .then((result) => {
+        dispatch(editPostSuccess(result.data))
+        store.dispatch(getPosts())
+        return result
+      })
+      .catch((error) => {
+        dispatch(failure(error))
+      })
+  }
 }

@@ -6,9 +6,10 @@ import Head from 'next/head'
 
 import WhiteLogo from '../src/assets/images/WhiteLogo'
 import { Button } from '../src/components/Button'
-import { signup } from '../src/store/User/user.actions'
+import { signup } from '../src/store/User/user.api'
+import store from '../src/store'
 
-function Signup({ signup }) {
+function Signup({ err }) {
   const router = useRouter()
 
   const [state, setState] = useState({
@@ -68,22 +69,24 @@ function Signup({ signup }) {
 
   const handleSubmit = async () => {
     try {
-      signup(
-        {
+      store.dispatch(
+        signup({
           username: state.email,
           first_name: state.firstName,
           last_name: state.lastName,
           email: state.email,
           password: state.password,
           password2: state.confirmPassword,
-        },
-        () => {
-          router.push('/login')
-        }
+        })
       )
     } catch (e) {
       console.log(e)
     }
+    setTimeout(() => {
+      if (!err) {
+        router.push('/login')
+      }
+    }, 1000)
   }
 
   useEffect(() => {
@@ -215,13 +218,13 @@ function Signup({ signup }) {
   )
 }
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    err: state.user.error,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    signup: (payload, cb) => dispatch(signup(payload, cb)),
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup)

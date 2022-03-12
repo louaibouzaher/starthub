@@ -3,11 +3,10 @@ import { useRouter } from 'next/router'
 import { connect } from 'react-redux'
 
 import { space } from '../../src/data/space'
-import { connectedUser } from '../../src/data/user'
 import { posts } from '../../src/data/posts'
 import { projects } from '../../src/data/projects'
 import Cross from '../../src/assets/icons/Cross'
-import { Navbar } from '../../src/components/Navbar'
+import Navbar from '../../src/components/Navbar'
 import { Button } from '../../src/components/Button'
 import SectionIndexer from '../../src/components/SectionIndexer'
 import Post from '../../src/components/Post'
@@ -20,7 +19,7 @@ const Space = ({ sectionIndexer }) => {
 
   return (
     <>
-      <Navbar isConnected connectedUser={connectedUser} />
+      <Navbar />
       <div className="h-screen w-full flex flex-col justify-start items-start pt-28 p-20">
         <div className="flex w-full">
           <div className="w-1/2 flex items-start bg-white rounded-md shadow-lg p-10 m-2">

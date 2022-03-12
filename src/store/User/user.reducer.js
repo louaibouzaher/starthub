@@ -1,37 +1,135 @@
-import { login, signup } from './user.api'
-import { LOGIN, SIGNUP } from './user.types'
+import axios from 'axios'
+import {
+  GET_CURRENT_USER_SUCCESS,
+  GET_PROFILE_SUCCESS,
+  PUT_PROFILE_SUCCESS,
+  LOGIN_SUCCESS,
+  FAILURE,
+  LOADING,
+  SIGNUP_SUCCESS,
+  SET_SETTINGS_STATE,
+  REFRESH_TOKEN,
+  SET_TOKEN,
+} from './user.types'
 
 const INITIAL_STATE = {
-  connectedUser: {},
-  token: {
-    access: null,
-    refresh: null,
+  loading: true,
+  isConnected: false,
+  data: {
+    settingsState: {},
+    connectedUser: {},
+    token: {
+      access: null,
+      refresh: null,
+    },
   },
+  error: '',
 }
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case LOGIN:
-      const token = {}
-      login(action.payload).then((r) => {
-        token.refresh = r.data.refresh
-        token.access = r.data.access
-        if (r.status == 200) {
-          action.cb()
-        }
-        return { ...state, token: token }
-      })
-      return { ...state, token: token }
-      break
-    case SIGNUP:
-      signup(action.payload).then((r) => {
-        if (r.status == 201) {
-          action.cb()
-        }
-        console.log(r)
-      })
-      return state
-
+    // case SET_TOKEN:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     data: { token: action.payload },
+    //     error: '',
+    //     isConnected: true,
+    //   }
+    case LOADING:
+      return { ...state, loading: true }
+    case LOGIN_SUCCESS:
+      axios.defaults.headers.common = { Authorization: `Bearer ${action.payload.access}` }
+      return {
+        ...state,
+        loading: false,
+        data: { token: action.payload },
+        error: '',
+        isConnected: true,
+      }
+    case REFRESH_TOKEN:
+      return { ...state, loading: false, data: { token: action.payload }, error: '' }
+    case FAILURE:
+      return { ...state, loading: false, error: action.payload }
+    case GET_CURRENT_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: {
+          ...state.data,
+          connectedUser: {
+            ...state.data.connectedUser,
+            ...action.payload,
+            firstName: action.payload.first_name,
+            lastName: action.payload.last_name,
+          },
+          settingsState: {
+            ...state.data.settingsState,
+            ...action.payload,
+            firstName: action.payload.first_name,
+            lastName: action.payload.last_name,
+          },
+        },
+        error: '',
+      }
+    case GET_PROFILE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: {
+          ...state.data,
+          connectedUser: {
+            ...state.data.connectedUser,
+            ...action.payload,
+            picture: action.payload.profilePic,
+            twitterUrl: action.payload.twitter_url,
+            linkedInUrl: action.payload.linkedin_url,
+            websiteUrl: action.payload.website_url,
+          },
+          settingsState: {
+            ...state.data.connectedUser,
+            ...action.payload,
+            picture: action.payload.profilePic,
+            twitterUrl: action.payload.twitter_url,
+            linkedInUrl: action.payload.linkedin_url,
+            websiteUrl: action.payload.website_url,
+          },
+        },
+        error: '',
+      }
+    case PUT_PROFILE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        data: {
+          ...state.data,
+          connectedUser: {
+            ...state.data.connectedUser,
+            ...action.payload,
+            picture: action.payload.profilePic,
+            twitterUrl: action.payload.twitter_url,
+            linkedInUrl: action.payload.linkedin_url,
+            websiteUrl: action.payload.website_url,
+          },
+          settingsState: {
+            ...state.data.connectedUser,
+            ...action.payload,
+            picture: action.payload.profilePic,
+            twitterUrl: action.payload.twitter_url,
+            linkedInUrl: action.payload.linkedin_url,
+            websiteUrl: action.payload.website_url,
+          },
+        },
+        error: '',
+      }
+    case SIGNUP_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: '',
+      }
+    case SET_SETTINGS_STATE:
+      return { ...state, data: { ...state.data, settingsState: action.payload } }
     default:
       return state
   }

@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import UserAvatar from '../assets/images/UserAvatar'
-import { connectedUser } from '../data/user'
 import { sendMessage } from '../store/Messages/messages.actions'
 import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from './Button'
 
-const SendMessage = ({ userTo, sendMessage, toggleOverlay }) => {
+const SendMessage = ({ userTo, sendMessage, toggleOverlay, connectedUser }) => {
   const [message, setMessage] = useState({
     message: '',
   })
@@ -19,11 +18,11 @@ const SendMessage = ({ userTo, sendMessage, toggleOverlay }) => {
   }
 
   const handleSubmit = async () => {
-    sendMessage({
-      ...message,
-      time: new Date().toUTCString(),
-      user: connectedUser,
-    })
+    // sendMessage({
+    //   ...message,
+    //   time: new Date().toUTCString(),
+    //   user: connectedUser,
+    // })
     toggleOverlay()
     setMessage({ message: '' })
     // setSubmitted(true)
@@ -37,11 +36,11 @@ const SendMessage = ({ userTo, sendMessage, toggleOverlay }) => {
       <div className="flex flex-col">
         <div className="text-dark opacity-50 text-sm">Sending message to</div>
         <div className="flex flex-row w-full items-center mt-2 ">
-          <UserAvatar link={userTo.avatar} size={'20'} />
+          <UserAvatar link={userTo.picture} />
           <div className="ml-2 flex flex-col items-start">
             <div className="text-dark font-bold">
               {' '}
-              {userTo.firstName} {userTo.lastName}
+              {userTo.first_name} {userTo.last_name}
             </div>
           </div>
         </div>
@@ -75,13 +74,15 @@ const SendMessage = ({ userTo, sendMessage, toggleOverlay }) => {
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    connectedUser: state.user.data.connectedUser,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sendMessage: (message) => dispatch(sendMessage(message)),
     toggleOverlay: () => dispatch(toggleOverlay()),
+    sendMessage: () => dispatch(sendMessage()),
   }
 }
 

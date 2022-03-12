@@ -1,5 +1,6 @@
+import React, { useEffect } from 'react'
 import Link from 'next/link'
-
+import { connect } from 'react-redux'
 import { Button } from './Button'
 import MainLogo from '../assets/images/MainLogo'
 import UserAvatar from '../assets/images/UserAvatar'
@@ -7,8 +8,16 @@ import WhiteLogo from '../assets/images/WhiteLogo'
 import Messages from '../assets/icons/Messages'
 import Notification from '../assets/icons/Notification'
 import Settings from '../assets/icons/Settings'
+import store from '../store'
+import { getProfile } from '../store/User/user.api'
 
-export const Navbar = ({ isConnected, connectedUser }) => {
+const Navbar = ({ connectedUser, isConnected }) => {
+  useEffect(() => {
+    if (isConnected) {
+      store.dispatch(getProfile(connectedUser.id))
+    }
+  }, [isConnected])
+
   return (
     <div
       className={
@@ -61,7 +70,7 @@ export const Navbar = ({ isConnected, connectedUser }) => {
                 <Settings className="mx-3 mr-10" />
               </a>
             </Link>
-            <Link href="/profile/1" passHref>
+            <Link href={`/profile/${connectedUser.id}`} passHref>
               <a>
                 <UserAvatar link={connectedUser.picture} className="cursor-pointer" />
               </a>
@@ -72,3 +81,17 @@ export const Navbar = ({ isConnected, connectedUser }) => {
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    connectedUser: state.user.data.connectedUser || {},
+    isConnected: state.user.isConnected,
+    token: state.user.data.token,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

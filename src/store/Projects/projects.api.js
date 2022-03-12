@@ -1,41 +1,72 @@
 import axios from 'axios'
+import store from '..'
 import { API_BASEURL } from '../../../appConfig'
+import {
+  failure,
+  loading,
+  getProjectsSuccess,
+  deleteProjectSuccess,
+  editProjectSuccess,
+  addProjectSuccess,
+} from '../Projects/projects.actions'
 
+export const getProjects = () => {
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .get(API_BASEURL + `projects/`)
+      .then((result) => {
+        console.log(result)
+        dispatch(getProjectsSuccess(result.data))
+      })
+      .catch((error) => {
+        dispatch(failure(error))
+      })
+  }
+}
 export const postProject = (project) => {
-  const req = axios.post(API_BASEURL + 'projects/', project)
-  return req
-    .then((result) => {
-      console.log(result)
-      return result.data.id
-    })
-    .catch((error) => {
-      console.error(error)
-      throw error
-    })
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .post(API_BASEURL + 'projects/', project)
+      .then((result) => {
+        dispatch(addProjectSuccess(result.data))
+        store.dispatch(getProjects())
+      })
+      .catch((error) => {
+        dispatch(failure(error))
+      })
+  }
 }
 
 export const deleteProject = (projectId) => {
-  axios
-    .delete(API_BASEURL + `projects/${projectId}`)
-    .then((result) => {
-      console.log(result)
-      return result
-    })
-    .catch((error) => {
-      console.error(error)
-      throw error
-    })
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .delete(API_BASEURL + `projects/${projectId}/`)
+      .then((result) => {
+        dispatch(deleteProjectSuccess(result.data))
+        store.dispatch(getProjects())
+        return result
+      })
+      .catch((error) => {
+        dispatch(failure(error))
+      })
+  }
 }
 
 export const putProject = (projectId, editedProject) => {
-  axios
-    .put(API_BASEURL + `projects/${projectId}/`, editedProject)
-    .then((result) => {
-      console.log(result)
-      return result
-    })
-    .catch((error) => {
-      console.error(error)
-      throw error
-    })
+  return function (dispatch) {
+    dispatch(loading())
+    axios
+      .put(API_BASEURL + `projects/${projectId}/`, editedProject)
+      .then((result) => {
+        dispatch(editProjectSuccess(result.data))
+        store.dispatch(getProjects())
+        return result
+      })
+      .catch((error) => {
+        dispatch(failure(error))
+      })
+  }
 }

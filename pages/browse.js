@@ -3,25 +3,34 @@ import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
 
 import { changeChild } from '../src/store/OverlayWindow/overlayWindow.actions'
+import store from '../src/store'
 
-import { Navbar } from '../src/components/Navbar'
+import Navbar from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
 import SectionIndexer from '../src/components/SectionIndexer'
 import Post from '../src/components/Post'
 import Project from '../src/components/Project'
 import SideBar from '../src/layouts/SideBar'
 
-import { connectedUser } from '../src/data/user'
 import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
 import AddProject from '../src/components/AddProject'
+import { getCurrentUser } from '../src/store/User/user.api'
+import { getPosts } from '../src/store/Posts/posts.api'
+import { getProjects } from '../src/store/Projects/projects.api'
 
-function Browse({ posts, projects, sectionIndexer, changeChild, token }) {
+function Browse({
+  posts,
+  projects,
+  sectionIndexer,
+  changeChild,
+  isConnected,
+  connectedUser,
+}) {
   const router = useRouter()
 
   const [submitted, setSubmitted] = useState(false)
-  const [userConnected, setUserConnected] = useState(true)
 
   useEffect(() => {
     changeChild(
@@ -34,10 +43,16 @@ function Browse({ posts, projects, sectionIndexer, changeChild, token }) {
   }, [sectionIndexer.id])
 
   useEffect(() => {
-    if (!token.access) {
-      router.push('/login')
+    const fetchUser = async () => {
+      await store.dispatch(getCurrentUser())
     }
-  }, [token.access])
+    fetchUser()
+  }, [isConnected])
+
+  useEffect(() => {
+    store.dispatch(getPosts())
+    store.dispatch(getProjects())
+  }, [])
 
   return (
     <>
@@ -45,25 +60,42 @@ function Browse({ posts, projects, sectionIndexer, changeChild, token }) {
         <title>Home - StartHub</title>
       </Head>
       <OverlayWindow />
-      <Navbar
-        connectedUser={connectedUser}
-        isConnected={userConnected}
-        setUserConnected={setUserConnected}
-      />
+      <Navbar />
 
       <SideBar section={sectionIndexer.title} />
       <div className="App w-full flex flex-col justify-start items-center pt-16">
         <Feed>
           <div className="text-4xl mt-6">
-            Hello, <span className="text-purple">{connectedUser.firstName}.</span>{' '}
+            Hello, <span className="text-purple">{connectedUser.firstName}</span>{' '}
           </div>
           <div className="mt-2 font-thin">
             Here are some of the top selections for you.
           </div>
           <SectionIndexer />
           {sectionIndexer.id === 0
-            ? posts.map((p) => <Post post={p} user={p.user} />)
-            : projects.map((p) => <Project project={p} user={p.user} />)}
+            ? posts?.map((p) => (
+                <Post
+                  post={p}
+                  user={{
+                    id: p.owner?.id,
+                    firstName: p.owner?.first_name,
+                    lastName: p.owner?.last_name,
+                    avatar: p.profile?.profilePic,
+                  }}
+                />
+              ))
+            : projects?.map((p) => (
+                <Project
+                  project={p}
+                  user={{
+                    id: p.owner?.id,
+                    firstName: p.owner?.first_name,
+                    lastName: p.owner?.last_name,
+                    avatar: p.profile?.profilePic,
+                    position: p.profile?.position,
+                  }}
+                />
+              ))}
         </Feed>
       </div>
       {submitted && (
@@ -80,7 +112,9 @@ const mapStateToProps = (state) => {
     posts: state.posts.list,
     projects: state.projects.list,
     sectionIndexer: state.sectionIndexer,
-    token: state.user.token,
+    token: state.user.data.token,
+    isConnected: state.user.isConnected,
+    connectedUser: state.user.data.connectedUser || {},
   }
 }
 

@@ -1,5 +1,7 @@
-import { postProject, deleteProject, putProject } from './projects.api'
 import {
+  PROJECTS_FAILURE,
+  PROJECTS_LOADING,
+  GET_PROJECTS,
   ADD_PROJECT,
   DELETE_PROJECT,
   EDIT_PROJECT,
@@ -9,6 +11,7 @@ import {
 
 const INITIAL_STATE = {
   isEditing: false,
+  loading: false,
   addProjectState: {},
   list: [
     {
@@ -58,37 +61,27 @@ const INITIAL_STATE = {
       ageInMonths: 12,
     },
   ],
+  error: '',
 }
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case PROJECTS_LOADING:
+      return { ...state, loading: true }
+    case PROJECTS_FAILURE:
+      return { ...state, loading: false, error: action.payload }
     case TOGGLE_ISEDITING:
       return { ...state, isEditing: !state.isEditing }
-
     case SET_ADD_PROJECT_STATE:
       return { ...state, addProjectState: action.payload }
-
+    case GET_PROJECTS:
+      return { ...state, loading: false, list: action.payload }
     case ADD_PROJECT:
-      const newProject = { ...action.payload }
-      postProject(action.payload).then((r) => {
-        newProject.id = r
-      })
-      console.log(newProject)
-      return { ...state, list: [newProject, ...state.list] }
-
+      return state
     case DELETE_PROJECT:
-      deleteProject(action.id)
       return { ...state, list: state.list.filter((p) => p.id !== action.id) }
-
     case EDIT_PROJECT:
-      putProject(action.id, action.payload)
-      console.log(action.id)
-      const newList = state.list.filter((p) => p.id !== action.id)
-      return {
-        ...state,
-        list: [{ ...action.payload, id: action.id }, ...newList],
-      }
-
+      return state
     default:
       return state
   }

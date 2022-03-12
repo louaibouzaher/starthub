@@ -10,6 +10,7 @@ export default function UserAvatar({ link, sizing, className }) {
       style={{
         backgroundImage: 'url(' + link + ')',
         backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}
     ></div>
   )

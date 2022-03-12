@@ -1,43 +1,40 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
-import {
-  deletePost,
-  setAddPostState,
-  toggleIsEditing,
-} from '../store/Posts/posts.actions'
+import Link from 'next/link'
+import { setAddPostState, toggleIsEditing } from '../store/Posts/posts.actions'
+import { deletePost } from '../store/Posts/posts.api'
 
 import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 
 import Dots from '../assets/icons/Dots'
 import Heart from '../assets/icons/Heart'
 import Comment from '../assets/icons/Comment'
+import ButtonArrow from '../assets/icons/ButtonArrow'
 import Share from '../assets/icons/Share'
 import Saved from '../assets/icons/Saved'
 import Delete from '../assets/icons/Delete'
 import Edit from '../assets/icons/Edit'
 import UserAvatar from '../assets/images/UserAvatar'
 import { Button } from './Button'
-import { connectedUser } from '../data/user'
 import { reactionsColors } from '../data/general'
 import tailwindConfig from '../../tailwind.config'
 
 import AddPost from './AddPost'
+import store from '../store'
 
 const Post = ({
   user,
   post,
-  isOwnPost,
-  deletePost,
   changeChild,
   toggleOverlay,
   toggleIsEditing,
   setAddPostState,
+  connectedUser,
 }) => {
   const [isDotsListOpen, setIsDotsListOpen] = useState(false)
 
-  // TODO: Remove
-  const showFollow = isOwnPost || user.firstName === connectedUser.firstName
+  const isOwner = user.id == connectedUser?.id
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
@@ -47,7 +44,7 @@ const Post = ({
 
   const handleDelete = () => {
     setIsDotsListOpen(false)
-    deletePost(post.id)
+    store.dispatch(deletePost(post.id))
   }
 
   const handleEdit = () => {
@@ -80,45 +77,56 @@ const Post = ({
         backgroundBlendMode: 'darken',
       }}
     >
-      <div className="absolute flex flex-col items-end top-8 right-8">
-        <Dots
-          isDark
-          className="scale-125"
-          onClick={() => setIsDotsListOpen(!isDotsListOpen)}
-        />
-        {isDotsListOpen && (
-          <div className="text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
-            <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
-              <Edit color={tailwindConfig.theme.extend.colors.dark} />
-              <div className="mx-1"> Edit Post</div>
+      {isOwner && (
+        <div className="absolute flex flex-col items-end top-8 right-8">
+          <Dots
+            isDark
+            className="scale-125"
+            onClick={() => setIsDotsListOpen(!isDotsListOpen)}
+          />
+          {isDotsListOpen && (
+            <div className="text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
+              <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
+                <Edit color={tailwindConfig.theme.extend.colors.dark} />
+                <div className="mx-1"> Edit Post</div>
+              </div>
+              <div
+                className="bg-dark rounded-full opacity-5"
+                style={{
+                  height: 2,
+                }}
+              >
+                {' '}
+              </div>
+              <div className="cursor-pointer flex my-1" onClick={() => handleDelete()}>
+                <Delete color={tailwindConfig.theme.extend.colors.dark} />
+                <div className="mx-1"> Delete Permanently</div>
+              </div>
             </div>
-            <div
-              className="bg-dark rounded-full opacity-5"
-              style={{
-                height: 2,
-              }}
-            >
-              {' '}
-            </div>
-            <div className="cursor-pointer flex my-1" onClick={() => handleDelete()}>
-              <Delete color={tailwindConfig.theme.extend.colors.dark} />
-              <div className="mx-1"> Delete Permanently</div>
-            </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
       <div
         className={
           'flex flex-row w-full items-center ' +
           (post.picture ? 'py-2  max-w-max rounded-lg ' : '')
         }
       >
-        <UserAvatar link={user.avatar || user.picture} size={'16'} />
+        <Link href={`/profile/${user.id}`} passHref>
+          <UserAvatar link={user.avatar || user.picture} size={'16'} />
+        </Link>
         <div className="ml-4 flex flex-col items-start">
-          <div className={'font-bold ' + (post.picture ? ' text-white' : 'text-dark')}>
-            {' '}
-            {user.firstName} {user.lastName}
-          </div>
+          <Link href={`/profile/${user.id}`} passHref>
+            <div
+              className={
+                'hover:text-purple cursor-pointer font-bold ' +
+                (post.picture ? ' text-white' : 'text-dark')
+              }
+            >
+              {' '}
+              {user.firstName} {user.lastName}
+            </div>
+          </Link>
           <div
             className={
               'text-xs opacity-50 ' + (post.picture ? ' text-white' : 'text-dark')
@@ -127,7 +135,7 @@ const Post = ({
             {post.time}
           </div>
         </div>
-        {!showFollow && Math.floor(Math.random() * 2) === 0 && (
+        {!isOwner && Math.floor(Math.random() * 2) === 0 && (
           <Button
             label={'Follow'}
             btnStyle={
@@ -146,50 +154,67 @@ const Post = ({
       >
         {post.picture ? post.title : post.content}
       </div>
-      <div className={'flex flex-row mt-6 text-sm font-light'}>
-        <Heart isClicked={reactions[0]} className="mx-1" />
-        <div
-          className="mr-2"
-          style={{
-            color: reactions[0] ? reactionsColors.like : reactionsColors.disabled,
-          }}
-        >
-          Like
+      <div
+        className={
+          'w-full flex flex-row justify-between items-center mt-7 text-sm font-light'
+        }
+      >
+        <div className="flex">
+          <Heart isClicked={reactions[0]} className="mx-1" />
+          <div
+            className="mr-2"
+            style={{
+              color: reactions[0] ? reactionsColors.like : reactionsColors.disabled,
+            }}
+          >
+            Like
+          </div>
+          <Comment isCommented={reactions[1]} className="mx-1" />
+          <div
+            className=" mr-2"
+            style={{
+              color: reactions[1] ? reactionsColors.comment : reactionsColors.disabled,
+            }}
+          >
+            Comment
+          </div>
+          <Share isClicked={reactions[2]} className="mx-1" />
+          <div
+            className=" mr-2"
+            style={{
+              color: reactions[2] ? reactionsColors.share : reactionsColors.disabled,
+            }}
+          >
+            Share
+          </div>
+          <Saved isClicked={reactions[3]} className="mx-1" />
+          <div
+            className=" mr-2"
+            style={{
+              color: reactions[3] ? reactionsColors.save : reactionsColors.disabled,
+            }}
+          >
+            Save
+          </div>
         </div>
-        <Comment isCommented={reactions[1]} className="mx-1" />
-        <div
-          className="mr-2"
-          style={{
-            color: reactions[1] ? reactionsColors.comment : reactionsColors.disabled,
-          }}
-        >
-          Comment
-        </div>
-        <Share isClicked={reactions[2]} className="mx-1" />
-        <div
-          className="mr-2"
-          style={{
-            color: reactions[2] ? reactionsColors.share : reactionsColors.disabled,
-          }}
-        >
-          Share
-        </div>
-        <Saved isClicked={reactions[3]} className="mx-1" />
-        <div
-          className="mr-2"
-          style={{
-            color: reactions[3] ? reactionsColors.save : reactionsColors.disabled,
-          }}
-        >
-          Save
-        </div>
+        <Link href={'/post/' + post.id}>
+          <div className="text-purple flex items-center cursor-pointer">
+            <div>Learn more</div>
+            <ButtonArrow
+              className={'-rotate-90'}
+              color={tailwindConfig.theme.extend.colors.purple}
+            />
+          </div>
+        </Link>
       </div>
     </div>
   )
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    connectedUser: state.user.data.connectedUser,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

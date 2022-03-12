@@ -1,21 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import UserAvatar from '../../assets/images/UserAvatar'
-import { connectedUser } from '../../data/user'
 import Download from '../../assets/icons/Download'
 import { tailwindToHex } from '../../../tailwindColors'
 import Delete from '../../assets/icons/Delete'
 import tailwindConfig from '../../../tailwind.config'
+import { setSettingsState } from '../../store/User/user.actions'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../store/OverlayWindow/overlayWindow.actions'
+import ConfirmPicture from './ConfirmPicture'
+import OverlayWindow from '../OverlayWindow'
 
-export default function PersonalInformation() {
+function PersonalInformation({
+  setSettingsState,
+  settingsState,
+  changeChild,
+  toggleOverlay,
+}) {
+  const [file, setFile] = useState(null)
+  const handleChange = (e) => {
+    setSettingsState({ ...settingsState, [e.target.name]: e.target.value })
+  }
+  const handleFile = (e) => {
+    setFile(e.target.files[0])
+    changeChild(<ConfirmPicture file={e.target.files[0]} />)
+    toggleOverlay()
+  }
+
   return (
     <div className="text-dark text-sm w-full flex flex-col justify-start items-start">
       <div className="flex items-center">
-        <UserAvatar sizing className={'h-40 w-40'} link={connectedUser.picture} />
+        <UserAvatar sizing className={'h-40 w-40'} link={settingsState.picture} />
         <div className="ml-10 flex flex-col justify-start">
           <div>
-            <input accept="image/*" type="file" id="file" className="hidden" />
+            <input
+              accept="image/*"
+              type="file"
+              id="profilePicture"
+              className="hidden"
+              onChange={(e) => {
+                console.log('onChange')
+                handleFile(e)
+              }}
+            />
             <label
-              for="file"
+              for="profilePicture"
               className="cursor-pointer flex h-10  my-2 p-2 border-2 rounded-md border-purple text-center text-purple justify-center items-center"
             >
               <Download
@@ -33,36 +64,58 @@ export default function PersonalInformation() {
       </div>
       <div className="flex w-full">
         <div className="w-1/2 mt-6">
-          <div>Username</div>
+          <div>First Name</div>
           <input
-            value={connectedUser.firstName + ' ' + connectedUser.lastName}
+            value={settingsState.firstName}
             type="text"
             className="border-2 border-dark p-1 rounded-md"
-            name="username"
-            // onChange={handleChange}
+            name="firstName"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="w-1/2 mt-6">
+          <div>Last Name</div>
+          <input
+            value={settingsState.lastName}
+            type="text"
+            className="border-2 border-dark p-1 rounded-md"
+            name="lastName"
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="flex w-full">
+        <div className="w-1/2 mt-6 pr-10">
+          <div>Biography</div>
+          <textarea
+            value={settingsState.biography}
+            style={{
+              resize: 'none',
+            }}
+            className="h-28 w-full border-2 border-dark p-1 rounded-md"
+            name="biography"
+            onChange={handleChange}
           />
         </div>
         <div className="w-1/2 mt-6">
           <div>Position</div>
           <input
-            value={connectedUser.position}
+            value={settingsState.position}
             type="text"
             className="border-2 border-dark p-1 rounded-md"
             name="position"
-            // onChange={handleChange}
+            onChange={handleChange}
           />
         </div>
       </div>
       <div className="w-1/2 mt-6">
-        <div>Biography</div>
-        <textarea
-          value={connectedUser.biography}
-          style={{
-            resize: 'none',
-          }}
-          className="h-28 w-full border-2 border-dark p-1 rounded-md"
-          name="biography"
-          // onChange={handleChange}
+        <div>Location</div>
+        <input
+          value={settingsState.location}
+          type="text"
+          className="border-2 border-dark p-1 rounded-md"
+          name="location"
+          onChange={handleChange}
         />
       </div>
       <div className="w-full mt-10">
@@ -71,25 +124,51 @@ export default function PersonalInformation() {
           <div className="w-1/2 mt-2">
             <div>LinkedIn</div>
             <input
-              placeholder=""
+              value={settingsState.linkedInUrl}
               type="text"
               className="border-2 border-dark p-1 rounded-md w-3/4"
-              name="linkedin"
-              // onChange={handleChange}
+              name="linkedInUrl"
+              onChange={handleChange}
             />
           </div>
           <div className="w-1/2 mt-2">
-            <div>Instagram</div>
+            <div>Twitter</div>
             <input
-              placeholder=""
+              value={settingsState.twitterUrl}
               type="text"
               className="border-2 border-dark p-1 rounded-md w-3/4"
-              name="instagram"
-              // onChange={handleChange}
+              name="twitterUrl"
+              onChange={handleChange}
             />
           </div>
+        </div>
+        <div className="w-1/2 mt-2">
+          <div>Website</div>
+          <input
+            value={settingsState.websiteUrl}
+            type="text"
+            className="border-2 border-dark p-1 rounded-md w-3/4"
+            name="websiteUrl"
+            onChange={handleChange}
+          />
         </div>
       </div>
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    settingsState: state.user.data.settingsState,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSettingsState: (state) => dispatch(setSettingsState(state)),
+    changeChild: (newChild) => dispatch(changeChild(newChild)),
+    toggleOverlay: () => dispatch(toggleOverlay()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PersonalInformation)

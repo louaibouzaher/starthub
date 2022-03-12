@@ -5,10 +5,12 @@ import Head from 'next/head'
 import WhiteLogo from '../src/assets/images/WhiteLogo'
 import { Button } from '../src/components/Button'
 import Link from 'next/link'
-import { login } from '../src/store/User/user.actions'
+import { login, refreshToken } from '../src/store/User/user.api'
+import store from '../src/store'
 
-function Login({ login }) {
+function Login({ token, isConnected }) {
   const router = useRouter()
+  // localStorage.removeItem('token')
 
   const [state, setState] = useState({
     email: '',
@@ -33,20 +35,24 @@ function Login({ login }) {
     } else {
       setErrors({ ...errors, email: false })
     }
-    try {
-      login(
-        {
-          username: state.email,
-          password: state.password,
-        },
-        () => {
-          router.push('/browse')
-        }
-      )
-    } catch (e) {
-      console.log(e)
-    }
+    await store.dispatch(
+      login({
+        username: state.email,
+        password: state.password,
+      })
+    )
   }
+  useEffect(() => {
+    if (token.access) {
+      localStorage.setItem('token', token.access)
+    }
+  }, [token.access])
+
+  useEffect(() => {
+    if (isConnected) {
+      router.push('/browse')
+    }
+  }, [isConnected])
 
   return (
     <>
@@ -59,11 +65,13 @@ function Login({ login }) {
         </div>
 
         <form>
-          <div class="bg-white px-10 py-12 rounded-xl w-screen shadow-md max-w-sm">
-            <div class="space-y-4">
-              <h1 class="text-center text-2xl  text-black-600">Login to your account</h1>
+          <div className="bg-white px-10 py-12 rounded-xl w-screen shadow-md max-w-sm">
+            <div className="space-y-4">
+              <h1 className="text-center text-2xl  text-black-600">
+                Login to your account
+              </h1>
               <div>
-                <label for="email" class="block mb-1 text-gray-600 ">
+                <label for="email" className="block mb-1 text-gray-600 ">
                   Email
                 </label>
                 <input
@@ -71,14 +79,14 @@ function Login({ login }) {
                   onChange={handleChange}
                   name="email"
                   type="text"
-                  class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  className="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
                 />
                 <div className="text-red-600 text-sm h-4 ">
                   {errors.email && 'Please enter a valid email'}
                 </div>
               </div>
               <div>
-                <label for="email" class="block mb-1 text-gray-600 ">
+                <label for="email" className="block mb-1 text-gray-600 ">
                   Password
                 </label>
                 <input
@@ -86,7 +94,7 @@ function Login({ login }) {
                   onChange={handleChange}
                   name="password"
                   type="password"
-                  class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  className="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
                 />
                 <div className="text-red-600 text-sm h-4 ">
                   {errors.passwordWrong && 'Wrong password'}
@@ -98,7 +106,7 @@ function Login({ login }) {
               <Button
                 label="Login"
                 btnStyle={' text-white tx-2xl '}
-                onClick={handleSubmit}
+                onClick={() => handleSubmit()}
               />
             </div>
             <div className="flex justify-center mt-10">
@@ -120,15 +128,13 @@ function Login({ login }) {
 
 const mapStateToProps = (state) => {
   return {
-    connectedUser: state.user.connectedUser,
-    token: state.user.token,
+    token: state.user.data.token,
+    isConnected: state.user.isConnected,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (payload, cb) => dispatch(login(payload, cb)),
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

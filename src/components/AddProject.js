@@ -1,27 +1,21 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-
-import { connectedUser } from '../data/user'
-import {
-  addProject,
-  editProject,
-  setAddProjectState,
-  toggleIsEditing,
-} from '../store/Projects/projects.actions'
+import store from '../store'
+import { setAddProjectState, toggleIsEditing } from '../store/Projects/projects.actions'
+import { putProject, postProject } from '../store/Projects/projects.api'
 import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import StepTwo from './AddProject/StepTwo'
 import StepOne from './AddProject/StepOne'
 import { Uploader, Downloader } from '../firebase/Helpers'
 
 const AddProject = ({
-  addProject,
-  editProject,
   toggleOverlay,
   setSubmitted,
   state,
   isEditing,
   setAddProjectState,
   toggleIsEditing,
+  connectedUser,
 }) => {
   const [step, setStep] = useState(0)
 
@@ -43,22 +37,25 @@ const AddProject = ({
     const videoLink = state.file ? await Downloader(videoRef) : null
 
     if (isEditing) {
-      editProject(state.id, {
-        ...state,
-        user: connectedUser,
-        video: videoLink || state.video,
-      })
+      store.dispatch(
+        putProject(state.id, {
+          ...state,
+          user: connectedUser,
+          video: videoLink || state.video,
+        })
+      )
       toggleIsEditing()
     } else {
-      addProject({
-        ...state,
-        user: connectedUser,
-        video: videoLink || state.video,
-      })
+      store.dispatch(
+        postProject({
+          ...state,
+          user: connectedUser,
+          video: videoLink || state.video,
+        })
+      )
     }
     setStep(0)
     toggleOverlay()
-    setAddProjectState({})
     setAddProjectState({})
     setSubmitted(true)
     setTimeout(() => {
@@ -98,13 +95,12 @@ const mapStateToProps = (state) => {
   return {
     state: state.projects.addProjectState,
     isEditing: state.projects.isEditing,
+    connectedUser: state.user.data.connectedUser,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addProject: (project) => dispatch(addProject(project)),
-    editProject: (projectId, project) => dispatch(editProject(projectId, project)),
     toggleOverlay: () => dispatch(toggleOverlay()),
     setAddProjectState: (newState) => dispatch(setAddProjectState(newState)),
     toggleIsEditing: () => dispatch(toggleIsEditing()),
