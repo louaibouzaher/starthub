@@ -1,8 +1,10 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import Link from 'next/link'
 import { connect } from 'react-redux'
-
+import { BiLinkAlt } from 'react-icons/bi'
+import { AiFillLinkedin, AiFillTwitterSquare } from 'react-icons/ai'
 import SectionIndexer from '../../src/components/SectionIndexer'
 import Navbar from '../../src/components/Navbar'
 import Post from '../../src/components/Post'
@@ -15,6 +17,20 @@ import { API_BASEURL } from '../../appConfig'
 function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
   const isOwner = connectedUser.id == user.user.id
   const router = useRouter()
+  const url = user.website_url.includes('http')
+    ? user.website_url
+    : `http://${user.website_url}`
+  const website = new URL(url).href
+
+  const linkedin_url = user.linkedin_url.includes('http')
+    ? user.linkedin_url
+    : `http://${user.linkedin_url}`
+  const linkedin = new URL(linkedin_url).href
+
+  const twitter_url = user.twitter_url.includes('http')
+    ? user.twitter_url
+    : `http://${user.twitter_url}`
+  const twitter = new URL(twitter_url).href
 
   return (
     <>
@@ -47,6 +63,29 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
               </div>
             </div>
             <div className="text-sm p-2 break-words">{user.biography}</div>
+            <div className="flex space-x-1 my-1">
+              {user.website_url && (
+                <Link href={website} passHref>
+                  <a target="_blank">
+                    <BiLinkAlt size={28} />
+                  </a>
+                </Link>
+              )}
+              {user.linkedin_url && (
+                <Link href={linkedin} passHref>
+                  <a target="_blank">
+                    <AiFillLinkedin size={28} />
+                  </a>
+                </Link>
+              )}
+              {user.twitter_url && (
+                <Link href={twitter} passHref>
+                  <a target="_blank">
+                    <AiFillTwitterSquare size={28} />
+                  </a>
+                </Link>
+              )}
+            </div>
             <div className="flex w-full mt-2">
               {!isOwner && (
                 <>
