@@ -36,10 +36,20 @@ const AddProject = ({
     const videoRef = state.file ? await Uploader(state.file, true) : null
     const videoLink = state.file ? await Downloader(videoRef) : null
 
+    const formatedDate =
+      (state.establishedOn?.getYear() % 100) +
+      2000 +
+      '-' +
+      ((state.establishedOn?.getMonth() < 9 ? '0' : '') +
+        (state.establishedOn?.getMonth() + 1)) +
+      '-' +
+      state.establishedOn?.getDate()
+    console.log(formatedDate)
     if (isEditing) {
       store.dispatch(
         putProject(state.id, {
           ...state,
+          establishedOn: formatedDate,
           user: connectedUser,
           video: videoLink || state.video,
         })
@@ -49,6 +59,7 @@ const AddProject = ({
       store.dispatch(
         postProject({
           ...state,
+          establishedOn: formatedDate,
           user: connectedUser,
           video: videoLink || state.video,
         })

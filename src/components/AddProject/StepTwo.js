@@ -17,7 +17,14 @@ export default function StepTwo({
   setStep,
 }) {
   const [isDatePickerDisabled, setIsDatePickerDisabled] = useState(false)
-
+  console.log(
+    (Project.establishedOn?.getYear() % 100) +
+      2000 +
+      '/' +
+      (Project.establishedOn?.getMonth() + 1) +
+      '/' +
+      Project.establishedOn?.getDate()
+  )
   return (
     <>
       <div className="flex flex-col w-full ">
@@ -39,8 +46,15 @@ export default function StepTwo({
             <DesktopDatePicker
               disabled={isDatePickerDisabled}
               label="Select Date"
-              inputFormat="MM/dd/yyyy"
-              value={Project.establishedOn}
+              inputFormat="yyyy/MM/dd"
+              value={
+                (Project.establishedOn?.getYear() % 100) +
+                2000 +
+                '/' +
+                (Project.establishedOn?.getMonth() + 1) +
+                '/' +
+                Project.establishedOn?.getDate()
+              }
               onChange={(newValue) => setProject({ ...Project, establishedOn: newValue })}
               renderInput={(params) => <TextField {...params} />}
             />
@@ -71,6 +85,16 @@ export default function StepTwo({
             onChange={handleChange}
           />
           <span>$</span>
+        </div>
+        <div className="flex w-full items-center mt-4">
+          <div className="mr-4 min-w-max">Number Of Employees</div>
+          <input
+            type="number"
+            className="w-1/4 border-2 border-dark p-2 rounded-md mx-1 text-purple text-center"
+            name="numberOfEmployees"
+            value={Project.numberOfEmployees}
+            onChange={handleChange}
+          />
         </div>
         <div className="flex flex-col w-1/2 mt-4">
           <label> Location </label>
