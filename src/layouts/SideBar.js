@@ -174,7 +174,6 @@ const SideBar = ({ section, toggleOverlay, connectedUser }) => {
           options={countries}
           sx={{ width: '95%' }}
           renderInput={(params) => <TextField {...params} label="Select a country" />}
-          
         />
       </div>
     </div>
