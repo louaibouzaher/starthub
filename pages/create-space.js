@@ -1,24 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { Button } from '../src/components/Button'
-import Link from 'next/dist/client/link'
+import Link from 'next/link'
 import SpaceWhiteImage from '../src/assets/images/SpaceWhiteImage'
 import StepOne from '../src/components/CreateSpace/StepOne'
 import StepTwo from '../src/components/CreateSpace/StepTwo'
 import StepThree from '../src/components/CreateSpace/StepThree'
 import StepFour from '../src/components/CreateSpace/StepFour'
-const CreateSpace = ({ toggleOverlay, setCreateSpaceState }) => {
+
+import { setAddSpaceState } from '../src/store/Spaces/spaces.actions'
+import { postSpace } from '../src/store/Spaces/spaces.api'
+import store from '../src/store'
+
+const CreateSpace = ({ toggleOverlay, setAddSpaceState, addSpaceState, isConnected }) => {
+  const router = useRouter()
   const [step, setStep] = useState(0)
-  const [state, setState] = useState({})
-  const [state2, setStateEnd] = useState({})
+
   const handleChange = (e) => {
-    setCreateSpaceState({
-      ...state,
+    setAddSpaceState({
+      ...addSpaceState,
       [e.target.name]: e.target.value,
     })
   }
+  useEffect(() => {
+    if (!isConnected) {
+      router.push('/login')
+    }
+  }, [isConnected])
 
-  const handleSubmit = async () => {}
+  const handleSubmit = async () => {
+    store.dispatch(postSpace(addSpaceState))
+  }
   return (
     <>
       <Head>
@@ -37,43 +51,30 @@ const CreateSpace = ({ toggleOverlay, setCreateSpaceState }) => {
           {step === 0 && (
             <StepOne
               handleChange={handleChange}
-              Space={state}
-              setSpace={setState}
-              setStep={setStep}
-              toggleOverlay={toggleOverlay}
+              space={addSpaceState}
+              setSpace={setAddSpaceState}
             />
           )}
           {step === 1 && (
             <StepTwo
               handleChange={handleChange}
-              Space={state}
-              Space2={state2}
-              setSpace={setState}
-              setSpaceE={setStateEnd}
-              handleSubmit={handleSubmit}
-              setStep={setStep}
-              toggleOverlay={toggleOverlay}
+              space={addSpaceState}
+              setSpace={setAddSpaceState}
             />
           )}
           {step === 2 && (
             <StepThree
               handleChange={handleChange}
-              Space={state}
-              setSpace={setState}
-              setSpaceE={setStateEnd}
-              handleSubmit={handleSubmit}
-              setStep={setStep}
-              toggleOverlay={toggleOverlay}
+              space={addSpaceState}
+              setSpace={setAddSpaceState}
             />
           )}
           {step === 3 && (
             <StepFour
               handleChange={handleChange}
-              Space={state}
-              setSpace={setState}
+              space={addSpaceState}
+              setSpace={addSpaceState}
               handleSubmit={handleSubmit}
-              setStep={setStep}
-              toggleOverlay={toggleOverlay}
             />
           )}
           <div className="absolute flex flex-row bottom-10 right-10">
@@ -99,9 +100,7 @@ const CreateSpace = ({ toggleOverlay, setCreateSpaceState }) => {
                 <Button
                   label="Submit"
                   btnStyle="bg-purple text-white border-2 border-purple mx-2"
-                  onClick={() => {
-                    console.log('Create space')
-                  }}
+                  onClick={handleSubmit}
                 />
               </Link>
             )}
@@ -112,4 +111,19 @@ const CreateSpace = ({ toggleOverlay, setCreateSpaceState }) => {
   )
 }
 
-export default CreateSpace
+const mapStateToProps = (state) => {
+  return {
+    addSpaceState: state.spaces.addSpaceState,
+    isConnected: state.user.isConnected,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setAddSpaceState: (state) => {
+      dispatch(setAddSpaceState(state))
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateSpace)

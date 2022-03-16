@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { Button } from '../Button'
-import Link from 'next/dist/client/link'
-import { space } from '../../data/space'
+
+import { space as participants } from '../../data/space'
 import Autocomplete from '@mui/material/Autocomplete'
 import { Box } from '@mui/system'
-import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 
-export default function StepThree({ setStep }) {
+export default function StepThree({ setSpace, space }) {
+  console.log(participants)
   return (
     <>
       <h2 className="font-bold text-xl">Add Prticipant</h2>
@@ -15,7 +15,10 @@ export default function StepThree({ setStep }) {
       <Autocomplete
         multiple
         id="tags-outlined"
-        options={space.pariticipants}
+        options={participants.pariticipants}
+        onChange={(e) => {
+          // Add Participants here
+        }}
         getOptionLabel={(option) => option.firstName + option.lastName}
         sx={{ width: '50%' }}
         renderOption={(props, option) => (
@@ -29,9 +32,7 @@ export default function StepThree({ setStep }) {
             {option.firstName} {option.lastName}
           </Box>
         )}
-        renderInput={(params) => (
-          <TextField {...params} label="Select particepants" placeholder="Favorites" />
-        )}
+        renderInput={(params) => <TextField {...params} label="Select participants" />}
       />
     </>
   )

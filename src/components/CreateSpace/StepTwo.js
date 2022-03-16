@@ -9,7 +9,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import TextField from '@mui/material/TextField'
 
-export default function StepTwo({ setSpaceE, setSpace, Space2, Space, setStep }) {
+export default function StepTwo({ space, handleChange, setSpace }) {
   const [isDatePickerDisabled] = useState(false)
 
   return (
@@ -20,9 +20,9 @@ export default function StepTwo({ setSpaceE, setSpace, Space2, Space, setStep })
           disabled={isDatePickerDisabled}
           label="Select Date"
           inputFormat="MM/dd/yyyy"
-          value={Space.establishedOn}
+          value={space.startsOn}
           onChange={(v) => {
-            setSpace({ ...Space, establishedOn: v })
+            setSpace({ ...space, startsOn: v })
           }}
           renderInput={(params) => <TextField {...params} />}
         />
@@ -33,9 +33,9 @@ export default function StepTwo({ setSpaceE, setSpace, Space2, Space, setStep })
           disabled={isDatePickerDisabled}
           label="Select Date"
           inputFormat="MM/dd/yyyy"
-          value={Space2.establishedOn}
+          value={space.endsOn}
           onChange={(newvalue) => {
-            setSpaceE({ ...Space2, establishedOn: newvalue })
+            setSpace({ ...space, endsOn: newvalue })
           }}
           renderInput={(param) => <TextField {...param} />}
         />
@@ -46,6 +46,10 @@ export default function StepTwo({ setSpaceE, setSpace, Space2, Space, setStep })
         id="combo-box-demo"
         options={countries}
         sx={{ width: '40%' }}
+        value={space.location}
+        onChange={(e) => {
+          setSpace({ ...space, location: e.target.innerHTML })
+        }}
         renderOption={(props, option) => (
           <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
             <img
@@ -55,7 +59,7 @@ export default function StepTwo({ setSpaceE, setSpace, Space2, Space, setStep })
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               alt=""
             />
-            {option.label} ({option.code})
+            <div>{option.label}</div>
           </Box>
         )}
         renderInput={(params) => <TextField {...params} label="Select a country" />}

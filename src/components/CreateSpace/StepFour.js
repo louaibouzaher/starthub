@@ -1,21 +1,20 @@
-import React, { useState } from 'react'
-import { Button } from '../Button'
-import Link from 'next/dist/client/link'
-import { space } from '../../data/space'
+import React from 'react'
+import { space as judges } from '../../data/space'
 import Autocomplete from '@mui/material/Autocomplete'
 import { Box } from '@mui/system'
-import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 
-export default function StepFour({ setStep }) {
+export default function StepFour({ setSpace, space }) {
   return (
     <>
       <h2 className="font-bold text-xl">Add Judges</h2>
-
       <Autocomplete
         multiple
         id="tags-outlined"
-        options={space.judges}
+        options={judges.judges}
+        onChange={(e) => {
+          // Add Judges here
+        }}
         getOptionLabel={(option) => option.firstName + option.lastName}
         sx={{ width: '50%' }}
         renderOption={(props, option) => (
@@ -39,9 +38,7 @@ export default function StepFour({ setStep }) {
             </div>
           </div>
         )}
-        renderInput={(params) => (
-          <TextField {...params} label="Select judges" placeholder="Favorites" />
-        )}
+        renderInput={(params) => <TextField {...params} label="Select judges" />}
       />
     </>
   )
