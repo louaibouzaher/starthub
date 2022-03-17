@@ -10,11 +10,13 @@ import {
   addProjectSuccess,
 } from '../Projects/projects.actions'
 
-export const getProjects = () => {
+export const getProjects = (queryParams = {}) => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .get(API_BASEURL + `projects/`)
+      .get(API_BASEURL + `projects/`, {
+        params: queryParams,
+      })
       .then((result) => {
         console.log(result)
         dispatch(getProjectsSuccess(result.data))
