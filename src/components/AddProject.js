@@ -59,6 +59,7 @@ const AddProject = ({
       store.dispatch(
         postProject({
           ...state,
+          space: 1,
           establishedOn: formatedDate,
           user: connectedUser,
           video: videoLink || state.video,

@@ -42,6 +42,7 @@ const AddPost = ({
       store.dispatch(
         postPost({
           ...state,
+          space: 1,
           picture: pictureLink,
         })
       )
