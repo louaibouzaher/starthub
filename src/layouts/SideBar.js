@@ -100,7 +100,7 @@ const SideBar = ({ section, toggleOverlay, connectedUser }) => {
     // const field = selectedFields.map(id => fields[id].title).join(',')
     store.dispatch(
       getProjects({
-        estimatedCapital: `[${value[0]},${value[1]}]`,
+        // estimatedCapital: `[${value[0]},${value[1]}]`,
         numberOfEmployees: `[${numberOfEmployees[0]},${numberOfEmployees[1]}]`,
         location: location,
         minYears: yearsInBusiness[0],
