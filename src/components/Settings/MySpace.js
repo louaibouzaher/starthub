@@ -19,7 +19,7 @@ export function MySpaces() {
             <div className="text-4xl text-dark font-bold">{s.name}</div>
             <div className=" flex flex-row text-xl font-bold m-2">
               <div>From:</div>
-              <div className=" ml-4">{s.dateFrom.toISOString()}</div>
+              <div className=" ml-4">{s.dateFrom.toDateString()}</div>
             </div>
             <div className=" flex flex-row text-xl font-bold m-2">
               <div>To:</div>
@@ -28,6 +28,7 @@ export function MySpaces() {
           </div>
           <div className=" flex flex-col m-1">
             <div className="text-xl font-bold"> Position</div>
+            
           </div>{' '}
         </div>
         )
