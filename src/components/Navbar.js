@@ -16,7 +16,7 @@ const Navbar = ({ connectedUser, isConnected }) => {
     if (isConnected) {
       store.dispatch(getProfile(connectedUser.id))
     }
-  }, [isConnected])
+  }, [isConnected, connectedUser.id])
 
   return (
     <div

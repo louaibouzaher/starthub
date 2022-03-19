@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
 import { connect } from 'react-redux'
-import { posts } from '../../src/data/posts'
 import Navbar from '../../src/components/Navbar'
 import OverlayWindow from '../../src/components/OverlayWindow'
 import { Button } from '../../src/components/Button'
@@ -17,14 +15,13 @@ import { API_BASEURL } from '../../appConfig'
 import Head from 'next/head'
 
 const Post = ({ post }) => {
-  const router = useRouter()
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
   ]
-
+  console.log(post)
   return (
     <>
       <Head>
