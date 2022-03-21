@@ -11,7 +11,9 @@ import TextField from '@mui/material/TextField'
 
 export default function StepTwo({ space, handleChange, setSpace }) {
   const [isDatePickerDisabled] = useState(false)
-
+  const handleLocation = (e, newValue, reason) => {
+    setSpace({ ...space, location: newValue })
+  }
   return (
     <>
       <div className="my-2 font-bold text-dark">Start Date</div>
@@ -47,9 +49,7 @@ export default function StepTwo({ space, handleChange, setSpace }) {
         options={countries}
         sx={{ width: '40%' }}
         value={space.location}
-        onChange={(e) => {
-          setSpace({ ...space, location: e.target.innerHTML })
-        }}
+        onInputChange={handleLocation}
         renderOption={(props, option) => (
           <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
             <img

@@ -96,7 +96,7 @@ const CreateSpace = ({ toggleOverlay, setAddSpaceState, addSpaceState, isConnect
               />
             )}
             {step == 3 && (
-              <Link href="space/1" passHref>
+              <Link href="settings/" passHref>
                 <Button
                   label="Submit"
                   btnStyle="bg-purple text-white border-2 border-purple mx-2"
