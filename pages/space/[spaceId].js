@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import Head from 'next/head'
 import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
 import { useRouter } from 'next/router'
@@ -11,11 +12,35 @@ import Post from '../../src/components/Post'
 import Project from '../../src/components/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 import { getMonth } from '../../src/helpers/date'
-const Space = ({ sectionIndexer, space }) => {
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../src/store/OverlayWindow/overlayWindow.actions'
+import store from '../../src/store'
+import AddPost from '../../src/components/AddPost'
+import AddProject from '../../src/components/AddProject'
+import OverlayWindow from '../../src/components/OverlayWindow'
+
+const Space = ({ sectionIndexer, space, isLoading, toggleOverlay, changeChild }) => {
   const startsOn = new Date(space.startsOn)
   const endsOn = new Date(space.endsOn)
+
+  useEffect(() => {
+    changeChild(
+      sectionIndexer.id === 0 ? (
+        <AddPost space={space.id} />
+      ) : (
+        <AddProject space={space.id} />
+      )
+    )
+  }, [sectionIndexer.id, isLoading])
+
   return (
     <>
+      <Head>
+        <title>{space.title}</title>
+      </Head>
+      <OverlayWindow />
       <Navbar />
       <div className="h-screen w-full flex flex-col justify-start items-start pt-28 p-20">
         <div className="flex w-full">
@@ -101,6 +126,18 @@ const Space = ({ sectionIndexer, space }) => {
           <div className="text-xl text-dark mb-10 mt-2">
             Check the latest updates about this space.
           </div>
+          <Button
+            onClick={() => {
+              toggleOverlay()
+            }}
+            label={`New ${sectionIndexer.title.substring(
+              0,
+              sectionIndexer.title.length - 1
+            )}`}
+            btnStyle={
+              'max-w-max px-20  bottom-10 right-10 bg-white border-purple border-2 text-purple w-full text-center hover:bg-purple hover:text-white'
+            }
+          />
           <SectionIndexer />
           {sectionIndexer.id === 0
             ? space.posts.map((p) => (
@@ -135,11 +172,16 @@ const Space = ({ sectionIndexer, space }) => {
 const mapStateToProps = (state) => {
   return {
     sectionIndexer: state.sectionIndexer,
+    isLoading: state.posts.loading || state.projects.loading,
+    isOverlayOpen: state.overlayWindow.isOpen,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    changeChild: (newChild) => dispatch(changeChild(newChild)),
+    toggleOverlay: () => dispatch(toggleOverlay()),
+  }
 }
 
 export async function getServerSideProps({ params }) {

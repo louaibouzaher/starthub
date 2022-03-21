@@ -7,6 +7,7 @@ import store from '../src/store'
 
 import Navbar from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
+import Link from 'next/link'
 import SectionIndexer from '../src/components/SectionIndexer'
 import Post from '../src/components/Post'
 import Project from '../src/components/Project'
@@ -21,7 +22,6 @@ import { getPosts } from '../src/store/Posts/posts.api'
 import { getProjects } from '../src/store/Projects/projects.api'
 
 function Browse({
-  isOverlayOpen,
   isLoading,
   posts,
   projects,
@@ -36,13 +36,9 @@ function Browse({
 
   useEffect(() => {
     changeChild(
-      sectionIndexer.id === 0 ? (
-        <AddPost setSubmitted={setSubmitted} />
-      ) : (
-        <AddProject setSubmitted={setSubmitted} />
-      )
+      sectionIndexer.id === 0 ? <AddPost space={1} /> : <AddProject space={1} />
     )
-  }, [sectionIndexer.id, isLoading, isOverlayOpen])
+  }, [sectionIndexer.id, isLoading])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -63,7 +59,6 @@ function Browse({
       </Head>
       <OverlayWindow />
       <Navbar />
-
       <SideBar section={sectionIndexer.title} />
       <div className="App w-full flex flex-col justify-start items-center pt-16">
         <Feed>
@@ -73,6 +68,10 @@ function Browse({
           <div className="mt-2 font-thin">
             Here are some of the top selections for you.
           </div>
+          {/* TODO: Remove this link */}
+          <Link href="space/1" passHref>
+            <a>Space</a>
+          </Link>
           <SectionIndexer />
           {sectionIndexer.id === 0
             ? posts?.map((p) => (
@@ -112,7 +111,7 @@ function Browse({
 const mapStateToProps = (state) => {
   return {
     isLoading: state.posts.loading || state.projects.loading,
-    isLoading: state.overlayWindow.isOpen,
+    isOverlayOpen: state.overlayWindow.isOpen,
     posts: state.posts.list,
     projects: state.projects.list,
     sectionIndexer: state.sectionIndexer,

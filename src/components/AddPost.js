@@ -10,6 +10,7 @@ import { Downloader, Uploader } from '../firebase/Helpers'
 import Loader from './Loader'
 
 const AddPost = ({
+  space,
   toggleOverlay,
   state,
   isEditing,
@@ -46,7 +47,7 @@ const AddPost = ({
       await store.dispatch(
         postPost({
           ...state,
-          space: 1,
+          space: space,
           picture: pictureLink,
         })
       )

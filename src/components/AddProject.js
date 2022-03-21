@@ -10,6 +10,7 @@ import { Uploader, Downloader } from '../firebase/Helpers'
 import Loader from './Loader'
 
 const AddProject = ({
+  space,
   toggleOverlay,
   state,
   isEditing,
@@ -62,7 +63,7 @@ const AddProject = ({
       store.dispatch(
         postProject({
           ...state,
-          space: 1,
+          space: space,
           establishedOn: formatedDate,
           user: connectedUser,
           video: videoLink || state.video,
