@@ -51,11 +51,11 @@ const AddPost = ({
         })
       )
     }
+    toggleOverlay()
+    toggleOverlay()
     if (error && !isLoading) {
       changeChild(<div>{JSON.stringify(error.message)}</div>)
     } else if (!error && !isLoading) {
-      toggleOverlay()
-      toggleOverlay()
       changeChild(<div>Successfully Posted ✅</div>)
     }
     setTimeout(() => {

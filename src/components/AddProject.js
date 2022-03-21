@@ -69,12 +69,11 @@ const AddProject = ({
         })
       )
     }
+    toggleOverlay()
+    toggleOverlay()
     if (error && !isLoading) {
-      console.log('here1')
       changeChild(<div>{JSON.stringify(error.message)}</div>)
     } else if (!error && !isLoading) {
-      toggleOverlay()
-      toggleOverlay()
       changeChild(<div>Successfully Posted ✅</div>)
     }
     setTimeout(() => {
