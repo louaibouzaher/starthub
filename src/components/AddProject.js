@@ -3,19 +3,22 @@ import { connect } from 'react-redux'
 import store from '../store'
 import { setAddProjectState, toggleIsEditing } from '../store/Projects/projects.actions'
 import { putProject, postProject } from '../store/Projects/projects.api'
-import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
+import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import StepTwo from './AddProject/StepTwo'
 import StepOne from './AddProject/StepOne'
 import { Uploader, Downloader } from '../firebase/Helpers'
+import Loader from './Loader'
 
 const AddProject = ({
   toggleOverlay,
-  setSubmitted,
   state,
   isEditing,
   setAddProjectState,
   toggleIsEditing,
   connectedUser,
+  changeChild,
+  isLoading,
+  error,
 }) => {
   const [step, setStep] = useState(0)
 
@@ -66,13 +69,19 @@ const AddProject = ({
         })
       )
     }
-    setStep(0)
-    toggleOverlay()
-    setAddProjectState({})
-    setSubmitted(true)
+    if (error && !isLoading) {
+      console.log('here1')
+      changeChild(<div>{JSON.stringify(error.message)}</div>)
+    } else if (!error && !isLoading) {
+      toggleOverlay()
+      toggleOverlay()
+      changeChild(<div>Successfully Posted ✅</div>)
+    }
     setTimeout(() => {
-      setSubmitted(false)
-    }, 3000)
+      toggleOverlay()
+    }, 2000)
+
+    setAddProjectState({})
   }
 
   return (
@@ -108,12 +117,15 @@ const mapStateToProps = (state) => {
     state: state.projects.addProjectState,
     isEditing: state.projects.isEditing,
     connectedUser: state.user.data.connectedUser,
+    isLoading: state.projects.loading,
+    error: state.projects.error,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleOverlay: () => dispatch(toggleOverlay()),
+    changeChild: (newChild) => dispatch(changeChild(newChild)),
     setAddProjectState: (newState) => dispatch(setAddProjectState(newState)),
     toggleIsEditing: () => dispatch(toggleIsEditing()),
   }

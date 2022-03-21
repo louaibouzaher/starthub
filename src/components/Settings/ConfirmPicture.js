@@ -1,12 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setSettingsState } from '../../store/User/user.actions'
-import { toggleOverlay } from '../../store/OverlayWindow/overlayWindow.actions'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../store/OverlayWindow/overlayWindow.actions'
 import { Button } from '../Button'
 import { Downloader, Uploader } from '../../firebase/Helpers'
+import Loader from '../Loader'
 
-const ConfirmPicture = ({ file, setSettingsState, settingsState, toggleOverlay }) => {
+const ConfirmPicture = ({
+  file,
+  setSettingsState,
+  settingsState,
+  toggleOverlay,
+  changeChild,
+}) => {
   const handleSubmit = async () => {
+    changeChild(<Loader />)
     const pictureRef = file ? await Uploader(file) : null
     const pictureLink = file ? await Downloader(pictureRef) : null
     setSettingsState({ ...settingsState, picture: pictureLink })
@@ -56,6 +67,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setSettingsState: (state) => dispatch(setSettingsState(state)),
     toggleOverlay: () => dispatch(toggleOverlay()),
+    changeChild: (newChild) => dispatch(changeChild(newChild)),
   }
 }
 

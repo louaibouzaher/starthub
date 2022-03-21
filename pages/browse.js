@@ -21,6 +21,8 @@ import { getPosts } from '../src/store/Posts/posts.api'
 import { getProjects } from '../src/store/Projects/projects.api'
 
 function Browse({
+  isOverlayOpen,
+  isLoading,
   posts,
   projects,
   sectionIndexer,
@@ -40,7 +42,7 @@ function Browse({
         <AddProject setSubmitted={setSubmitted} />
       )
     )
-  }, [sectionIndexer.id])
+  }, [sectionIndexer.id, isLoading, isOverlayOpen])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -109,6 +111,8 @@ function Browse({
 
 const mapStateToProps = (state) => {
   return {
+    isLoading: state.posts.loading || state.projects.loading,
+    isLoading: state.overlayWindow.isOpen,
     posts: state.posts.list,
     projects: state.projects.list,
     sectionIndexer: state.sectionIndexer,

@@ -25,6 +25,9 @@ export default function StepTwo({
       '/' +
       Project.establishedOn?.getDate()
   )
+  const handleLocation = (e, newValue, reason) => {
+    setProject({ ...Project, location: newValue })
+  }
   return (
     <>
       <div className="flex flex-col w-full ">
@@ -104,7 +107,7 @@ export default function StepTwo({
             options={countries}
             sx={{ width: 300 }}
             value={Project.location}
-            onChange={(e) => setProject({ ...Project, location: e.target.innerHTML })}
+            onInputChange={handleLocation}
             renderInput={(params) => <TextField {...params} label="Select a country" />}
           />{' '}
         </div>
