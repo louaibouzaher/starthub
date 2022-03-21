@@ -19,7 +19,7 @@ import UserAvatar from '../assets/images/UserAvatar'
 import { Button } from './Button'
 import { reactionsColors } from '../data/general'
 import tailwindConfig from '../../tailwind.config'
-
+import { getMonth } from '../helpers/date'
 import AddPost from './AddPost'
 import store from '../store'
 
@@ -61,6 +61,7 @@ const Post = ({
     )
     toggleOverlay()
   }
+  const time = new Date(post.time)
 
   return (
     <div
@@ -132,7 +133,7 @@ const Post = ({
               'text-xs opacity-50 ' + (post.picture ? ' text-white' : 'text-dark')
             }
           >
-            {post.time}
+            {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()}
           </div>
         </div>
         {!isOwner && Math.floor(Math.random() * 2) === 0 && (

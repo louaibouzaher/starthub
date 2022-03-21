@@ -20,6 +20,7 @@ import { setAddProjectState, toggleIsEditing } from '../store/Projects/projects.
 import { deleteProject } from '../store/Projects/projects.api'
 import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import AddProject from './AddProject'
+import { getMonth } from '../helpers/date'
 
 const Project = ({
   user,
@@ -58,6 +59,7 @@ const Project = ({
     )
     toggleOverlay()
   }
+  const time = new Date(project.time)
 
   return (
     <div
@@ -96,6 +98,9 @@ const Project = ({
       </div>
 
       <div className="text-4xl text-dark font-bold">{project.title}</div>
+      <div className="text-xs opacity-50">
+        {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()}
+      </div>
       <div className="flex mt-2">
         {project.tags
           ?.split(',')

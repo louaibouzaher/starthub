@@ -21,6 +21,7 @@ import { changeChild } from '../../src/store/OverlayWindow/overlayWindow.actions
 import Head from 'next/head'
 import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
+import { getMonth } from '../../src/helpers/date'
 
 const Project = ({ toggleOverlay, changeChild, project }) => {
   const reactions = [
@@ -38,7 +39,7 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
   }
 
   const establishedOn = new Date(project.establishedOn)
-
+  const time = new Date(project.time)
   return (
     <>
       <Head>
@@ -66,11 +67,15 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
         </div>
         <div className=" w-full flex justify-between mb-4 text-4xl text-dark font-bold pt-8  ">
           <div>{project.title}</div>
+
           <Button
             btnStyle=" w-1/4 bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white"
             label="Get In Touch"
             onClick={handleGetInTouch}
           />
+        </div>
+        <div className="text-xs opacity-50 mb-2">
+          {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()}
         </div>
         <div className="flex space-x-2 justify-start ">
           {project.tags
@@ -85,6 +90,7 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
               )
             })}
         </div>
+
         <div className="flex flex-row items-center">
           <Location className="mr-1" />{' '}
           <span className="my-2 text-dark">{project.location}</span>
@@ -93,15 +99,15 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
         <div className={' my-2 text-dark'}>{project.description}</div>
         <div className="flex flex-col justify-start items-start mt-2">
           <div className=" text-xl text-dark my-2">
-            <div className="my-2">
-              <span className=" text-xl font-bold">Field </span>
-              <span className="text-purple">{project.field}</span>
+            <div className="my-2 space-x-2">
+              <span className=" text-xl font-bold">Industry </span>
+              <span className="text-purple">{project.industry}</span>
             </div>
-            <div className="my-2">
+            <div className="my-2  space-x-2">
               <span className=" text-xl font-bold ">Number of Employees </span>
               <span className="text-purple">{project.numberOfEmployees}</span>
             </div>
-            <div className="my-2">
+            <div className="my-2  space-x-2">
               <span className=" text-xl font-bold ">Inception Date </span>
               <span className="text-purple">
                 {project.establishedOn
@@ -113,7 +119,7 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
                   : 'Not yet'}
               </span>
             </div>
-            <div className="my-2">
+            <div className="my-2  space-x-2">
               <span className=" text-xl font-bold">Capital </span>
               <span className="text-purple"> {project.estimatedCapital}$ </span>
             </div>
