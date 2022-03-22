@@ -21,11 +21,11 @@ export function MySpaces() {
               <div className="text-4xl text-dark font-bold">{space.name}</div>
               <div className=" flex flex-row text-xl font-bold m-2">
                 <div>From:</div>
-                <div className=" ml-4">{space.dateFrom.toDateString()}</div>
+                <div className="text-purple ml-4">{space.dateFrom.toDateString()}</div>
               </div>
               <div className=" flex flex-row text-xl font-bold m-2">
                 <div>To:</div>
-                <div className=" ml-10">{space.dateTo.toDateString()}</div>
+                <div className="text-purple ml-10">{space.dateTo.toDateString()}</div>
               </div>
             </div>
             <div className=" ml-5 w-1/5 text-2xl font-bold felx flex-col">
