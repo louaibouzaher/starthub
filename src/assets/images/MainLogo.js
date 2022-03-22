@@ -1,6 +1,7 @@
-export default function MainLogo({ width }) {
+export default function MainLogo({ width, className }) {
   return (
     <svg
+      className={className}
       width={width ? width : '140'}
       height="29"
       viewBox="0 0 158 29"

@@ -30,17 +30,26 @@ const Navbar = ({ connectedUser, isConnected }) => {
       </Link>
 
       <div className="flex flex-row ">
+        <Link href="/space" passHref>
+          <Button
+            label="Spaces"
+            btnStyle={isConnected ? 'text-white' : 'text-dark'}
+            onClick={() => {
+              console.log('Spaces')
+            }}
+          />
+        </Link>
+        <Link href="/browse" passHref>
+          <Button
+            label="Browse"
+            btnStyle={isConnected ? 'text-white' : 'text-dark'}
+            onClick={() => {
+              console.log('Browse')
+            }}
+          />
+        </Link>
         {!isConnected && (
           <>
-            <Link href="/browse" passHref>
-              <Button
-                label="Browse"
-                btnStyle={'text-dark mx-2 '}
-                onClick={() => {
-                  console.log('Browse')
-                }}
-              />
-            </Link>
             <Link href="/login" passHref>
               <Button
                 label="Login"
