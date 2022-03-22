@@ -80,7 +80,7 @@ function Settings({ settingsState, connectedUser }) {
             {section == 0 && <PersonalInformation />}
             {section == 1 && <PlatformPreferences />}
             {section == 2 && <AccountSecurity />}
-            {section == 3 && <MySpaces/>}
+            {section == 3 && <MySpaces />}
           </div>
         </div>
       </div>
