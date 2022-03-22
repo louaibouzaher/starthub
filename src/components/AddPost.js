@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
 import store from '../store'
 import { setAddPostState, toggleIsEditing } from '../store/Posts/posts.actions'
 import { postPost, putPost } from '../store/Posts/posts.api'
@@ -8,7 +7,7 @@ import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow
 import { Button } from './Button'
 import { Downloader, Uploader } from '../firebase/Helpers'
 import Loader from './Loader'
-
+import { notify } from '../helpers/notifications'
 const AddPost = ({
   space,
   toggleOverlay,
@@ -53,16 +52,11 @@ const AddPost = ({
       )
     }
     toggleOverlay()
-    toggleOverlay()
-    if (error && !isLoading) {
-      changeChild(<div>{JSON.stringify(error.message)}</div>)
-    } else if (!error && !isLoading) {
-      changeChild(<div>Successfully Posted ✅</div>)
+    if (error) {
+      notify(error, false)
+    } else {
+      notify('Successfully Posted ✅', true)
     }
-    setTimeout(() => {
-      toggleOverlay()
-    }, 2000)
-
     setAddPostState({})
   }
 

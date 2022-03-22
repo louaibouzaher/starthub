@@ -8,6 +8,7 @@ import StepTwo from './AddProject/StepTwo'
 import StepOne from './AddProject/StepOne'
 import { Uploader, Downloader } from '../firebase/Helpers'
 import Loader from './Loader'
+import { notify } from '../helpers/notifications'
 
 const AddProject = ({
   space,
@@ -37,6 +38,7 @@ const AddProject = ({
   }
 
   const handleSubmit = async () => {
+    changeChild(<Loader />)
     const videoRef = state.file ? await Uploader(state.file, true) : null
     const videoLink = state.file ? await Downloader(videoRef) : null
 
@@ -71,16 +73,11 @@ const AddProject = ({
       )
     }
     toggleOverlay()
-    toggleOverlay()
-    if (error && !isLoading) {
-      changeChild(<div>{JSON.stringify(error.message)}</div>)
-    } else if (!error && !isLoading) {
-      changeChild(<div>Successfully Posted ✅</div>)
+    if (error) {
+      notify(error, false)
+    } else {
+      notify('Successfully Posted ✅', true)
     }
-    setTimeout(() => {
-      toggleOverlay()
-    }, 2000)
-
     setAddProjectState({})
   }
 
