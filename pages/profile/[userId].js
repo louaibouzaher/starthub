@@ -113,9 +113,30 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
         <div className="w-full my-4 min-h-screen rounded-md">
           <SectionIndexer />
           {sectionIndexer.id === 0
-            ? user.posts?.map((p) => <Post post={p} user={p.user} isOwnPost />)
+            ? user.posts?.map((p) => (
+                <Post
+                  post={p}
+                  user={{
+                    id: p.owner?.id,
+                    firstName: p.owner?.first_name,
+                    lastName: p.owner?.last_name,
+                    avatar: p.profile?.profilePic,
+                  }}
+                  isOwnPost
+                />
+              ))
             : user.projects?.map((p) => (
-                <Project project={p} user={p.user} isOwnProject />
+                <Project
+                  project={p}
+                  user={{
+                    id: p.owner?.id,
+                    firstName: p.owner?.first_name,
+                    lastName: p.owner?.last_name,
+                    avatar: p.profile?.profilePic,
+                    position: p.profile?.position,
+                  }}
+                  isOwnProject
+                />
               ))}
         </div>
       </div>
@@ -125,10 +146,27 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
 }
 
 export async function getServerSideProps({ params }) {
-  const user = await axios.get(API_BASEURL + `profiles/${params.userId}`).then((res) => {
-    return res.data
-  })
+  const profile = await axios
+    .get(API_BASEURL + `profiles/${params.userId}`)
+    .then((res) => {
+      return res.data
+    })
+  const projects = await axios
+    .get(API_BASEURL + `projects/?owner=${params.userId}&space=1`)
+    .then((res) => {
+      return res.data
+    })
+  const posts = await axios
+    .get(API_BASEURL + `posts/?owner=${params.userId}&space=1`)
+    .then((res) => {
+      return res.data
+    })
 
+  const user = {
+    ...profile,
+    projects,
+    posts,
+  }
   return {
     props: {
       user,

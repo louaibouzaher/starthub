@@ -1,20 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
 import store from '../store'
 import { setAddPostState, toggleIsEditing } from '../store/Posts/posts.actions'
-import { getPosts, postPost, putPost } from '../store/Posts/posts.api'
-import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
+import { postPost, putPost } from '../store/Posts/posts.api'
+import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from './Button'
 import { Downloader, Uploader } from '../firebase/Helpers'
-
+import Loader from './Loader'
+import { notify } from '../helpers/notifications'
 const AddPost = ({
-  setSubmitted,
+  space,
   toggleOverlay,
   state,
   isEditing,
   setAddPostState,
   toggleIsEditing,
+  changeChild,
+  isLoading,
+  error,
 }) => {
   const handleChange = (e) => {
     setAddPostState({
@@ -28,10 +31,11 @@ const AddPost = ({
   }
 
   const handleSubmit = async () => {
+    changeChild(<Loader />)
     const pictureRef = state.file ? await Uploader(state.file) : null
     const pictureLink = state.file ? await Downloader(pictureRef) : null
     if (isEditing) {
-      store.dispatch(
+      await store.dispatch(
         putPost(state.id, {
           ...state,
           pictureLink: pictureLink || null,
@@ -39,20 +43,21 @@ const AddPost = ({
       )
       toggleIsEditing()
     } else {
-      store.dispatch(
+      await store.dispatch(
         postPost({
           ...state,
+          space: space,
           picture: pictureLink,
         })
       )
     }
-
     toggleOverlay()
+    if (error) {
+      notify(error, false)
+    } else {
+      notify('Successfully Posted ✅', true)
+    }
     setAddPostState({})
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-    }, 3000)
   }
 
   const labelUpload = 'Seems empty here 🤔'
@@ -120,12 +125,15 @@ const mapStateToProps = (state) => {
     state: state.posts.addPostState,
     isEditing: state.posts.isEditing,
     connectedUser: state.user.data.connectedUser,
+    isLoading: state.posts.loading,
+    error: state.posts.error,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleOverlay: () => dispatch(toggleOverlay()),
+    changeChild: (newChild) => dispatch(changeChild(newChild)),
     toggleIsEditing: () => dispatch(toggleIsEditing()),
     setAddPostState: (state) => dispatch(setAddPostState(state)),
   }

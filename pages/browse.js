@@ -4,14 +4,15 @@ import { useRouter } from 'next/router'
 
 import { changeChild } from '../src/store/OverlayWindow/overlayWindow.actions'
 import store from '../src/store'
-
+import 'react-toastify/dist/ReactToastify.css'
 import Navbar from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
+import Link from 'next/link'
 import SectionIndexer from '../src/components/SectionIndexer'
 import Post from '../src/components/Post'
 import Project from '../src/components/Project'
 import SideBar from '../src/layouts/SideBar'
-
+import { ToastContainer, toast } from 'react-toastify'
 import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
@@ -21,6 +22,7 @@ import { getPosts } from '../src/store/Posts/posts.api'
 import { getProjects } from '../src/store/Projects/projects.api'
 
 function Browse({
+  isLoading,
   posts,
   projects,
   sectionIndexer,
@@ -34,13 +36,9 @@ function Browse({
 
   useEffect(() => {
     changeChild(
-      sectionIndexer.id === 0 ? (
-        <AddPost setSubmitted={setSubmitted} />
-      ) : (
-        <AddProject setSubmitted={setSubmitted} />
-      )
+      sectionIndexer.id === 0 ? <AddPost space={1} /> : <AddProject space={1} />
     )
-  }, [sectionIndexer.id])
+  }, [sectionIndexer.id, isLoading])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -61,6 +59,17 @@ function Browse({
       </Head>
       <OverlayWindow />
       <Navbar />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
 
       <SideBar section={sectionIndexer.title} />
       <div className="App w-full flex flex-col justify-start items-center pt-16">
@@ -71,6 +80,10 @@ function Browse({
           <div className="mt-2 font-thin">
             Here are some of the top selections for you.
           </div>
+          {/* TODO: Remove this link */}
+          <Link href="space/1" passHref>
+            <a>Space</a>
+          </Link>
           <SectionIndexer />
           {sectionIndexer.id === 0
             ? posts?.map((p) => (
@@ -109,6 +122,8 @@ function Browse({
 
 const mapStateToProps = (state) => {
   return {
+    isLoading: state.posts.loading || state.projects.loading,
+    isOverlayOpen: state.overlayWindow.isOpen,
     posts: state.posts.list,
     projects: state.projects.list,
     sectionIndexer: state.sectionIndexer,

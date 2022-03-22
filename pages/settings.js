@@ -70,7 +70,7 @@ function Settings({ settingsState, connectedUser }) {
             />
             <Button
               label="Discard"
-              btnStyle="mx-1  border-2 border-dark "
+              btnStyle="mx-1  border-2 border-dark"
               onClick={() => {
                 console.log('Discard Changes')
               }}

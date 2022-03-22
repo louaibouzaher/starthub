@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import Head from 'next/head'
+import axios from 'axios'
+import { API_BASEURL } from '../../appConfig'
 import { useRouter } from 'next/router'
 import { connect } from 'react-redux'
-
-import { space } from '../../src/data/space'
-import { posts } from '../../src/data/posts'
-import { projects } from '../../src/data/projects'
 import Cross from '../../src/assets/icons/Cross'
 import Navbar from '../../src/components/Navbar'
 import { Button } from '../../src/components/Button'
@@ -12,13 +11,36 @@ import SectionIndexer from '../../src/components/SectionIndexer'
 import Post from '../../src/components/Post'
 import Project from '../../src/components/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
+import { getMonth } from '../../src/helpers/date'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../src/store/OverlayWindow/overlayWindow.actions'
+import store from '../../src/store'
+import AddPost from '../../src/components/AddPost'
+import AddProject from '../../src/components/AddProject'
+import OverlayWindow from '../../src/components/OverlayWindow'
 
-const Space = ({ sectionIndexer }) => {
-  const router = useRouter()
-  const { spaceId } = router.query
+const Space = ({ sectionIndexer, space, isLoading, toggleOverlay, changeChild }) => {
+  const startsOn = new Date(space.startsOn)
+  const endsOn = new Date(space.endsOn)
+
+  useEffect(() => {
+    changeChild(
+      sectionIndexer.id === 0 ? (
+        <AddPost space={space.id} />
+      ) : (
+        <AddProject space={space.id} />
+      )
+    )
+  }, [sectionIndexer.id, isLoading])
 
   return (
     <>
+      <Head>
+        <title>{space.title}</title>
+      </Head>
+      <OverlayWindow />
       <Navbar />
       <div className="h-screen w-full flex flex-col justify-start items-start pt-28 p-20">
         <div className="flex w-full">
@@ -26,13 +48,13 @@ const Space = ({ sectionIndexer }) => {
             <div
               className="h-32 w-32 rounded-full mr-6"
               style={{
-                backgroundImage: 'url(' + space.logo + ')',
+                backgroundImage: 'url(' + space.spacePic + ')',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
             ></div>
             <div className="w-3/4 flex flex-col">
-              <div className="text-4xl text-dark">{space.name}</div>
+              <div className="text-4xl text-dark">{space.title}</div>
               <div className="flex items-center my-4 text-dark break-words">
                 {space.description}
               </div>
@@ -50,23 +72,15 @@ const Space = ({ sectionIndexer }) => {
           <div className="w-1/2 flex justify-start items-start bg-white rounded-md shadow-lg p-10 m-2">
             <div className="w-1/3 flex flex-col m-2">
               <div>From</div>
-              <div className="text-6xl text-purple">
-                {space.dateFrom.toDateString().split(' ')[2]}
-              </div>
-              <div className="text-6xl text-purple">
-                {space.dateFrom.toDateString().split(' ')[1]}
-              </div>
-              <div>{space.dateFrom.toDateString().split(' ')[3]}</div>
+              <div className="text-6xl text-purple">{startsOn.getDate()}</div>
+              <div className="text-2xl text-purple">{getMonth(startsOn.getMonth())}</div>
+              <div>{startsOn.getFullYear()}</div>
             </div>
             <div className="w-1/3 flex flex-col m-2">
               <div>To</div>
-              <div className="text-6xl text-purple">
-                {parseInt(space.dateTo.toDateString().split(' ')[2]) + 1}
-              </div>
-              <div className="text-6xl text-purple">
-                {space.dateTo.toDateString().split(' ')[1]}
-              </div>
-              <div>{space.dateTo.toDateString().split(' ')[3]}</div>
+              <div className="text-6xl text-purple">{endsOn.getDate()}</div>
+              <div className="text-2xl text-purple">{getMonth(endsOn.getMonth())}</div>
+              <div>{endsOn.getFullYear()}</div>
             </div>
             <div className="w-1/3 flex flex-col m-2">
               <div>At</div>
@@ -78,7 +92,7 @@ const Space = ({ sectionIndexer }) => {
           <div className="w-1/2 flex flex-col items-start bg-white rounded-md shadow-lg p-10 m-2">
             <div className="text-2xl text-dark">Participants</div>
             <div className="flex flex-wrap mt-3 justify-start items-center">
-              {space.pariticipants.map((p) => (
+              {space?.pariticipants?.map((p) => (
                 <UserAvatar link={p.picture} className="m-1 h-10 w-10" sizing />
               ))}
               <div className="h-10 w-10 bg-purple rounded-full flex justify-center items-center cursor-pointer">
@@ -89,7 +103,7 @@ const Space = ({ sectionIndexer }) => {
           <div className="w-1/2 flex flex-col items-start bg-white rounded-md shadow-lg p-10 m-2 ">
             <div className="text-2xl text-dark">Judges</div>
             <div className="flex flex-col flex-wrap mt-3">
-              {space.judges.map((j) => (
+              {space?.judges?.map((j) => (
                 <div className="flex items-center">
                   <UserAvatar link={j.picture} className="m-1 h-14 w-14" sizing />
                   <div className="mx-2 text-dark">
@@ -112,10 +126,43 @@ const Space = ({ sectionIndexer }) => {
           <div className="text-xl text-dark mb-10 mt-2">
             Check the latest updates about this space.
           </div>
+          <Button
+            onClick={() => {
+              toggleOverlay()
+            }}
+            label={`New ${sectionIndexer.title.substring(
+              0,
+              sectionIndexer.title.length - 1
+            )}`}
+            btnStyle={
+              'max-w-max px-20  bottom-10 right-10 bg-white border-purple border-2 text-purple w-full text-center hover:bg-purple hover:text-white'
+            }
+          />
           <SectionIndexer />
           {sectionIndexer.id === 0
-            ? posts.map((p) => <Post post={p} user={p.user} />)
-            : projects.map((p) => <Project project={p} user={p.user} />)}
+            ? space.posts.map((p) => (
+                <Post
+                  post={p}
+                  user={{
+                    id: p.owner?.id,
+                    firstName: p.owner?.first_name,
+                    lastName: p.owner?.last_name,
+                    avatar: p.profile?.profilePic,
+                  }}
+                />
+              ))
+            : space.projects.map((p) => (
+                <Project
+                  project={p}
+                  user={{
+                    id: p.owner?.id,
+                    firstName: p.owner?.first_name,
+                    lastName: p.owner?.last_name,
+                    avatar: p.profile?.profilePic,
+                    position: p.profile?.position,
+                  }}
+                />
+              ))}
         </div>
       </div>
     </>
@@ -125,11 +172,43 @@ const Space = ({ sectionIndexer }) => {
 const mapStateToProps = (state) => {
   return {
     sectionIndexer: state.sectionIndexer,
+    isLoading: state.posts.loading || state.projects.loading,
+    isOverlayOpen: state.overlayWindow.isOpen,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    changeChild: (newChild) => dispatch(changeChild(newChild)),
+    toggleOverlay: () => dispatch(toggleOverlay()),
+  }
+}
+
+export async function getServerSideProps({ params }) {
+  const info = await axios.get(API_BASEURL + `spaces/${params.spaceId}`).then((res) => {
+    return res.data
+  })
+  const projects = await axios
+    .get(API_BASEURL + `projects/?space=${params.spaceId}`)
+    .then((res) => {
+      return res.data
+    })
+  const posts = await axios
+    .get(API_BASEURL + `posts/?space=${params.spaceId}`)
+    .then((res) => {
+      return res.data
+    })
+
+  const space = {
+    ...info,
+    projects,
+    posts,
+  }
+  return {
+    props: {
+      space,
+    },
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Space)

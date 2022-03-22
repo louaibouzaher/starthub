@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
 import { connect } from 'react-redux'
-import { posts } from '../../src/data/posts'
 import Navbar from '../../src/components/Navbar'
 import OverlayWindow from '../../src/components/OverlayWindow'
 import { Button } from '../../src/components/Button'
@@ -15,16 +13,16 @@ import { PublicationComment } from '../../src/components/PublicationDetails/Publ
 import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
 import Head from 'next/head'
+import { getMonth } from '../../src/helpers/date'
 
 const Post = ({ post }) => {
-  const router = useRouter()
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
   ]
-
+  const time = new Date(post.time)
   return (
     <>
       <Head>
@@ -51,10 +49,14 @@ const Post = ({ post }) => {
             }
           />
         </div>
-        <div className=" w-full flex justify-between mb-4 text-xl text-dark font-bold pt-8  ">
-          <div>{post.title}</div>
+
+        <div className=" w-full flex justify-between  text-3xl text-dark font-bold pt-8  ">
+          {post.title}
         </div>
-        <div className="flex space-x-2  justify-start ">{post.content}</div>
+        <div className="text-xs opacity-50">
+          {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()}
+        </div>
+        <div className="flex space-x-2 mt-4 justify-start ">{post.content}</div>
 
         {post.picture && (
           <img

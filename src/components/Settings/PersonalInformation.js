@@ -11,8 +11,7 @@ import {
   toggleOverlay,
 } from '../../store/OverlayWindow/overlayWindow.actions'
 import ConfirmPicture from './ConfirmPicture'
-import OverlayWindow from '../OverlayWindow'
-
+import { defaultProfilePicture } from '../../assets/images/index'
 function PersonalInformation({
   setSettingsState,
   settingsState,
@@ -29,6 +28,9 @@ function PersonalInformation({
     toggleOverlay()
   }
 
+  const handleDeleteProfilePicture = () => {
+    setSettingsState({ ...settingsState, picture: defaultProfilePicture })
+  }
   return (
     <div className="text-dark text-sm w-full flex flex-col justify-start items-start">
       <div className="flex items-center">
@@ -56,7 +58,10 @@ function PersonalInformation({
               Upload New Picture
             </label>
           </div>
-          <div className="my-2 cursor-pointer flex justify-start items-center text-red-600 py-2 px-4 rounded-md max-h-8">
+          <div
+            className="my-2 cursor-pointer flex justify-start items-center text-red-600 py-2 px-4 rounded-md max-h-8"
+            onClick={handleDeleteProfilePicture}
+          >
             <Delete className="scale-75" color={tailwindToHex('red-600')} />
             <div>Delete Picture</div>
           </div>
