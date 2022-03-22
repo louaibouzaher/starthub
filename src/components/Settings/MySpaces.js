@@ -2,17 +2,17 @@ import React from 'react'
 import { space } from '../../data/space'
 export function MySpaces() {
   return (
-    <div
+    <div>
       <div className=" w-full  flex flex-col justify-center ">
           <div className=" flex items-start flex-row bg-white rounded shadow-lg p-10 m-2">
-            <div
-              className="h-36 w-48 rounded-full mr-6"
+            <div className="h-36 w-48 rounded-full mr-6">
+
               style={{
                 backgroundImage: 'url(' + space.logo + ')',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
-            ></div>
+            </div>
             <div className="h-36 w-48">
               <div className=" text-dark">{space.name}</div>
               </div>
@@ -43,6 +43,6 @@ export function MySpaces() {
           </div>
       </div>
     </div>
-  )
+    )
 }
 export default MySpaces
