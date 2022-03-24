@@ -7,7 +7,6 @@ import store from '../src/store'
 import 'react-toastify/dist/ReactToastify.css'
 import Navbar from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
-import Link from 'next/link'
 import SectionIndexer from '../src/components/SectionIndexer'
 import Post from '../src/components/Post'
 import Project from '../src/components/Project'
@@ -80,10 +79,6 @@ function Browse({
           <div className="mt-2 font-thin">
             Here are some of the top selections for you.
           </div>
-          {/* TODO: Remove this link */}
-          <Link href="space/1" passHref>
-            <a>Space</a>
-          </Link>
           <SectionIndexer />
           {sectionIndexer.id === 0
             ? posts?.map((p) => (
