@@ -1,3 +1,6 @@
+import PostsIcon from '../assets/icons/PostsIcon'
+import ProjectsIcon from '../assets/icons/ProjectsIcon'
+
 export const labelUpload = 'Seems empty here 🤔'
 
 export const industry = [
@@ -83,4 +86,39 @@ export const sampleComments = [
   'Seems promising! Keep it up 💪',
   'Can I know more ? ',
   'Interesting invesment opportunity 💵 ',
+]
+
+export const spaceSections = [
+  {
+    id: 0,
+    title: 'Overview',
+    Icon: () => <PostsIcon />,
+  },
+  {
+    id: 1,
+    title: 'My Projects',
+    Icon: () => <ProjectsIcon />,
+  },
+  {
+    id: 2,
+    title: 'Participants',
+    Icon: () => <PostsIcon />,
+  },
+  {
+    id: 3,
+    title: 'Judges',
+    Icon: () => <ProjectsIcon />,
+  },
+]
+export const defaultSections = [
+  {
+    id: 0,
+    title: 'Posts',
+    Icon: () => <PostsIcon />,
+  },
+  {
+    id: 1,
+    title: 'Projects',
+    Icon: () => <ProjectsIcon />,
+  },
 ]

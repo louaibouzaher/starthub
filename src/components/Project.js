@@ -99,7 +99,8 @@ const Project = ({
 
       <div className="text-4xl text-dark font-bold">{project.title}</div>
       <div className="text-xs opacity-50">
-        {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()}
+        {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()} at{' '}
+        {time.getHours() + ':' + time.getMinutes()}
       </div>
       <div className="flex mt-2">
         {project.tags
@@ -200,11 +201,11 @@ const Project = ({
           </div>
         </div>
         <Link href={'/project/' + project.id}>
-          <div className="text-purple flex items-center cursor-pointer">
+          <div className="text-dark flex items-center cursor-pointer opacity-40">
             <div>Learn more</div>
             <ButtonArrow
               className={'-rotate-90'}
-              color={tailwindConfig.theme.extend.colors.purple}
+              color={tailwindConfig.theme.extend.colors.dark}
             />
           </div>
         </Link>

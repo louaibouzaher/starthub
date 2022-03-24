@@ -133,7 +133,8 @@ const Post = ({
               'text-xs opacity-50 ' + (post.picture ? ' text-white' : 'text-dark')
             }
           >
-            {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()}
+            {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()}{' '}
+            at {time.getHours() + ':' + time.getMinutes()}
           </div>
         </div>
         {!isOwner && Math.floor(Math.random() * 2) === 0 && (
@@ -199,11 +200,11 @@ const Post = ({
           </div>
         </div>
         <Link href={'/post/' + post.id}>
-          <div className="text-purple flex items-center cursor-pointer">
+          <div className="text-dark flex items-center cursor-pointer opacity-40">
             <div>Learn more</div>
             <ButtonArrow
               className={'-rotate-90'}
-              color={tailwindConfig.theme.extend.colors.purple}
+              color={tailwindConfig.theme.extend.colors.dark}
             />
           </div>
         </Link>

@@ -13,8 +13,10 @@ import UserAvatar from '../../src/assets/images/UserAvatar'
 import { Button } from '../../src/components/Button'
 import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
+import { spaceSections } from '../../src/data/general'
+import { sectionsInit } from '../../src/store/SectionIndexer/sectionIndexer.actions'
 
-function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
+function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }) {
   const isOwner = connectedUser.id == user.user.id
   const router = useRouter()
   let website
@@ -24,6 +26,9 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
       : `http://${user.website_url}`
     website = new URL(url).href
   } catch (error) {}
+  useEffect(() => {
+    sectionsInit(spaceSections)
+  }, [])
 
   return (
     <>
@@ -182,7 +187,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return { sectionsInit: (sections) => dispatch(sectionsInit(sections)) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

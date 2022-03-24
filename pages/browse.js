@@ -19,6 +19,8 @@ import AddProject from '../src/components/AddProject'
 import { getCurrentUser } from '../src/store/User/user.api'
 import { getPosts } from '../src/store/Posts/posts.api'
 import { getProjects } from '../src/store/Projects/projects.api'
+import { sectionsInit } from '../src/store/SectionIndexer/sectionIndexer.actions'
+import { defaultSections } from '../src/data/general'
 
 function Browse({
   isLoading,
@@ -28,6 +30,7 @@ function Browse({
   changeChild,
   isConnected,
   connectedUser,
+  sectionsInit,
 }) {
   const router = useRouter()
 
@@ -47,6 +50,7 @@ function Browse({
   }, [isConnected])
 
   useEffect(() => {
+    sectionsInit(defaultSections)
     store.dispatch(getPosts())
     store.dispatch(getProjects())
   }, [])
@@ -131,6 +135,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeChild: (newChild) => dispatch(changeChild(newChild)),
+    sectionsInit: (sections) => dispatch(sectionsInit(sections)),
   }
 }
 

@@ -1,1 +1,2 @@
-export const TOGGLE_SECTION = 'TOGGLE_SECTION'
+export const SET_SECTION = 'SET_SECTION'
+export const SECTIONS_INIT = 'SECTIONS_INIT'
