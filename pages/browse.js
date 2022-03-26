@@ -38,9 +38,13 @@ function Browse({
 
   useEffect(() => {
     changeChild(
-      sectionIndexer.id === 0 ? <AddPost space={1} /> : <AddProject space={1} />
+      sectionIndexer.selectedSection === 0 ? (
+        <AddPost space={1} />
+      ) : (
+        <AddProject space={1} />
+      )
     )
-  }, [sectionIndexer.id, isLoading])
+  }, [sectionIndexer.selectedSection, isLoading])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -84,7 +88,7 @@ function Browse({
             Here are some of the top selections for you.
           </div>
           <SectionIndexer />
-          {sectionIndexer.id === 0
+          {sectionIndexer.selectedSection === 0
             ? posts?.map((p) => (
                 <Post
                   post={p}

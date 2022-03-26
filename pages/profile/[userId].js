@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -13,7 +13,7 @@ import UserAvatar from '../../src/assets/images/UserAvatar'
 import { Button } from '../../src/components/Button'
 import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
-import { spaceSections } from '../../src/data/general'
+import { defaultSections } from '../../src/data/general'
 import { sectionsInit } from '../../src/store/SectionIndexer/sectionIndexer.actions'
 
 function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }) {
@@ -27,7 +27,7 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }
     website = new URL(url).href
   } catch (error) {}
   useEffect(() => {
-    sectionsInit(spaceSections)
+    sectionsInit(defaultSections)
   }, [])
 
   return (
@@ -117,7 +117,7 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }
         </div>
         <div className="w-full my-4 min-h-screen rounded-md">
           <SectionIndexer />
-          {sectionIndexer.id === 0
+          {sectionIndexer.selectedSection === 0
             ? user.posts?.map((p) => (
                 <Post
                   post={p}
