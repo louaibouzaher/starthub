@@ -78,7 +78,7 @@ function Browse({
         pauseOnHover
       />
 
-      <SideBar section={sectionIndexer.title} />
+      <SideBar section={sectionIndexer?.title} />
       <div className="App w-full flex flex-col justify-start items-center pt-16">
         <Feed>
           <div className="text-4xl mt-6">
