@@ -76,7 +76,7 @@ const Project = ({
           />
         )}
         {isDotsListOpen && (
-          <div className="text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
+          <div className="z-10 text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
             <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
               <Edit color={tailwindConfig.theme.extend.colors.dark} />
               <div className="mx-1"> Edit Project</div>

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
 import Navbar from '../src/components/Navbar'
-
 import PersonalInformation from '../src/components/Settings/PersonalInformation'
 import PlatformPreferences from '../src/components/Settings/PlatformPreferences'
 import AccountSecurity from '../src/components/Settings/AccountSecurity'
@@ -11,7 +10,7 @@ import store from '../src/store'
 import { putProfile } from '../src/store/User/user.api'
 import OverlayWindow from '../src/components/OverlayWindow'
 
-function Settings({ settingsState, connectedUser }) {
+function Settings({ settingsState, connectedUser, error }) {
   const [section, setSection] = useState(0)
 
   const settingsPages = [
@@ -86,6 +85,7 @@ function Settings({ settingsState, connectedUser }) {
 const mapStateToProps = (state) => {
   return {
     connectedUser: state.user.data.connectedUser,
+    error: state.user.error,
     settingsState: state.user.data.settingsState,
   }
 }

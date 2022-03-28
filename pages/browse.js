@@ -4,14 +4,12 @@ import { useRouter } from 'next/router'
 
 import { changeChild } from '../src/store/OverlayWindow/overlayWindow.actions'
 import store from '../src/store'
-import 'react-toastify/dist/ReactToastify.css'
 import Navbar from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
 import SectionIndexer from '../src/components/SectionIndexer'
 import Post from '../src/components/Post'
 import Project from '../src/components/Project'
 import SideBar from '../src/layouts/SideBar'
-import { ToastContainer, toast } from 'react-toastify'
 import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
@@ -66,18 +64,6 @@ function Browse({
       </Head>
       <OverlayWindow />
       <Navbar />
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-
       <SideBar section={sectionIndexer?.title} />
       <div className="font-bold App w-full flex flex-col justify-start items-center pt-16">
         <Feed>
