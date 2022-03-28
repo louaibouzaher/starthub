@@ -2,7 +2,8 @@ module.exports = {
   content: ['./pages/**/*.{js,ts,jsx,tsx}', './src/**/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      sans: ['Inter', 'system-ui'],
+      sans: ['Inter Regular', 'system-ui'],
+      bold: ['Inter Bold', 'system-ui'],
     },
     extend: {
       colors: {

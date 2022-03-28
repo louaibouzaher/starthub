@@ -79,14 +79,12 @@ function Browse({
       />
 
       <SideBar section={sectionIndexer?.title} />
-      <div className="App w-full flex flex-col justify-start items-center pt-16">
+      <div className="font-bold App w-full flex flex-col justify-start items-center pt-16">
         <Feed>
           <div className="text-4xl mt-6">
             Hello, <span className="text-purple">{connectedUser.firstName}</span>{' '}
           </div>
-          <div className="mt-2 font-thin">
-            Here are some of the top selections for you.
-          </div>
+          <div className="mt-2">Here are some of the top selections for you.</div>
           <SectionIndexer />
           {sectionIndexer.selectedSection === 0
             ? posts?.map((p) => (
