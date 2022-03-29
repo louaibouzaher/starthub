@@ -13,7 +13,6 @@ import SideBar from '../src/layouts/SideBar'
 import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
-import MessageCard from '../src/components/MessageCard'
 import AddProject from '../src/components/AddProject'
 import { getCurrentUser } from '../src/store/User/user.api'
 import { getPosts } from '../src/store/Posts/posts.api'
@@ -71,7 +70,6 @@ function Browse({
           <div className="text-4xl mt-6">
             Hello, <span className="text-purple">{connectedUser.firstName}</span>{' '}
           </div>
-          <MessageCard user= 'William'  timeAgo = '12:40 AM' lastMessage = 'ok deal then see you later ...'/>
           <div className="mt-2">Here are some of the top selections for you.</div>
           <SectionIndexer />
           {sectionIndexer.selectedSection === 0
