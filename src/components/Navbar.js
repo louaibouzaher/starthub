@@ -72,7 +72,11 @@ const Navbar = ({ connectedUser, isConnected }) => {
         )}
         {isConnected && (
           <div className="flex flex-row items-center">
-            <Messages className="mx-3" />
+            <Link href="/message" passHref>
+              <a>
+                <Messages className="mx-3" />
+              </a>
+            </Link>
             <Notification className="mx-3" />
             <Link href="/settings" passHref>
               <a>
