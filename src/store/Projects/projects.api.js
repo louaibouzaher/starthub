@@ -33,6 +33,7 @@ export const postProject = (project) => {
       .post(API_BASEURL + 'projects/', project)
       .then((result) => {
         dispatch(addProjectSuccess(result.data))
+        dispatch(showNotification('Project Created Successfully ✅', true))
         store.dispatch(getProjects())
       })
       .catch((error) => {
@@ -48,6 +49,7 @@ export const deleteProject = (projectId) => {
       .delete(API_BASEURL + `projects/${projectId}/`)
       .then((result) => {
         dispatch(deleteProjectSuccess(result.data))
+        dispatch(showNotification('Project Deleted Successfully ✅', true))
         store.dispatch(getProjects())
         return result
       })
@@ -64,6 +66,7 @@ export const putProject = (projectId, editedProject) => {
       .put(API_BASEURL + `projects/${projectId}/`, editedProject)
       .then((result) => {
         dispatch(editProjectSuccess(result.data))
+        dispatch(showNotification('Project Updated Successfully ✅', true))
         store.dispatch(getProjects())
         return result
       })

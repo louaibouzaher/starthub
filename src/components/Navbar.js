@@ -21,7 +21,7 @@ const Navbar = ({ connectedUser, isConnected }) => {
   return (
     <div
       className={
-        'z-50 fixed w-full h-16 shadow-lg flex justify-between items-center px-20 py-6 ' +
+        'z-50 fixed w-full h-16 shadow-lg flex justify-between items-center px-20 py-6 font-bold ' +
         (isConnected ? 'bg-purple' : 'bg-white')
       }
     >

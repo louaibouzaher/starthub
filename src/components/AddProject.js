@@ -73,11 +73,6 @@ const AddProject = ({
       )
     }
     toggleOverlay()
-    if (error) {
-      notify(error, false)
-    } else {
-      notify('Successfully Posted ✅', true)
-    }
     setAddProjectState({})
   }
 

@@ -54,7 +54,7 @@ export const toggleIsEditing = () => {
   }
 }
 
-export const editSPACESuccess = (spaceId, editedSpace) => {
+export const editSpaceSuccess = (spaceId, editedSpace) => {
   return {
     type: EDIT_SPACE,
     id: spaceId,

@@ -9,6 +9,7 @@ import {
   editPostSuccess,
   addPostSuccess,
 } from '../Posts/posts.actions'
+import { showNotification } from '../Notifications/notifications.actions'
 
 export const getPosts = () => {
   return function (dispatch) {
@@ -31,10 +32,13 @@ export const postPost = (post) => {
       .post(API_BASEURL + 'posts/', post)
       .then((result) => {
         dispatch(addPostSuccess(result.data))
+        dispatch(showNotification('Post Created Successfully ✅', true))
+
         store.dispatch(getPosts())
       })
       .catch((error) => {
         dispatch(failure(error))
+        dispatch(showNotification(error.message, false))
       })
   }
 }
@@ -47,10 +51,12 @@ export const deletePost = (postId) => {
       .then((result) => {
         dispatch(deletePostSuccess(result.data))
         store.dispatch(getPosts())
+        dispatch(showNotification('Post Deleted Successfully ✅', true))
         return result
       })
       .catch((error) => {
         dispatch(failure(error))
+        dispatch(showNotification(error.message, false))
       })
   }
 }
@@ -62,11 +68,13 @@ export const putPost = (postId, editedPost) => {
       .put(API_BASEURL + `posts/${postId}/`, editedPost)
       .then((result) => {
         dispatch(editPostSuccess(result.data))
+        dispatch(showNotification('Post Updated Successfully ✅', true))
         store.dispatch(getPosts())
         return result
       })
       .catch((error) => {
         dispatch(failure(error))
+        dispatch(showNotification(error.message, false))
       })
   }
 }

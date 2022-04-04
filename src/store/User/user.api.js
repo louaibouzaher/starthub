@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { API_BASEURL } from '../../../appConfig'
+import { showNotification } from '../Notifications/notifications.actions'
 import {
   getCurrentUserSuccess,
   getProfileSuccess,
@@ -70,11 +71,12 @@ export const putProfile = (userId, updatedProfile) => {
       })
       .then((result) => {
         dispatch(putProfileSuccess(result.data))
+        dispatch(showNotification('Information Updated Successfully', true))
         return result
       })
       .catch((e) => {
         dispatch(failure(e))
-        console.log(e)
+        dispatch(showNotification(e.message, false))
       })
   }
 }

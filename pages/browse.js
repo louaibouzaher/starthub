@@ -4,15 +4,12 @@ import { useRouter } from 'next/router'
 
 import { changeChild } from '../src/store/OverlayWindow/overlayWindow.actions'
 import store from '../src/store'
-import 'react-toastify/dist/ReactToastify.css'
 import Navbar from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
-import Link from 'next/link'
 import SectionIndexer from '../src/components/SectionIndexer'
 import Post from '../src/components/Post'
 import Project from '../src/components/Project'
 import SideBar from '../src/layouts/SideBar'
-import { ToastContainer, toast } from 'react-toastify'
 import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
@@ -20,6 +17,8 @@ import AddProject from '../src/components/AddProject'
 import { getCurrentUser } from '../src/store/User/user.api'
 import { getPosts } from '../src/store/Posts/posts.api'
 import { getProjects } from '../src/store/Projects/projects.api'
+import { sectionsInit } from '../src/store/SectionIndexer/sectionIndexer.actions'
+import { defaultSections } from '../src/data/general'
 
 function Browse({
   isLoading,
@@ -29,6 +28,7 @@ function Browse({
   changeChild,
   isConnected,
   connectedUser,
+  sectionsInit,
 }) {
   const router = useRouter()
 
@@ -36,9 +36,13 @@ function Browse({
 
   useEffect(() => {
     changeChild(
-      sectionIndexer.id === 0 ? <AddPost space={1} /> : <AddProject space={1} />
+      sectionIndexer.selectedSection === 0 ? (
+        <AddPost space={1} />
+      ) : (
+        <AddProject space={1} />
+      )
     )
-  }, [sectionIndexer.id, isLoading])
+  }, [sectionIndexer.selectedSection, isLoading])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -48,6 +52,7 @@ function Browse({
   }, [isConnected])
 
   useEffect(() => {
+    sectionsInit(defaultSections)
     store.dispatch(getPosts())
     store.dispatch(getProjects())
   }, [])
@@ -59,33 +64,15 @@ function Browse({
       </Head>
       <OverlayWindow />
       <Navbar />
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-
-      <SideBar section={sectionIndexer.title} />
-      <div className="App w-full flex flex-col justify-start items-center pt-16">
+      <SideBar section={sectionIndexer?.title} />
+      <div className="font-bold App w-full flex flex-col justify-start items-center pt-16">
         <Feed>
           <div className="text-4xl mt-6">
             Hello, <span className="text-purple">{connectedUser.firstName}</span>{' '}
           </div>
-          <div className="mt-2 font-thin">
-            Here are some of the top selections for you.
-          </div>
-          {/* TODO: Remove this link */}
-          <Link href="space/1" passHref>
-            <a>Space</a>
-          </Link>
+          <div className="mt-2">Here are some of the top selections for you.</div>
           <SectionIndexer />
-          {sectionIndexer.id === 0
+          {sectionIndexer.selectedSection === 0
             ? posts?.map((p) => (
                 <Post
                   post={p}
@@ -136,6 +123,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeChild: (newChild) => dispatch(changeChild(newChild)),
+    sectionsInit: (sections) => dispatch(sectionsInit(sections)),
   }
 }
 

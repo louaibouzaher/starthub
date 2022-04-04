@@ -52,11 +52,6 @@ const AddPost = ({
       )
     }
     toggleOverlay()
-    if (error) {
-      notify(error, false)
-    } else {
-      notify('Successfully Posted ✅', true)
-    }
     setAddPostState({})
   }
 
