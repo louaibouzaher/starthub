@@ -9,6 +9,7 @@ import {
   editProjectSuccess,
   addProjectSuccess,
 } from '../Projects/projects.actions'
+import { showNotification } from '../Notifications/notifications.actions'
 
 export const getProjects = (queryParams = {}) => {
   return function (dispatch) {
