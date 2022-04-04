@@ -7,8 +7,6 @@ import store from '../src/store'
 import Navbar from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
 import SectionIndexer from '../src/components/SectionIndexer'
-import Post from '../src/components/Post'
-import Project from '../src/components/Project'
 import SideBar from '../src/layouts/SideBar'
 import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
@@ -19,6 +17,8 @@ import { getPosts } from '../src/store/Posts/posts.api'
 import { getProjects } from '../src/store/Projects/projects.api'
 import { sectionsInit } from '../src/store/SectionIndexer/sectionIndexer.actions'
 import { defaultSections } from '../src/data/general'
+import PostList from '../src/components/PostList'
+import ProjectList from '../src/components/ProjectList'
 
 function Browse({
   isLoading,
@@ -73,29 +73,7 @@ function Browse({
           <div className="mt-2">Here are some of the top selections for you.</div>
           <SectionIndexer />
           {sectionIndexer.selectedSection === 0
-            ? posts?.map((p) => (
-                <Post
-                  post={p}
-                  user={{
-                    id: p.owner?.id,
-                    firstName: p.owner?.first_name,
-                    lastName: p.owner?.last_name,
-                    avatar: p.profile?.profilePic,
-                  }}
-                />
-              ))
-            : projects?.map((p) => (
-                <Project
-                  project={p}
-                  user={{
-                    id: p.owner?.id,
-                    firstName: p.owner?.first_name,
-                    lastName: p.owner?.last_name,
-                    avatar: p.profile?.profilePic,
-                    position: p.profile?.position,
-                  }}
-                />
-              ))}
+            ? <PostList /> : <ProjectList /> }
         </Feed>
       </div>
       {submitted && (
