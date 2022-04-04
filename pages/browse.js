@@ -72,8 +72,7 @@ function Browse({
           </div>
           <div className="mt-2">Here are some of the top selections for you.</div>
           <SectionIndexer />
-          {sectionIndexer.selectedSection === 0
-            ? <PostList /> : <ProjectList /> }
+          {sectionIndexer.selectedSection === 0 ? <PostList /> : <ProjectList />}
         </Feed>
       </div>
       {submitted && (
