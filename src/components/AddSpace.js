@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
 import { Button } from './Button'
 import Link from 'next/link'
 import StepOne from './CreateSpace/StepOne'
 import StepTwo from './CreateSpace/StepTwo'
 import StepThree from './CreateSpace/StepThree'
 import StepFour from './CreateSpace/StepFour'
-import { putSpace, postSpace } from '../store/Spaces/spaces.api'
+import { putspace, postSpace } from '../store/Spaces/spaces.api'
 import store from '../store'
 import Loader from './Loader'
 import { setAddSpaceState, toggleIsEditing } from '../store/Spaces/spaces.actions'
 import {changeChild,toggleOverlay} from '../store/OverlayWindow/overlayWindow.actions'
 
 const AddSpace = ({
+  space,
+  state,
   toggleOverlay,
   setAddSpaceState,
   addSpaceState,
   isEditing,
-  isConnected,
   toggleIsEditing,
   changeChild,
 }) => {
@@ -28,30 +28,24 @@ const AddSpace = ({
 
   const handleChange = (e) => {
     setAddSpaceState({
-      ...addSpaceState,
+      ...state,
       [e.target.name]: e.target.value,
     })
   }
-  // useEffect(() => {
-  //   if (!isConnected) {
-  //     router.push('/login')
-  //   }
-  // }, [isConnected])
-
   const handleSubmit = async () => {
     changeChild(<Loader />)
     if (isEditing) {
       store.dispatch(
-        putSpace(state.space, {
-          ...addSpaceState,
-          user: connectedUser,
+        putspace(state, {
+          ...state,
         })
       )
       toggleIsEditing()
     } else {
-      store.dispatch(
+      await store.dispatch(
         postSpace({
-          ...addSpaceState,
+          ...state,
+          space:space,
         })
       )
     }
@@ -60,78 +54,75 @@ const AddSpace = ({
   }
   return (
     <>
+      <div
+        className=" h-screen w-full mt-40 bg-white shadow-lg p-10 pb-20 rounded-lg flex flex-col justify-center items-start"
+      >
+        {step === 0 && (
+          <StepOne
+            
+            handleChange={handleChange}
+            space={addSpaceState}
+            setSpace={setAddSpaceState}
+            toggleOverlay={toggleOverlay}
+          />
+        )}
+        {step === 1 && (
+          <StepTwo
+            handleChange={handleChange}
+            space={addSpaceState}
+            setSpace={setAddSpaceState}
+            toggleOverlay={toggleOverlay}
+          />
+        )}
+        {step === 2 && (
+          <StepThree
+            handleChange={handleChange}
+            space={addSpaceState}
+            setSpace={setAddSpaceState}
+            toggleOverlay={toggleOverlay}
+          />
+        )}
+        {step === 3 && (
+          <StepFour
+            handleChange={handleChange}
+            space={addSpaceState}
+            setSpace={addSpaceState}
+            toggleOverlay={toggleOverlay}
+            handleSubmit={handleSubmit}
+          />
+        )}
+        <div className=" flex flex-row bottom-10 mt-5 right-10">
+          <Button
+            label="Cancel"
+            btnStyle={'border-2 border-dark mx-2 '}
+            onClick={toggleOverlay}
+          />
 
-        <div
-          style={{
-            minHeight: 500,
-          }}
-          className=" h-screen w-full mt-40 bg-white shadow-lg p-10 pb-20 rounded-lg flex flex-col justify-center items-start"
-        >
-          {step === 0 && (
-            <StepOne
-              handleChange={handleChange}
-              space={addSpaceState}
-              setSpace={setAddSpaceState}
-              toggleOverlay={toggleOverlay}
-            />
-          )}
-          {step === 1 && (
-            <StepTwo
-              handleChange={handleChange}
-              space={addSpaceState}
-              setSpace={setAddSpaceState}
-              toggleOverlay={toggleOverlay}
-            />
-          )}
-          {step === 2 && (
-            <StepThree
-              handleChange={handleChange}
-              space={addSpaceState}
-              setSpace={setAddSpaceState}
-              toggleOverlay={toggleOverlay}
-            />
-          )}
-          {step === 3 && (
-            <StepFour
-              handleChange={handleChange}
-              space={addSpaceState}
-              setSpace={addSpaceState}
-              toggleOverlay={toggleOverlay}
-              handleSubmit={handleSubmit}
-            />
-          )}
-          <div className=" flex flex-row bottom-10 right-10">
+          {step != 0 && (
             <Button
-              label="Cancel"
-              btnStyle={'border-2 border-dark mx-2 '}
-              onClick={toggleOverlay}
+              label="Previous"
+              btnStyle="bg-white text-purple border-2 border-purple"
+              onClick={() => setStep(step - 1)}
             />
-
-            {step != 0 && (
+          )}
+          {step != 3 && (
+            <Button
+              label="Next"
+              btnStyle="bg-purple text-white border-2 border-purple mx-2"
+              onClick={() => setStep(step + 1)}
+            />
+          )}
+          {step == 3 && (
+            <Link href="settings/" passHref>
               <Button
-                label="Previous"
-                btnStyle="bg-white text-purple border-2 border-purple"
-                onClick={() => setStep(step - 1)}
-              />
-            )}
-            {step != 3 && (
-              <Button
-                label="Next"
+                label="Submit"
                 btnStyle="bg-purple text-white border-2 border-purple mx-2"
-                onClick={() => setStep(step + 1)}
+                onClick={handleSubmit}
               />
-            )}
-            {step == 3 && (
-              <Link href="settings/" passHref>
-                <Button
-                  label="Submit"
-                  btnStyle="bg-purple text-white border-2 border-purple mx-2"
-                  onClick={handleSubmit}
-                />
-              </Link>
-            )}
-          </div>
+            </Link>
+          )}
         </div>
+      </div>
     </>
   )
 }

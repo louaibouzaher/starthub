@@ -12,7 +12,7 @@ import tailwindConfig from '../../../tailwind.config'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
-import { deleteSpaceSuccess } from '../../store/Spaces/spaces.actions'
+import { deleteSpace } from '../../store/Spaces/spaces.api'
 import { setAddSpaceState, toggleIsEditing } from '../../store/Spaces/spaces.actions'
 import {
   changeChild,
@@ -41,8 +41,10 @@ const MySpaces = ({
   }
   const handleDelete = () => {
     setIsDotsListOpen(false)
-    store.dispatch(deleteSpaceSuccess(spacee))
+    store.dispatch(deleteSpace(spacee))
+    sp.splice(0, 1);
   }
+
   const handleEdit = () => {
     setIsDotsListOpen(false)
     toggleIsEditing()
@@ -149,7 +151,7 @@ const MySpaces = ({
                           onClick={() => handleEdit()}
                         >
                           <Edit color={tailwindConfig.theme.extend.colors.dark} />
-                          <div className="mx-1"> Edit Post</div>
+                          <div className="mx-1"> Edit Space</div>
                         </div>
                       </MenuItem>
                       <Divider />

@@ -10,7 +10,7 @@ import StepTwo from '../src/components/CreateSpace/StepTwo'
 import StepThree from '../src/components/CreateSpace/StepThree'
 import StepFour from '../src/components/CreateSpace/StepFour'
 import { putSpace, postSpace } from '../src/store/Spaces/spaces.api'
-import store from '../src/store'
+import AddSpace from '../src/components/AddSpace'
 import Loader from '../src/components/Loader'
 import { setAddSpaceState, toggleIsEditing } from '../src/store/Spaces/spaces.actions'
 import {
@@ -26,25 +26,13 @@ const CreateSpace = ({
   toggleIsEditing,
   changeChild,
 }) => {
-  const router = useRouter()
-  const [step, setStep] = useState(0)
+  useEffect(() => {
+    if (!isConnected) {
+      router.push('/login')
+    }
+  }, [isConnected])
 
-  const handleChange = (e) => {
-    setAddSpaceState({
-      ...addSpaceState,
-      [e.target.name]: e.target.value,
-    })
-  }
-  // useEffect(() => {
-  //   if (!isConnected) {
-  //     router.push('/login')
-  //   }
-  // }, [isConnected])
 
-  const handleSubmit = async () => {
-    changeChild(<Loader />)
-    setAddSpaceState({})
-  }
   return (
     <>
       <Head>
@@ -55,80 +43,7 @@ const CreateSpace = ({
           <SpaceWhiteImage className={' justify-center items-center  '} />
         </div>
 
-        <div
-          style={{
-            minHeight: 500,
-          }}
-          className="relative w-1/2 mt-40 bg-white shadow-lg p-10 pb-20 rounded-lg flex flex-col justify-center items-start"
-        >
-          {step === 0 && (
-            <StepOne
-              handleChange={handleChange}
-              space={addSpaceState}
-              setSpace={setAddSpaceState}
-            />
-          )}
-          {step === 1 && (
-            <StepTwo
-              handleChange={handleChange}
-              space={addSpaceState}
-              setSpace={setAddSpaceState}
-            />
-          )}
-          {step === 2 && (
-            <StepThree
-              handleChange={handleChange}
-              space={addSpaceState}
-              setSpace={setAddSpaceState}
-            />
-          )}
-          {step === 3 && (
-            <StepFour
-              handleChange={handleChange}
-              space={addSpaceState}
-              setSpace={addSpaceState}
-              handleSubmit={handleSubmit}
-            />
-          )}
-          <div className="absolute flex flex-row bottom-10 right-10">
-            <Button
-              label="Cancel"
-              btnStyle={'border-2 border-dark mx-2 '}
-              onClick={toggleOverlay}
-            />
-            <Link href="Cancel">
-              <Button
-                label="Cancel"
-                btnStyle={'border-2 border-dark mx-2 '}
-                onClick={toggleOverlay}
-              />
-            </Link>
-
-            {step != 0 && (
-              <Button
-                label="Previous"
-                btnStyle="bg-white text-purple border-2 border-purple"
-                onClick={() => setStep(step - 1)}
-              />
-            )}
-            {step != 3 && (
-              <Button
-                label="Next"
-                btnStyle="bg-purple text-white border-2 border-purple mx-2"
-                onClick={() => setStep(step + 1)}
-              />
-            )}
-            {step == 3 && (
-              <Link href="settings/" passHref>
-                <Button
-                  label="Submit"
-                  btnStyle="bg-purple text-white border-2 border-purple mx-2"
-                  onClick={handleSubmit}
-                />
-              </Link>
-            )}
-          </div>
-        </div>
+        <AddSpace />
       </div>
     </>
   )
