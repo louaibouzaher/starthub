@@ -2,26 +2,23 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { Button } from '../src/components/Button'
+import { Button } from './Button'
 import Link from 'next/link'
-import SpaceWhiteImage from '../src/assets/images/SpaceWhiteImage'
-import StepOne from '../src/components/CreateSpace/StepOne'
-import StepTwo from '../src/components/CreateSpace/StepTwo'
-import StepThree from '../src/components/CreateSpace/StepThree'
-import StepFour from '../src/components/CreateSpace/StepFour'
-import { putSpace, postSpace } from '../src/store/Spaces/spaces.api'
-import store from '../src/store'
-import Loader from '../src/components/Loader'
-import { setAddSpaceState, toggleIsEditing } from '../src/store/Spaces/spaces.actions'
-import {
-  changeChild,
-  toggleOverlay,
-} from '../src/store/OverlayWindow/overlayWindow.actions'
+import StepOne from './CreateSpace/StepOne'
+import StepTwo from './CreateSpace/StepTwo'
+import StepThree from './CreateSpace/StepThree'
+import StepFour from './CreateSpace/StepFour'
+import { putSpace, postSpace } from '../store/Spaces/spaces.api'
+import store from '../store'
+import Loader from './Loader'
+import { setAddSpaceState, toggleIsEditing } from '../store/Spaces/spaces.actions'
+import {changeChild,toggleOverlay} from '../store/OverlayWindow/overlayWindow.actions'
 
-const CreateSpace = ({
+const AddSpace = ({
   toggleOverlay,
   setAddSpaceState,
   addSpaceState,
+  isEditing,
   isConnected,
   toggleIsEditing,
   changeChild,
@@ -43,29 +40,39 @@ const CreateSpace = ({
 
   const handleSubmit = async () => {
     changeChild(<Loader />)
+    if (isEditing) {
+      store.dispatch(
+        putSpace(state.space, {
+          ...addSpaceState,
+          user: connectedUser,
+        })
+      )
+      toggleIsEditing()
+    } else {
+      store.dispatch(
+        postSpace({
+          ...addSpaceState,
+        })
+      )
+    }
+    toggleOverlay()
     setAddSpaceState({})
   }
   return (
     <>
-      <Head>
-        <title>Create New Space</title>
-      </Head>
-      <div className="h-screen w-full text-dark bg-purple flex flex-col justify-start items-center ">
-        <div className="fixed top-10 scale-120">
-          <SpaceWhiteImage className={' justify-center items-center  '} />
-        </div>
 
         <div
           style={{
             minHeight: 500,
           }}
-          className="relative w-1/2 mt-40 bg-white shadow-lg p-10 pb-20 rounded-lg flex flex-col justify-center items-start"
+          className=" h-screen w-full mt-40 bg-white shadow-lg p-10 pb-20 rounded-lg flex flex-col justify-center items-start"
         >
           {step === 0 && (
             <StepOne
               handleChange={handleChange}
               space={addSpaceState}
               setSpace={setAddSpaceState}
+              toggleOverlay={toggleOverlay}
             />
           )}
           {step === 1 && (
@@ -73,6 +80,7 @@ const CreateSpace = ({
               handleChange={handleChange}
               space={addSpaceState}
               setSpace={setAddSpaceState}
+              toggleOverlay={toggleOverlay}
             />
           )}
           {step === 2 && (
@@ -80,6 +88,7 @@ const CreateSpace = ({
               handleChange={handleChange}
               space={addSpaceState}
               setSpace={setAddSpaceState}
+              toggleOverlay={toggleOverlay}
             />
           )}
           {step === 3 && (
@@ -87,22 +96,16 @@ const CreateSpace = ({
               handleChange={handleChange}
               space={addSpaceState}
               setSpace={addSpaceState}
+              toggleOverlay={toggleOverlay}
               handleSubmit={handleSubmit}
             />
           )}
-          <div className="absolute flex flex-row bottom-10 right-10">
+          <div className=" flex flex-row bottom-10 right-10">
             <Button
               label="Cancel"
               btnStyle={'border-2 border-dark mx-2 '}
               onClick={toggleOverlay}
             />
-            <Link href="Cancel">
-              <Button
-                label="Cancel"
-                btnStyle={'border-2 border-dark mx-2 '}
-                onClick={toggleOverlay}
-              />
-            </Link>
 
             {step != 0 && (
               <Button
@@ -129,7 +132,6 @@ const CreateSpace = ({
             )}
           </div>
         </div>
-      </div>
     </>
   )
 }
@@ -138,10 +140,10 @@ const mapStateToProps = (state) => {
   return {
     addSpaceState: state.spaces.addSpaceState,
     isConnected: state.user.isConnected,
+    isLoading: state.spaces.loading,
     isEditing: state.spaces.isEditing,
   }
 }
-
 const mapDispatchToProps = (dispatch) => {
   return {
     setAddSpaceState: (state) => {
@@ -153,4 +155,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSpace)
+export default connect(mapStateToProps, mapDispatchToProps)(AddSpace)
