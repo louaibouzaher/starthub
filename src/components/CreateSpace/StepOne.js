@@ -3,7 +3,6 @@ import { Button } from '../Button'
 import Link from 'next/dist/client/link'
 import { useRouter } from 'next/router'
 
-
 export default function StepOne({ space, handleChange }) {
   const [errors, setErrors] = useState({
     spaceTitle: false,

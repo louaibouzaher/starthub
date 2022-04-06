@@ -11,7 +11,7 @@ import { putspace, postSpace } from '../store/Spaces/spaces.api'
 import store from '../store'
 import Loader from './Loader'
 import { setAddSpaceState, toggleIsEditing } from '../store/Spaces/spaces.actions'
-import {changeChild,toggleOverlay} from '../store/OverlayWindow/overlayWindow.actions'
+import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 
 const AddSpace = ({
   space,
@@ -45,7 +45,7 @@ const AddSpace = ({
       await store.dispatch(
         postSpace({
           ...state,
-          space:space,
+          space: space,
         })
       )
     }
@@ -54,12 +54,9 @@ const AddSpace = ({
   }
   return (
     <>
-      <div
-        className=" h-screen w-full mt-40 bg-white shadow-lg p-10 pb-20 rounded-lg flex flex-col justify-center items-start"
-      >
+      <div className=" h-screen w-full mt-40 bg-white shadow-lg p-10 pb-20 rounded-lg flex flex-col justify-center items-start">
         {step === 0 && (
           <StepOne
-            
             handleChange={handleChange}
             space={addSpaceState}
             setSpace={setAddSpaceState}

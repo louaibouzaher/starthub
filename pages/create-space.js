@@ -2,36 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { Button } from '../src/components/Button'
-import Link from 'next/link'
 import SpaceWhiteImage from '../src/assets/images/SpaceWhiteImage'
-import StepOne from '../src/components/CreateSpace/StepOne'
-import StepTwo from '../src/components/CreateSpace/StepTwo'
-import StepThree from '../src/components/CreateSpace/StepThree'
-import StepFour from '../src/components/CreateSpace/StepFour'
-import { putSpace, postSpace } from '../src/store/Spaces/spaces.api'
 import AddSpace from '../src/components/AddSpace'
-import Loader from '../src/components/Loader'
 import { setAddSpaceState, toggleIsEditing } from '../src/store/Spaces/spaces.actions'
 import {
   changeChild,
   toggleOverlay,
 } from '../src/store/OverlayWindow/overlayWindow.actions'
 
-const CreateSpace = ({
-  toggleOverlay,
-  setAddSpaceState,
-  addSpaceState,
-  isConnected,
-  toggleIsEditing,
-  changeChild,
-}) => {
+const CreateSpace = ({ isConnected }) => {
+  const router = useRouter()
   useEffect(() => {
     if (!isConnected) {
       router.push('/login')
     }
   }, [isConnected])
-
 
   return (
     <>

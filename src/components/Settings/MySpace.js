@@ -42,19 +42,14 @@ const MySpaces = ({
   const handleDelete = () => {
     setIsDotsListOpen(false)
     store.dispatch(deleteSpace(spacee))
-    sp.splice(0, 1);
+    sp.splice(0, 1)
   }
 
   const handleEdit = () => {
     setIsDotsListOpen(false)
     toggleIsEditing()
     setAddSpaceState({ ...spacee, user: user })
-    changeChild(
-      <AddSpace
-        initialState={{ ...spacee, user: user }}
-        
-      />
-    )
+    changeChild(<AddSpace initialState={{ ...spacee, user: user }} />)
     toggleOverlay()
   }
   return (
@@ -188,7 +183,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteSpaceSuccess: (spaceId) => dispatch(deleteSpaceSuccess(spaceId)),
+    deleteSpace: (spaceId) => dispatch(deleteSpace(spaceId)),
     toggleOverlay: () => dispatch(toggleOverlay()),
     setAddSpaceState: (spacee) => dispatch(setAddSpaceState(spacee)),
     toggleIsEditing: () => dispatch(toggleIsEditing()),
