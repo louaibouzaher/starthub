@@ -1,4 +1,8 @@
-import axios from 'axios'
+import {
+  destroyToken,
+  setAxiosAuthHeader,
+  setTokenLocalStorage,
+} from '../../helpers/auth'
 import {
   GET_CURRENT_USER_SUCCESS,
   GET_PROFILE_SUCCESS,
@@ -10,10 +14,11 @@ import {
   SET_SETTINGS_STATE,
   REFRESH_TOKEN,
   SET_TOKEN,
+  LOGOUT,
 } from './user.types'
 
 const INITIAL_STATE = {
-  loading: true,
+  loading: false,
   isConnected: false,
   data: {
     settingsState: {},
@@ -28,27 +33,47 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    // case SET_TOKEN:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     data: { token: action.payload },
-    //     error: '',
-    //     isConnected: true,
-    //   }
-    case LOADING:
-      return { ...state, loading: true }
-    case LOGIN_SUCCESS:
-      axios.defaults.headers.common = { Authorization: `Bearer ${action.payload.access}` }
+    case SET_TOKEN:
+      setTokenLocalStorage(action.payload)
+      setAxiosAuthHeader(action.payload.access)
       return {
         ...state,
         loading: false,
-        data: { token: action.payload },
+        data: { ...state.data, token: action.payload },
+        error: '',
+        isConnected: true,
+      }
+    case LOADING:
+      return { ...state, loading: true }
+    case LOGOUT:
+      destroyToken()
+      return { ...INITIAL_STATE }
+
+    case LOGIN_SUCCESS:
+      setTokenLocalStorage(action.payload)
+      setAxiosAuthHeader(action.payload.access)
+      return {
+        ...state,
+        loading: false,
+        data: { ...state.data, token: action.payload },
         error: '',
         isConnected: true,
       }
     case REFRESH_TOKEN:
-      return { ...state, loading: false, data: { token: action.payload }, error: '' }
+      setTokenLocalStorage({
+        access: action.payload.access,
+        refresh: state.data.token.refresh,
+      })
+      setAxiosAuthHeader(action.payload.access)
+      return {
+        ...state,
+        loading: false,
+        data: {
+          ...state.data,
+          token: { ...state.data.token, access: action.payload.access },
+        },
+        error: '',
+      }
     case FAILURE:
       return { ...state, loading: false, error: action.payload }
     case GET_CURRENT_USER_SUCCESS:

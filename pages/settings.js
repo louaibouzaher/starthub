@@ -35,7 +35,6 @@ function Settings({ settingsState, connectedUser, error }) {
       <Head>
         <title>Settings - StartHub</title>
       </Head>
-      <Navbar />
       <OverlayWindow />
       <div className=" text-dark flex">
         <div className="w-60 fixed left-10 z-10 px-4 pt-24 h-screen flex flex-col justify-start items-center">

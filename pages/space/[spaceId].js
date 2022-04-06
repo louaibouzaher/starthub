@@ -33,7 +33,6 @@ const Space = ({ sectionIndexer, space, setSection, sectionsInit }) => {
         <title>{space.title}</title>
       </Head>
       <OverlayWindow />
-      <Navbar />
       <div className="h-screen w-full flex flex-col justify-start items-start p-20">
         <div className="flex w-full">
           <div

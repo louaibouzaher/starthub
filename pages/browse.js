@@ -63,7 +63,6 @@ function Browse({
         <title>Home - StartHub</title>
       </Head>
       <OverlayWindow />
-      <Navbar />
       <SideBar section={sectionIndexer?.title} />
       <div className="font-bold App w-full flex flex-col justify-start items-center pt-16">
         <Feed>

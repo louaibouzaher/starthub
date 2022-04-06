@@ -12,7 +12,6 @@ function Message({}) {
         <title>Message - StartHub</title>
       </Head>
       <OverlayWindow />
-      <Navbar />
       <div className="flex text-dark">
         <div className="w-1/4 py-16 h-screen bg-gray-100 border-b-2 border-gray-500">
           <div className="text-2xl p-4">Chats</div>

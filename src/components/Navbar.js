@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 import { Button } from './Button'
@@ -9,31 +9,46 @@ import Messages from '../assets/icons/Messages'
 import Notification from '../assets/icons/Notification'
 import Settings from '../assets/icons/Settings'
 import store from '../store'
-import { getProfile } from '../store/User/user.api'
+import { logout } from '../store/User/user.actions'
+import { showNotification } from '../store/Notifications/notifications.actions'
 
 const Navbar = ({ connectedUser, isConnected }) => {
+  const [connectedStyle, setConnectedStyle] = useState(false)
   useEffect(() => {
     if (isConnected) {
-      store.dispatch(getProfile(connectedUser.id))
+      setConnectedStyle(true)
+    } else {
+      setConnectedStyle(false)
     }
-  }, [isConnected, connectedUser.id])
+  }, [isConnected])
+
+  const handleLogout = () => {
+    try {
+      store.dispatch(logout())
+      store.dispatch(showNotification('Logged out Successfully ✅', true))
+    } catch (error) {
+      store.dispatch(showNotification(error.message, false))
+    }
+  }
 
   return (
     <div
       className={
         'z-50 fixed w-full h-16 shadow-lg flex justify-between items-center px-20 py-6 font-bold ' +
-        (isConnected ? 'bg-purple' : 'bg-white')
+        (connectedStyle ? 'bg-purple' : 'bg-white')
       }
     >
       <Link href="/" passHref className="cursor-pointer">
-        <div className="cursor-pointer">{isConnected ? <WhiteLogo /> : <MainLogo />}</div>
+        <div className="cursor-pointer">
+          {connectedStyle ? <WhiteLogo /> : <MainLogo />}
+        </div>
       </Link>
 
       <div className="flex flex-row ">
         <Link href="/space" passHref>
           <Button
             label="Spaces"
-            btnStyle={isConnected ? 'text-white' : 'text-dark'}
+            btnStyle={connectedStyle ? 'text-white' : 'text-dark'}
             onClick={() => {
               console.log('Spaces')
             }}
@@ -42,13 +57,13 @@ const Navbar = ({ connectedUser, isConnected }) => {
         <Link href="/browse" passHref>
           <Button
             label="Browse"
-            btnStyle={isConnected ? 'text-white' : 'text-dark'}
+            btnStyle={connectedStyle ? 'text-white' : 'text-dark'}
             onClick={() => {
               console.log('Browse')
             }}
           />
         </Link>
-        {!isConnected && (
+        {!connectedStyle && (
           <>
             <Link href="/login" passHref>
               <Button
@@ -70,7 +85,7 @@ const Navbar = ({ connectedUser, isConnected }) => {
             </Link>
           </>
         )}
-        {isConnected && (
+        {connectedStyle && (
           <div className="flex flex-row items-center">
             <Link href="/message" passHref>
               <a>
@@ -88,6 +103,9 @@ const Navbar = ({ connectedUser, isConnected }) => {
                 <UserAvatar link={connectedUser.picture} className="cursor-pointer" />
               </a>
             </Link>
+            <Link href="/" passHref>
+              <Button label="Logout" btnStyle="text-white" onClick={handleLogout} />
+            </Link>
           </div>
         )}
       </div>
@@ -99,7 +117,6 @@ const mapStateToProps = (state) => {
   return {
     connectedUser: state.user.data.connectedUser || {},
     isConnected: state.user.isConnected,
-    token: state.user.data.token,
   }
 }
 

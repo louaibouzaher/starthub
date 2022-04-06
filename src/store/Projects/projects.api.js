@@ -39,6 +39,7 @@ export const postProject = (project) => {
       })
       .catch((error) => {
         dispatch(failure(error))
+        dispatch(showNotification(error.message, false))
       })
   }
 }
@@ -56,6 +57,7 @@ export const deleteProject = (projectId) => {
       })
       .catch((error) => {
         dispatch(failure(error))
+        dispatch(showNotification(error.message, false))
       })
   }
 }
@@ -73,6 +75,7 @@ export const putProject = (projectId, editedProject) => {
       })
       .catch((error) => {
         dispatch(failure(error))
+        dispatch(showNotification(error.message, false))
       })
   }
 }

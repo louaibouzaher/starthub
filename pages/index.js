@@ -9,7 +9,6 @@ function Home() {
       <Head>
         <title>StartHub</title>
       </Head>
-      <Navbar />
       <Hero />
       <SpaceMain />
     </>

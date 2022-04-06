@@ -28,9 +28,7 @@ const Post = ({ post }) => {
       <Head>
         <title>{post.title}</title>
       </Head>
-
       <OverlayWindow />
-      <Navbar />
       <div className="pt-20 pb-10 px-36 App w-full flex flex-col justify-start items-start">
         <div className="flex flex-row w-full items-center mt-2 ">
           <UserAvatar link={post.profile.profilePic} size={'20'} />
