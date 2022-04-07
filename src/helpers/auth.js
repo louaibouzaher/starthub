@@ -1,5 +1,6 @@
 import axios from 'axios'
-
+import store from '../store/index'
+import { refreshToken } from '../store/User/user.api'
 export const destroyToken = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('refreshToken')
@@ -13,3 +14,15 @@ export const setTokenLocalStorage = (data) => {
 export const setAxiosAuthHeader = (headers = {}) => {
   axios.defaults.headers.common = { ...headers }
 }
+
+axios.interceptors.request.use(
+  (config) => {
+    if (!config.url.endsWith('/auth/login/refresh/')) {
+      store.dispatch(refreshToken(store.getState().user.data.token))
+    }
+    return config
+  },
+  (error) => {
+    Promise.reject(error)
+  }
+)

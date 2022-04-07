@@ -65,7 +65,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         access: action.payload.access,
         refresh: state.data.token.refresh,
       })
-      setAxiosAuthHeader(action.payload.access)
+      setAxiosAuthHeader({ Authorization: `Bearer ${action.payload.access}` })
       return {
         ...state,
         loading: false,
