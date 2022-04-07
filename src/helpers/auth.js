@@ -10,6 +10,6 @@ export const setTokenLocalStorage = (data) => {
   localStorage.setItem('refreshToken', data.refresh)
 }
 
-export const setAxiosAuthHeader = (accessToken) => {
-  axios.defaults.headers.common = { Authorization: `Bearer ${accessToken}` }
+export const setAxiosAuthHeader = (headers = {}) => {
+  axios.defaults.headers.common = { ...headers }
 }

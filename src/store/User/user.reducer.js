@@ -35,7 +35,7 @@ const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SET_TOKEN:
       setTokenLocalStorage(action.payload)
-      setAxiosAuthHeader(action.payload.access)
+      setAxiosAuthHeader({ Authorization: `Bearer ${action.payload.access}` })
       return {
         ...state,
         loading: false,
@@ -47,11 +47,12 @@ const reducer = (state = INITIAL_STATE, action) => {
       return { ...state, loading: true }
     case LOGOUT:
       destroyToken()
+      setAxiosAuthHeader({})
       return { ...INITIAL_STATE }
 
     case LOGIN_SUCCESS:
       setTokenLocalStorage(action.payload)
-      setAxiosAuthHeader(action.payload.access)
+      setAxiosAuthHeader({ Authorization: `Bearer ${action.payload.access}` })
       return {
         ...state,
         loading: false,

@@ -49,7 +49,7 @@ export const refreshToken = (payload) => {
 
 export const getProfile = (userId) => {
   return function (dispatch) {
-    dispatch(refreshToken(store.getState().user.data.token))
+    // dispatch(refreshToken(store.getState().user.data.token))
     dispatch(loading())
     axios
       .get(API_BASEURL + `profiles/${userId}/`)
@@ -66,7 +66,7 @@ export const getProfile = (userId) => {
 
 export const putProfile = (userId, updatedProfile) => {
   return function (dispatch) {
-    dispatch(refreshToken(store.getState().user.data.token))
+    // dispatch(refreshToken(store.getState().user.data.token))
     dispatch(loading())
     axios
       .put(API_BASEURL + `profiles/${userId}/`, {
@@ -91,7 +91,7 @@ export const putProfile = (userId, updatedProfile) => {
 
 export const getCurrentUser = () => {
   return function (dispatch) {
-    dispatch(refreshToken(store.getState().user.data.token))
+    // dispatch(refreshToken(store.getState().user.data.token))
     dispatch(loading())
     axios
       .get(API_BASEURL + `auth/current_user/`)
@@ -104,7 +104,7 @@ export const getCurrentUser = () => {
         return result
       })
       .catch((e) => {
-        if (e.response.status == 401) {
+        if (e?.response?.status == 401) {
           dispatch(showNotification('Error: Log in again.'))
           dispatch(logout())
         }
