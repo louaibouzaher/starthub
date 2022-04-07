@@ -59,7 +59,6 @@ export const getProfile = (userId) => {
       })
       .catch((e) => {
         dispatch(failure(e))
-        console.log(e)
       })
   }
 }
@@ -104,10 +103,6 @@ export const getCurrentUser = () => {
         return result
       })
       .catch((e) => {
-        if (e?.response?.status == 401) {
-          dispatch(showNotification('Error: Log in again.'))
-          dispatch(logout())
-        }
         dispatch(failure(e))
       })
   }
