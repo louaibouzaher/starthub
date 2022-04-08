@@ -1,19 +1,32 @@
 import React, { useState } from 'react'
-import { Button } from '../Button'
-import Link from 'next/dist/client/link'
-import { useRouter } from 'next/router'
+
 import { Avatar } from '@mui/material'
 import Download from '../../assets/icons/Download'
-import { tailwindToHex } from '../../../tailwindColors'
-import Delete from '../../assets/icons/Delete'
 import tailwindConfig from '../../../tailwind.config'
+import { Downloader, Uploader } from '../../firebase/Helpers'
+import Loader from '../Loader'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../store/OverlayWindow/overlayWindow.actions'
+import store from '../../store/index'
 
-export default function StepOne({ space, handleChange }) {
+export default function StepOne({ space, handleChange, setSpace }) {
   const [errors, setErrors] = useState({
     spaceTitle: false,
     spaceDescription: false,
   })
-
+  const handleFile = async (e) => {
+    const file = e.target.files[0]
+    store.dispatch(changeChild(<Loader />))
+    store.dispatch(toggleOverlay())
+    const pictureRef = file ? await Uploader(file) : null
+    const pictureLink = file ? await Downloader(pictureRef) : null
+    console.log(file)
+    console.log(pictureLink)
+    setSpace({ ...space, spacePic: pictureLink })
+    store.dispatch(toggleOverlay())
+  }
   // const handleChange = (e) => {
   //   switch (e.target.name) {
   //     case 'spaceTitle':
@@ -74,33 +87,29 @@ export default function StepOne({ space, handleChange }) {
         {errors.spaceDescription && 'Discription is required'}
       </div>
       <div className="flex items-center">
-        <Avatar sx={{ width: 180, height: 140 }} variant="square">S</Avatar>
+        <Avatar sx={{ width: 180, height: 140 }} variant="square">
+          S
+        </Avatar>
         <div className="ml-10 flex flex-col justify-start">
           <div>
             <input
               accept="image/*"
               type="file"
-              id="spacePicture"
+              id="spacePic"
+              name="spacePic"
               className="hidden"
-              onChange={(e) => {
-                console.log('onChange')
-                handleFile(e)
-              }}
+              onChange={handleFile}
             />
             <label
-              for="spacePicture"
+              for="spacePic"
               className="cursor-pointer flex h-10  my-2 p-2 border-2 rounded-md border-purple text-center text-purple justify-center items-center"
             >
               <Download
                 className="rotate-180 scale-75"
                 color={tailwindConfig.theme.extend.colors.purple}
               />
-              Upload New Space Picture
+              Upload Space Picture
             </label>
-          </div>
-          <div className="my-2 cursor-pointer flex justify-start items-center text-red-600 py-2 px-4 rounded-md max-h-8">
-            <Delete className="scale-75" color={tailwindToHex('red-600')} />
-            <div>Delete Picture</div>
           </div>
         </div>
       </div>
