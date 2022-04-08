@@ -66,7 +66,7 @@ const Space = ({
             className="w-1/2 flex items-end justify-start bg-white rounded-md shadow-lg p-10 m-2"
             style={{
               backgroundImage:
-                'url(' + s.logo + '),  linear-gradient(#FFFFFF 10%, #212121)',
+                'url(' + space.spacePic + '),  linear-gradient(#FFFFFF 10%, #212121)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundBlendMode: 'darken',
