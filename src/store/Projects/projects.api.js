@@ -9,12 +9,13 @@ import {
   editProjectSuccess,
   addProjectSuccess,
 } from '../Projects/projects.actions'
+import { showNotification } from '../Notifications/notifications.actions'
 
 export const getProjects = (queryParams = {}) => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .get(API_BASEURL + `projects/`, {
+      .get(API_BASEURL + `projects/?space=${store.getState().spaces.currentSpace}`, {
         params: queryParams,
       })
       .then((result) => {
@@ -33,10 +34,12 @@ export const postProject = (project) => {
       .post(API_BASEURL + 'projects/', project)
       .then((result) => {
         dispatch(addProjectSuccess(result.data))
+        dispatch(showNotification('Project Created Successfully ✅', true))
         store.dispatch(getProjects())
       })
       .catch((error) => {
         dispatch(failure(error))
+        dispatch(showNotification(error.message, false))
       })
   }
 }
@@ -48,11 +51,13 @@ export const deleteProject = (projectId) => {
       .delete(API_BASEURL + `projects/${projectId}/`)
       .then((result) => {
         dispatch(deleteProjectSuccess(result.data))
+        dispatch(showNotification('Project Deleted Successfully ✅', true))
         store.dispatch(getProjects())
         return result
       })
       .catch((error) => {
         dispatch(failure(error))
+        dispatch(showNotification(error.message, false))
       })
   }
 }
@@ -64,11 +69,13 @@ export const putProject = (projectId, editedProject) => {
       .put(API_BASEURL + `projects/${projectId}/`, editedProject)
       .then((result) => {
         dispatch(editProjectSuccess(result.data))
+        dispatch(showNotification('Project Updated Successfully ✅', true))
         store.dispatch(getProjects())
         return result
       })
       .catch((error) => {
         dispatch(failure(error))
+        dispatch(showNotification(error.message, false))
       })
   }
 }

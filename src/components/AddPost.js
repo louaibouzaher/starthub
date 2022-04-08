@@ -7,7 +7,7 @@ import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow
 import { Button } from './Button'
 import { Downloader, Uploader } from '../firebase/Helpers'
 import Loader from './Loader'
-import { notify } from '../helpers/notifications'
+
 const AddPost = ({
   space,
   toggleOverlay,
@@ -46,17 +46,12 @@ const AddPost = ({
       await store.dispatch(
         postPost({
           ...state,
-          space: space,
+          space: store.getState().spaces.currentSpace,
           picture: pictureLink,
         })
       )
     }
     toggleOverlay()
-    if (error) {
-      notify(error, false)
-    } else {
-      notify('Successfully Posted ✅', true)
-    }
     setAddPostState({})
   }
 

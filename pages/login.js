@@ -10,7 +10,6 @@ import store from '../src/store'
 
 function Login({ token, isConnected }) {
   const router = useRouter()
-  // localStorage.removeItem('token')
 
   const [state, setState] = useState({
     email: '',
@@ -42,11 +41,6 @@ function Login({ token, isConnected }) {
       })
     )
   }
-  useEffect(() => {
-    if (token.access) {
-      localStorage.setItem('token', token.access)
-    }
-  }, [token.access])
 
   useEffect(() => {
     if (isConnected) {
@@ -60,10 +54,6 @@ function Login({ token, isConnected }) {
         <title>Login - StartHub</title>
       </Head>
       <div class="h-screen w-full bg-purple flex flex-col justify-center items-center ">
-        <div className=" w-4.5 h-24 scale-150">
-          <WhiteLogo className={' justify-center items-center '} />
-        </div>
-
         <form>
           <div className="bg-white px-10 py-12 rounded-xl w-screen shadow-md max-w-sm">
             <div className="space-y-4">

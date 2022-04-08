@@ -40,9 +40,9 @@ const CreateSpace = ({ toggleOverlay, setAddSpaceState, addSpaceState, isConnect
         <title>Create New Space</title>
       </Head>
       <div className="h-screen w-full text-dark bg-purple flex flex-col justify-start items-center ">
-        <div className="fixed top-10 scale-120">
+        {/* <div className="fixed top-10 scale-120">
           <SpaceWhiteImage className={' justify-center items-center  '} />
-        </div>
+        </div> */}
         <div
           style={{
             minHeight: 500,

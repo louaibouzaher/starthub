@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -13,8 +13,10 @@ import UserAvatar from '../../src/assets/images/UserAvatar'
 import { Button } from '../../src/components/Button'
 import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
+import { defaultSections } from '../../src/data/general'
+import { sectionsInit } from '../../src/store/SectionIndexer/sectionIndexer.actions'
 
-function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
+function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }) {
   const isOwner = connectedUser.id == user.user.id
   const router = useRouter()
   let website
@@ -24,6 +26,9 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
       : `http://${user.website_url}`
     website = new URL(url).href
   } catch (error) {}
+  useEffect(() => {
+    sectionsInit(defaultSections)
+  }, [])
 
   return (
     <>
@@ -112,7 +117,7 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {} }) {
         </div>
         <div className="w-full my-4 min-h-screen rounded-md">
           <SectionIndexer />
-          {sectionIndexer.id === 0
+          {sectionIndexer.selectedSection === 0
             ? user.posts?.map((p) => (
                 <Post
                   post={p}
@@ -182,7 +187,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return { sectionsInit: (sections) => dispatch(sectionsInit(sections)) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

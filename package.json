@@ -4,9 +4,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint:fix": "eslint src/**/**/*.js --fix",
-    "lint": "eslint src/**/**/*.js",
-    "prettify": "prettier src/**/**/*.js --write"
+    "lint:fix": "eslint src/**/**/*.js pages/**/**/*.js --fix",
+    "lint": "eslint src/**/**/*.js pages/**/**/*.js",
+    "prettify": "prettier src/**/**/*.js pages/**/**/*.js --write"
   },
   "eslintConfig": {
     "extends": [
