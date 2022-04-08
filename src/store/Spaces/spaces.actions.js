@@ -7,6 +7,7 @@ import {
   EDIT_SPACE,
   SET_ADD_SPACE_STATE,
   TOGGLE_ISEDITING,
+  SET_CURRENT_SPACE,
 } from './spaces.types'
 
 export const loading = () => {
@@ -59,5 +60,12 @@ export const editSpaceSuccess = (spaceId, editedSpace) => {
     type: EDIT_SPACE,
     id: spaceId,
     payload: editedSpace,
+  }
+}
+
+export const setCurrentSpace = (payload) => {
+  return {
+    type: SET_CURRENT_SPACE,
+    id: payload,
   }
 }

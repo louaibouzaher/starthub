@@ -21,6 +21,8 @@ import { deleteProject } from '../store/Projects/projects.api'
 import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import AddProject from './AddProject'
 import { getMonth } from '../helpers/date'
+import PostIcon from '../assets/icons/PostsIcon'
+import AddReview from './AddReview'
 
 const Project = ({
   user,
@@ -49,14 +51,14 @@ const Project = ({
     setIsDotsListOpen(false)
     toggleIsEditing()
     setAddProjectState({ ...project, user: user })
-    changeChild(
-      <AddProject
-        initialState={{ ...project, user: user }}
-        setSubmitted={(r) => {
-          console.log(r)
-        }}
-      />
-    )
+    changeChild(<AddProject project={{ ...project, user: user }} />)
+    toggleOverlay()
+  }
+  const handleReview = () => {
+    setIsDotsListOpen(false)
+    toggleIsEditing()
+    // setAddReviewState({ ...project, user: user })
+    changeChild(<AddReview projectReviewed={{ ...project, user: user }} />)
     toggleOverlay()
   }
   const time = new Date(project.time)
@@ -92,6 +94,18 @@ const Project = ({
             <div className="cursor-pointer flex my-1" onClick={() => handleDelete()}>
               <Delete color={tailwindConfig.theme.extend.colors.dark} />
               <div className="mx-1"> Delete Permanently</div>
+            </div>
+            <div
+              className="bg-dark rounded-full opacity-5"
+              style={{
+                height: 2,
+              }}
+            >
+              {' '}
+            </div>
+            <div className="cursor-pointer flex my-1" onClick={() => handleReview()}>
+              <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
+              <div className="mx-1"> Submit Review</div>
             </div>
           </div>
         )}

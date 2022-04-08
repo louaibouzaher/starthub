@@ -4,37 +4,37 @@ import { API_BASEURL } from '../../../appConfig'
 import {
   failure,
   loading,
-  getPostsSuccess,
-  deletePostSuccess,
-  editPostSuccess,
-  addPostSuccess,
-} from '../Posts/posts.actions'
+  getReviewsSuccess,
+  deleteReviewSuccess,
+  editReviewSuccess,
+  addReviewSuccess,
+} from '../Reviews/reviews.actions'
 import { showNotification } from '../Notifications/notifications.actions'
 
-export const getPosts = () => {
+export const getReviews = () => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .get(API_BASEURL + `posts/?space=${store.getState().spaces.currentSpace}`)
+      .get(API_BASEURL + `space-reviews/`)
       .then((result) => {
         console.log(result)
-        dispatch(getPostsSuccess(result.data))
+        dispatch(getReviewsSuccess(result.data))
       })
       .catch((error) => {
         dispatch(failure(error))
       })
   }
 }
-export const postPost = (post) => {
+export const postReview = (review) => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .post(API_BASEURL + 'posts/', post)
+      .post(API_BASEURL + 'space-reviews/', review)
       .then((result) => {
-        dispatch(addPostSuccess(result.data))
-        dispatch(showNotification('Post Created Successfully ✅', true))
+        dispatch(addReviewSuccess(result.data))
+        dispatch(showNotification('Review Created Successfully ✅', true))
 
-        store.dispatch(getPosts())
+        store.dispatch(getReviews())
       })
       .catch((error) => {
         dispatch(failure(error))
@@ -43,15 +43,15 @@ export const postPost = (post) => {
   }
 }
 
-export const deletePost = (postId) => {
+export const deleteReview = (reviewId) => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .delete(API_BASEURL + `posts/${postId}/`)
+      .delete(API_BASEURL + `space-reviews/${reviewId}/`)
       .then((result) => {
-        dispatch(deletePostSuccess(result.data))
-        store.dispatch(getPosts())
-        dispatch(showNotification('Post Deleted Successfully ✅', true))
+        dispatch(deleteReviewSuccess(result.data))
+        store.dispatch(getReviews())
+        dispatch(showNotification('Review Deleted Successfully ✅', true))
         return result
       })
       .catch((error) => {
@@ -61,15 +61,15 @@ export const deletePost = (postId) => {
   }
 }
 
-export const putPost = (postId, editedPost) => {
+export const putReview = (reviewId, editedReview) => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .put(API_BASEURL + `posts/${postId}/`, editedPost)
+      .put(API_BASEURL + `space-reviews/${reviewId}/`, editedReview)
       .then((result) => {
-        dispatch(editPostSuccess(result.data))
-        dispatch(showNotification('Post Updated Successfully ✅', true))
-        store.dispatch(getPosts())
+        dispatch(editReviewSuccess(result.data))
+        dispatch(showNotification('Review Updated Successfully ✅', true))
+        store.dispatch(getReviews())
         return result
       })
       .catch((error) => {

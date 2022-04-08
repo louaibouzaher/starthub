@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 
 import { changeChild } from '../src/store/OverlayWindow/overlayWindow.actions'
 import store from '../src/store'
-import Navbar from '../src/components/Navbar'
 import { Feed } from '../src/layouts/Feed'
 import SectionIndexer from '../src/components/SectionIndexer'
 import SideBar from '../src/layouts/SideBar'
@@ -12,6 +11,7 @@ import Head from 'next/head'
 import OverlayWindow from '../src/components/OverlayWindow'
 import AddPost from '../src/components/AddPost'
 import AddProject from '../src/components/AddProject'
+import { setCurrentSpace } from '../src/store/Spaces/spaces.actions'
 import { getCurrentUser } from '../src/store/User/user.api'
 import { getPosts } from '../src/store/Posts/posts.api'
 import { getProjects } from '../src/store/Projects/projects.api'
@@ -53,6 +53,7 @@ function Browse({
 
   useEffect(() => {
     sectionsInit(defaultSections)
+    store.dispatch(setCurrentSpace(1))
     store.dispatch(getPosts())
     store.dispatch(getProjects())
   }, [])
@@ -71,7 +72,11 @@ function Browse({
           </div>
           <div className="mt-2">Here are some of the top selections for you.</div>
           <SectionIndexer />
-          {sectionIndexer.selectedSection === 0 ? <PostList /> : <ProjectList />}
+          {sectionIndexer.selectedSection === 0 ? (
+            <PostList posts={posts} />
+          ) : (
+            <ProjectList projects={projects} />
+          )}
         </Feed>
       </div>
       {submitted && (

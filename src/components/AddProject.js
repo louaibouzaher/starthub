@@ -65,7 +65,7 @@ const AddProject = ({
       store.dispatch(
         postProject({
           ...state,
-          space: space,
+          space: store.getState().spaces.currentSpace,
           establishedOn: formatedDate,
           user: connectedUser,
           video: videoLink || state.video,

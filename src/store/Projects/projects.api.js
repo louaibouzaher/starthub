@@ -15,7 +15,7 @@ export const getProjects = (queryParams = {}) => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .get(API_BASEURL + `projects/`, {
+      .get(API_BASEURL + `projects/?space=${store.getState().spaces.currentSpace}`, {
         params: queryParams,
       })
       .then((result) => {

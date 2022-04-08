@@ -1,43 +1,44 @@
 import {
-  SPACES_FAILURE,
-  SPACES_LOADING,
-  GET_SPACES,
-  ADD_SPACE,
-  DELETE_SPACE,
-  EDIT_SPACE,
-  SET_ADD_SPACE_STATE,
+  ADD_REVIEW,
+  GET_REVIEWS,
+  DELETE_REVIEW,
+  EDIT_REVIEW,
+  SET_ADD_REVIEW_STATE,
   TOGGLE_ISEDITING,
-  SET_CURRENT_SPACE,
-} from './spaces.types'
+  REVIEWS_LOADING,
+  REVIEWS_FAILURE,
+} from './reviews.types'
 
 const INITIAL_STATE = {
-  currentSpace: 1,
-  isEditing: false,
   loading: false,
-  addSpaceState: {},
+  error: false,
+  isEditing: false,
+  addReviewState: {
+    title: '',
+    content: '',
+    picture: null,
+    file: null,
+  },
   list: [],
-  error: '',
 }
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SET_CURRENT_SPACE:
-      return { ...state, currentSpace: action.id }
-    case SPACES_LOADING:
+    case REVIEWS_LOADING:
       return { ...state, loading: true }
-    case SPACES_FAILURE:
+    case REVIEWS_FAILURE:
       return { ...state, loading: false, error: action.payload }
     case TOGGLE_ISEDITING:
       return { ...state, isEditing: !state.isEditing }
-    case SET_ADD_SPACE_STATE:
-      return { ...state, addSpaceState: action.payload }
-    case GET_SPACES:
+    case SET_ADD_REVIEW_STATE:
+      return { ...state, addReviewState: action.payload }
+    case GET_REVIEWS:
       return { ...state, loading: false, list: action.payload }
-    case ADD_SPACE:
+    case ADD_REVIEW:
       return state
-    case DELETE_SPACE:
+    case DELETE_REVIEW:
       return { ...state, list: state.list.filter((p) => p.id !== action.id) }
-    case EDIT_SPACE:
+    case EDIT_REVIEW:
       return state
     default:
       return state
