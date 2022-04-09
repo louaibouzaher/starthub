@@ -23,6 +23,7 @@ import AddPost from '../../src/components/AddPost'
 import { getProjects } from '../../src/store/Projects/projects.api'
 import { getPosts } from '../../src/store/Posts/posts.api'
 import AddProject from '../../src/components/AddProject'
+import Link from 'next/link'
 
 const Space = ({
   space,
@@ -154,7 +155,13 @@ const Space = ({
                 </div>
                 <div className="mt-4">
                   {/* TODO: Replace this by User Card */}
-                  Owner <span className="text-purple"> StartHub Co. </span>
+                  Owner{' '}
+                  <Link href={`/profile/${space.owner.id}`}>
+                    <span className="text-dark font-bold hover:text-purple cursor-pointer no-underline">
+                      {' '}
+                      {space.owner.first_name} {space.owner.last_name}{' '}
+                    </span>
+                  </Link>
                 </div>
                 <div className="mt-4">
                   Prize <span className="text-purple"> 10.000$ </span>
@@ -163,7 +170,7 @@ const Space = ({
                 <div className="font-bold text-xl text-purple mt-6">
                   About {space.title}
                 </div>
-                <div className="">{s.description}</div>
+                <div className="">{space.description}</div>
                 <div className="font-bold text-xl text-purple mt-6">
                   {`Rules & Regulations`}
                 </div>
