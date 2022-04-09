@@ -70,45 +70,48 @@ const Project = ({
       }
     >
       <div className="absolute flex flex-col items-end top-8 right-8">
-        {isOwner && (
-          <Dots
-            isDark
-            className="scale-125"
-            onClick={() => setIsDotsListOpen(!isDotsListOpen)}
-          />
-        )}
+        <Dots
+          isDark
+          className="scale-125"
+          onClick={() => setIsDotsListOpen(!isDotsListOpen)}
+        />
+
         {isDotsListOpen && (
           <div className="z-10 text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
-            <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
-              <Edit color={tailwindConfig.theme.extend.colors.dark} />
-              <div className="mx-1"> Edit Project</div>
-            </div>
-            <div
-              className="bg-dark rounded-full opacity-5"
-              style={{
-                height: 2,
-              }}
-            >
-              {' '}
-            </div>
-            <div className="cursor-pointer flex my-1" onClick={() => handleDelete()}>
-              <Delete color={tailwindConfig.theme.extend.colors.dark} />
-              <div className="mx-1"> Delete Permanently</div>
-            </div>
-            <div
-              className="bg-dark rounded-full opacity-5"
-              style={{
-                height: 2,
-              }}
-            >
-              {' '}
+            {isOwner && (
+              <>
+                <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
+                  <Edit color={tailwindConfig.theme.extend.colors.dark} />
+                  <div className="mx-1"> Edit Project</div>
+                </div>
+                <div
+                  className="bg-dark rounded-full opacity-5"
+                  style={{
+                    height: 2,
+                  }}
+                >
+                  {' '}
+                </div>
+                <div className="cursor-pointer flex my-1" onClick={() => handleDelete()}>
+                  <Delete color={tailwindConfig.theme.extend.colors.dark} />
+                  <div className="mx-1"> Delete Permanently</div>
+                </div>
+                <div
+                  className="bg-dark rounded-full opacity-5"
+                  style={{
+                    height: 2,
+                  }}
+                >
+                  {' '}
+                </div>
+              </>
+            )}
+            <div className="cursor-pointer flex my-1" onClick={() => handleReview()}>
+              <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
+              <div className="mx-1"> Submit Review</div>
             </div>
           </div>
         )}
-        <div className="cursor-pointer flex my-1" onClick={() => handleReview()}>
-          <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
-          <div className="mx-1"> Submit Review</div>
-        </div>
       </div>
 
       <div className="text-4xl text-dark font-bold">{project.title}</div>
