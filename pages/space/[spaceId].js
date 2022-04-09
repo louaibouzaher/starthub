@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
 import axios from 'axios'
-import { space as s } from '../../src/data/space'
 import { API_BASEURL } from '../../appConfig'
 import { connect } from 'react-redux'
 import Cross from '../../src/assets/icons/Cross'
@@ -54,7 +53,7 @@ const Space = ({
       changeChild(<AddProject />)
     }
   }, [sectionIndexer.selectedSection])
-
+  console.log(space)
   return (
     <>
       <Head>
@@ -99,7 +98,7 @@ const Space = ({
             <div className="w-1/2 flex flex-col items-start bg-white rounded-md shadow-lg p-10 m-2">
               <div className="text-2xl text-dark">Participants</div>
               <div className="flex flex-wrap mt-3 justify-start items-center">
-                {space?.pariticipants?.map((p) => (
+                {space?.participants?.map((p) => (
                   <UserAvatar link={p.picture} className="m-1 h-10 w-10" sizing />
                 ))}
                 <div className="h-10 w-10 bg-purple rounded-full flex justify-center items-center cursor-pointer">
@@ -240,13 +239,19 @@ const Space = ({
             )}
             {sectionIndexer.selectedSection === 2 && (
               <div className="flex flex-wrap space-x-2 space-y-2 ">
-                {space?.pariticipants?.map((p) => (
-                  <div className="bg-white rounded-md shadow-md p-2 flex justify-center items-center">
-                    <UserAvatar link={p.picture} className="m-1 h-10 w-10" sizing />
-                    <div>
-                      {p.firstName} {p.lastName}
+                {space?.participants?.map((p) => (
+                  <Link href={`/profile/${p.user.id}`}>
+                    <div className="cursor-pointer bg-white rounded-md shadow-md p-2 pr-3 flex justify-center items-center">
+                      <UserAvatar
+                        link={p.profile.profilePic}
+                        className="m-1 h-10 w-10"
+                        sizing
+                      />
+                      <div>
+                        {p.user.first_name} {p.user.last_name}
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}
