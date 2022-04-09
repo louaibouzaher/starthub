@@ -7,7 +7,7 @@ export const Button = React.forwardRef(
         href={href}
         onClick={onClick}
         className={
-          ' flex justify-center items-center cursor-pointer font-sans py-2 px-6 rounded-md text-sm ' +
+          'font-bold flex justify-center items-center cursor-pointer font-sans py-2 px-6 rounded-md text-sm ' +
           btnStyle
         }
       >

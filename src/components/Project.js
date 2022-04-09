@@ -21,6 +21,8 @@ import { deleteProject } from '../store/Projects/projects.api'
 import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import AddProject from './AddProject'
 import { getMonth } from '../helpers/date'
+import PostIcon from '../assets/icons/PostsIcon'
+import AddReview from './AddReview'
 
 const Project = ({
   user,
@@ -49,14 +51,14 @@ const Project = ({
     setIsDotsListOpen(false)
     toggleIsEditing()
     setAddProjectState({ ...project, user: user })
-    changeChild(
-      <AddProject
-        initialState={{ ...project, user: user }}
-        setSubmitted={(r) => {
-          console.log(r)
-        }}
-      />
-    )
+    changeChild(<AddProject project={{ ...project, user: user }} />)
+    toggleOverlay()
+  }
+  const handleReview = () => {
+    setIsDotsListOpen(false)
+    toggleIsEditing()
+    // setAddReviewState({ ...project, user: user })
+    changeChild(<AddReview projectReviewed={{ ...project, user: user }} />)
     toggleOverlay()
   }
   const time = new Date(project.time)
@@ -76,7 +78,7 @@ const Project = ({
           />
         )}
         {isDotsListOpen && (
-          <div className="text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
+          <div className="z-10 text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
             <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
               <Edit color={tailwindConfig.theme.extend.colors.dark} />
               <div className="mx-1"> Edit Project</div>
@@ -93,13 +95,26 @@ const Project = ({
               <Delete color={tailwindConfig.theme.extend.colors.dark} />
               <div className="mx-1"> Delete Permanently</div>
             </div>
+            <div
+              className="bg-dark rounded-full opacity-5"
+              style={{
+                height: 2,
+              }}
+            >
+              {' '}
+            </div>
+            <div className="cursor-pointer flex my-1" onClick={() => handleReview()}>
+              <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
+              <div className="mx-1"> Submit Review</div>
+            </div>
           </div>
         )}
       </div>
 
       <div className="text-4xl text-dark font-bold">{project.title}</div>
       <div className="text-xs opacity-50">
-        {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()}
+        {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()} at{' '}
+        {time.getHours() + ':' + time.getMinutes()}
       </div>
       <div className="flex mt-2">
         {project.tags
@@ -200,11 +215,11 @@ const Project = ({
           </div>
         </div>
         <Link href={'/project/' + project.id}>
-          <div className="text-purple flex items-center cursor-pointer">
+          <div className="text-dark flex items-center cursor-pointer opacity-40">
             <div>Learn more</div>
             <ButtonArrow
               className={'-rotate-90'}
-              color={tailwindConfig.theme.extend.colors.purple}
+              color={tailwindConfig.theme.extend.colors.dark}
             />
           </div>
         </Link>

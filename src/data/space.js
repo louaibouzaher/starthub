@@ -160,7 +160,7 @@ export const space = {
     },
     {
       picture: 'https://randomuser.me/api/portraits/women/41.jpg',
-      firstName: 'Mark',
+      firstName: 'Mary',
       lastName: 'Doe',
       experience: 'Software Engineer at Microsoft',
     },

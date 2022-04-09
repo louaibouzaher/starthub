@@ -7,9 +7,11 @@ import {
   EDIT_SPACE,
   SET_ADD_SPACE_STATE,
   TOGGLE_ISEDITING,
+  SET_CURRENT_SPACE,
 } from './spaces.types'
 
 const INITIAL_STATE = {
+  currentSpace: 1,
   isEditing: false,
   loading: false,
   addSpaceState: {},
@@ -19,6 +21,8 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case SET_CURRENT_SPACE:
+      return { ...state, currentSpace: action.id }
     case SPACES_LOADING:
       return { ...state, loading: true }
     case SPACES_FAILURE:

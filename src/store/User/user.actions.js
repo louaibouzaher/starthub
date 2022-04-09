@@ -9,6 +9,7 @@ import {
   SET_SETTINGS_STATE,
   REFRESH_TOKEN,
   SET_TOKEN,
+  LOGOUT,
 } from './user.types'
 
 export const loading = () => {
@@ -26,6 +27,12 @@ export const loginSuccess = (payload) => {
   return {
     type: LOGIN_SUCCESS,
     payload: payload,
+  }
+}
+
+export const logout = () => {
+  return {
+    type: LOGOUT,
   }
 }
 

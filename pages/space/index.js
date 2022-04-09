@@ -3,7 +3,6 @@ import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
 import Head from 'next/head'
 import Link from 'next/link'
-import Navbar from '../../src/components/Navbar'
 import OverlayWindow from '../../src/components/OverlayWindow'
 import SpaceMainImage from '../../src/assets/images/SpaceMainImage'
 import SpaceCard from '../../src/components/SpaceCard'
@@ -16,7 +15,6 @@ const Spaces = ({ spaces }) => {
         <title>StartHub Spaces</title>
       </Head>
       <OverlayWindow />
-      <Navbar />
       <div className="h-screen w-full flex flex-col justify-start items-start pt-28 p-20">
         <div className="w-full flex flex-col justify-center items-center">
           <SpaceMainImage
@@ -29,10 +27,10 @@ const Spaces = ({ spaces }) => {
           <div className="mt-6 mb-2">You want to start your own?</div>
           <Link href="/create-space" passHref>
             <Button
-              label="Create A Space"
+              label="Create New Space"
               btnStyle={'bg-green text-white border-2 border-green mx-2'}
               onClick={() => {
-                console.log('Create a Space')
+                console.log('Create New Space')
               }}
             />
           </Link>

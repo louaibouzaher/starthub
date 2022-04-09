@@ -103,10 +103,6 @@ function Signup({ err }) {
         <title>Sign Up - StartHub</title>
       </Head>
       <div class="h-screen w-full text-dark bg-purple flex flex-col justify-center items-center ">
-        <div className=" w-4.5 h-12 scale-150">
-          <WhiteLogo className={' justify-center items-center  '} />
-        </div>
-
         <form>
           <div class="flex flex-col justify-center items-center bg-white px-10 py-8 rounded-xl w-full shadow-md max-w mt-10">
             <div>

@@ -26,7 +26,7 @@ export const SpaceMain = () => {
       <div className="flex justify-center items-center mt-5">
         <Link href="/create-space" passHref>
           <Button
-            label="Create A Space"
+            label="Create New Space"
             btnStyle={'bg-green text-white border-2 border-green mx-2'}
             onClick={() => {
               console.log('Create a Space')

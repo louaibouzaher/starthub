@@ -27,18 +27,17 @@ const ConfirmPicture = ({
     <>
       <div className="flex flex-col">
         <div>Do you want to upload this picture?</div>
-        <div
-          className="w-full rounded-md shadow-sm items-center p-10"
-          style={
-            {
-              // backgroundImage:
-            }
-          }
-        >
-          <img
-            src={URL.createObjectURL(file)}
-            className="w-full h-full overflow-hidden shadow-md"
-          />
+        <div className="w-full flex justify-center py-4">
+          <div
+            style={{
+              backgroundImage: 'url(' + URL.createObjectURL(file) + ')',
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              height: 300,
+              width: 300,
+            }}
+            className="flex justify-center rounded-full shadow-sm items-center p-10 "
+          ></div>
         </div>
       </div>
       <div className="absolute flex flex-row mt-10 right-8 bottom-8">

@@ -1,7 +1,14 @@
-import { TOGGLE_SECTION } from './sectionIndexer.types'
+import { SECTIONS_INIT, SET_SECTION } from './sectionIndexer.types'
 
-export const toggleSection = () => {
+export const setSection = (id) => {
   return {
-    type: TOGGLE_SECTION,
+    type: SET_SECTION,
+    payload: id,
+  }
+}
+export const sectionsInit = (sections) => {
+  return {
+    type: SECTIONS_INIT,
+    payload: sections,
   }
 }

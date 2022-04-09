@@ -7,7 +7,6 @@ import { Box } from '@mui/system'
 import TextField from '@mui/material/TextField'
 
 export default function StepThree({ setSpace, space }) {
-  console.log(participants)
   return (
     <>
       <h2 className="font-bold text-xl">Add Prticipant</h2>
