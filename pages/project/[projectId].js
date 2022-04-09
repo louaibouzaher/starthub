@@ -77,7 +77,7 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
           {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()}
         </div>
         <div className="flex space-x-2 justify-start ">
-          {project.tags
+          {project?.tags
             ?.split(',')
             .filter((t) => t.length > 0)
             .map((t) => {
@@ -112,7 +112,7 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
                 {project.establishedOn
                   ? establishedOn.getDate() +
                     '-' +
-                    establishedOn.getMonth() +
+                    (establishedOn.getMonth() + 1) +
                     '-' +
                     establishedOn.getFullYear()
                   : 'Not yet'}
