@@ -14,8 +14,6 @@ import { setAddSpaceState, toggleIsEditing } from '../store/Spaces/spaces.action
 import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 
 const AddSpace = ({
-  space,
-  state,
   toggleOverlay,
   setAddSpaceState,
   addSpaceState,
@@ -41,7 +39,6 @@ const AddSpace = ({
     })
   }
   const handleSubmit = async () => {
-    changeChild(<Loader />)
     if (isEditing) {
       store.dispatch(
         putSpace(addSpaceState.id, {
@@ -52,12 +49,10 @@ const AddSpace = ({
     } else {
       await store.dispatch(
         postSpace({
-          ...state,
-          space: space,
+          ...addSpaceState,
         })
       )
     }
-    toggleOverlay()
     setAddSpaceState({})
   }
   return (

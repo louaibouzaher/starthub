@@ -103,12 +103,12 @@ const Project = ({
             >
               {' '}
             </div>
-            <div className="cursor-pointer flex my-1" onClick={() => handleReview()}>
-              <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
-              <div className="mx-1"> Submit Review</div>
-            </div>
           </div>
         )}
+        <div className="cursor-pointer flex my-1" onClick={() => handleReview()}>
+          <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
+          <div className="mx-1"> Submit Review</div>
+        </div>
       </div>
 
       <div className="text-4xl text-dark font-bold">{project.title}</div>
