@@ -11,6 +11,7 @@ function PostList({ posts }) {
 
   return posts?.map((p) => (
     <Post
+      key={p.id}
       post={p}
       user={{
         id: p.owner?.id,

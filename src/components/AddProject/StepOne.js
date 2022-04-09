@@ -62,7 +62,7 @@ export default function StepOne({
             onChange={handleFile}
           />
           <label
-            for="file"
+            htmlFor="file"
             className="cursor-pointer h-10 w-1/3 my-2 p-2 border-2 rounded-md border-purple text-center text-purple justify-center items-center"
           >
             Upload a video

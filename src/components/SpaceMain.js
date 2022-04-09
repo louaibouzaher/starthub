@@ -5,11 +5,9 @@ import { Button } from './Button'
 export const SpaceMain = () => {
   return (
     <div className="h-screen flex flex-col justify-center items-center  p-2 overflow-x-hidden">
-      <div classNmae="h-3/4 w-full flex items-start  overflow-x-hidden">
-        <SpaceMainImage
-          className={'flex flex-col w-full justify-left items-center scale-120'}
-        />
-      </div>
+      <SpaceMainImage
+        className={'flex flex-col w-full justify-left items-center scale-120'}
+      />
       <div className="w-1/3 flex justify-center items-center text-center p-2 font-sans text-lg not-italic font-bold text-dark capitalize">
         Create your own space to host Startup competitions, entrepreneurship forums and
         more!

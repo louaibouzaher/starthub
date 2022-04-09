@@ -38,7 +38,7 @@ const Spaces = ({ spaces }) => {
         <div className="w-full px-60 flex justify-center">
           <div className="w-full flex flex-wrap ">
             {spaces.map((s) => (
-              <SpaceCard space={s} />
+              <SpaceCard space={s} key={s.id} />
             ))}
           </div>
         </div>

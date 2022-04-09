@@ -6,16 +6,18 @@ import store from '../src/store'
 import { Notification } from '../src/components/Notification'
 import 'react-toastify/dist/ReactToastify.css'
 import { setToken } from '../src/store/User/user.actions'
-import { getCurrentUser } from '../src/store/User/user.api'
+import { getCurrentUser, getProfile } from '../src/store/User/user.api'
 import Navbar from '../src/components/Navbar'
 
 if (typeof window !== 'undefined') {
   const token = localStorage.getItem('token')
   const refreshToken = localStorage.getItem('refreshToken')
 
-  if (token) {
+  if (token && !store.getState().user.isConnected) {
+    console.log('doing this ')
     store.dispatch(setToken({ access: token, refresh: refreshToken }))
     store.dispatch(getCurrentUser())
+    store.dispatch(getProfile(store.getState().user.data.connectedUser.id))
   }
 }
 

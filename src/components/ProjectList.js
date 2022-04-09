@@ -11,6 +11,7 @@ function ProjectList({ projects }) {
 
   return projects?.map((p) => (
     <Project
+      key={p.id}
       project={p}
       user={{
         id: p.owner?.id,

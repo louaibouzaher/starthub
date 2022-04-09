@@ -114,11 +114,11 @@ const Post = ({
           (post.picture ? 'py-2  max-w-max rounded-lg ' : '')
         }
       >
-        <Link href={`/profile/${user.id}`} passHref>
+        <Link href={`/profile/${user.id}`}>
           <UserAvatar link={user.avatar || user.picture} size={'16'} />
         </Link>
         <div className="ml-4 flex flex-col items-start">
-          <Link href={`/profile/${user.id}`} passHref>
+          <Link href={`/profile/${user.id}`}>
             <div
               className={
                 'hover:text-purple cursor-pointer font-bold ' +

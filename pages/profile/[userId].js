@@ -48,16 +48,16 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }
             <div className="text-xs text-gray-400 px-2">{user.position}</div>
             <div className="flex space-x-2 w-full mt-2">
               <div>
-                <span className="text-purple">298</span> Followers
+                <span className="text-purple">0</span> Followers
               </div>
               <div>
-                <span className="text-purple">843</span> Following
+                <span className="text-purple">0</span> Following
               </div>
               <div>
-                <span className="text-purple">10</span> Posts
+                <span className="text-purple">{user.posts.length}</span> Posts
               </div>
               <div>
-                <span className="text-purple">2</span> Projects
+                <span className="text-purple">{user.projects.length}</span> Projects
               </div>
             </div>
             <div className="text-sm p-2 break-words">{user.biography}</div>
