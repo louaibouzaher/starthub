@@ -16,7 +16,7 @@ export default function StepFour({ setSpace, space }) {
           // Add Judges here
         }}
         getOptionLabel={(option) => option.firstName + option.lastName}
-        sx={{ width: '40%' }}
+        sx={{ width: '100%' }}
         renderOption={(props, option) => (
           <div class="flex items-center">
             <div>

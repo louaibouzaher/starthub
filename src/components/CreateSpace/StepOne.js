@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-
-import { Avatar } from '@mui/material'
 import Download from '../../assets/icons/Download'
 import tailwindConfig from '../../../tailwind.config'
 import { Downloader, Uploader } from '../../firebase/Helpers'
