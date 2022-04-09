@@ -200,11 +200,16 @@ const Post = ({
           </div>
         </div>
         <Link href={'/post/' + post.id}>
-          <div className="text-dark flex items-center cursor-pointer opacity-40">
+          <div
+            className={
+              'flex items-center cursor-pointer  ' +
+              (post.picture ? 'text-white ' : ' text-dark opacity-40')
+            }
+          >
             <div>Learn more</div>
             <ButtonArrow
               className={'-rotate-90'}
-              color={tailwindConfig.theme.extend.colors.dark}
+              color={post.picture ? 'white' : tailwindConfig.theme.extend.colors.dark}
             />
           </div>
         </Link>

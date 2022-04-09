@@ -31,7 +31,8 @@ const CreateSpace = ({ toggleOverlay, setAddSpaceState, addSpaceState, isConnect
   }, [isConnected])
 
   const handleSubmit = async () => {
-    store.dispatch(postSpace(addSpaceState))
+    console.log(addSpaceState)
+    store.dispatch(postSpace({ ...addSpaceState, participants: [], judges: [] }))
   }
   return (
     <>
