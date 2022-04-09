@@ -18,10 +18,6 @@ const CreateSpace = ({ isConnected }) => {
     }
   }, [isConnected])
 
-  const handleSubmit = async () => {
-    console.log(addSpaceState)
-    store.dispatch(postSpace({ ...addSpaceState, participants: [], judges: [] }))
-  }
   return (
     <>
       <Head>
