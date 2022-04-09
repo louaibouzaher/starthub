@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField'
 export default function StepThree({ setSpace, space }) {
   return (
     <>
-      <h2 className="font-bold text-xl">Add Prticipant</h2>
+      <h2 className="font-bold text-xl my-6">Add Prticipant</h2>
 
       <Autocomplete
         multiple
@@ -19,7 +19,7 @@ export default function StepThree({ setSpace, space }) {
           // Add Participants here
         }}
         getOptionLabel={(option) => option.firstName + option.lastName}
-        sx={{ width: '50%' }}
+        sx={{ width: '40%' }}
         renderOption={(props, option) => (
           <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
             <img

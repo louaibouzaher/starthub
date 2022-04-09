@@ -1,5 +1,7 @@
 export const GET_SPACES = 'GET_SPACES'
 
+export const GET_MY_SPACES = 'GET_MY_SPACES'
+
 export const ADD_SPACE = 'ADD_SPACE'
 
 export const DELETE_SPACE = 'DELETE_SPACE'

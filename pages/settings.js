@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
-import Navbar from '../src/components/Navbar'
+import MySpaces from '../src/components/Settings/MySpaces'
 import PersonalInformation from '../src/components/Settings/PersonalInformation'
 import PlatformPreferences from '../src/components/Settings/PlatformPreferences'
 import AccountSecurity from '../src/components/Settings/AccountSecurity'
@@ -25,6 +25,10 @@ function Settings({ settingsState, connectedUser, error }) {
     {
       title: 'Account & Security',
       id: 2,
+    },
+    {
+      title: 'My Spaces',
+      id: 3,
     },
   ]
   const handleSave = async () => {
@@ -74,6 +78,7 @@ function Settings({ settingsState, connectedUser, error }) {
             {section == 0 && <PersonalInformation />}
             {section == 1 && <PlatformPreferences />}
             {section == 2 && <AccountSecurity />}
+            {section == 3 && <MySpaces />}
           </div>
         </div>
       </div>

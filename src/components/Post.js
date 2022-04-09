@@ -26,6 +26,7 @@ import store from '../store'
 const Post = ({
   user,
   post,
+  state,
   changeChild,
   toggleOverlay,
   toggleIsEditing,

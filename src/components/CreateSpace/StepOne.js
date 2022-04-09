@@ -4,12 +4,6 @@ import { Avatar } from '@mui/material'
 import Download from '../../assets/icons/Download'
 import tailwindConfig from '../../../tailwind.config'
 import { Downloader, Uploader } from '../../firebase/Helpers'
-import Loader from '../Loader'
-import {
-  changeChild,
-  toggleOverlay,
-} from '../../store/OverlayWindow/overlayWindow.actions'
-import store from '../../store/index'
 
 export default function StepOne({ space, handleChange, setSpace }) {
   const [file, setFile] = useState(null)
@@ -20,14 +14,12 @@ export default function StepOne({ space, handleChange, setSpace }) {
   const handleFile = async (e) => {
     const file = e.target.files[0]
     setFile(e.target.files[0])
-    store.dispatch(changeChild(<Loader />))
-    store.dispatch(toggleOverlay())
+
     const pictureRef = file ? await Uploader(file) : null
     const pictureLink = file ? await Downloader(pictureRef) : null
     console.log(file)
     console.log(pictureLink)
     setSpace({ ...space, spacePic: pictureLink })
-    store.dispatch(toggleOverlay())
   }
   // const handleChange = (e) => {
   //   switch (e.target.name) {
@@ -104,26 +96,24 @@ export default function StepOne({ space, handleChange, setSpace }) {
           )}
         </div>
         <div className="ml-10 flex flex-col justify-start w-full">
-          <div>
-            <input
-              accept="image/*"
-              type="file"
-              id="spacePic"
-              name="spacePic"
-              className="hidden"
-              onChange={handleFile}
+          <input
+            accept="image/*"
+            type="file"
+            id="spacePic"
+            name="spacePic"
+            className="hidden"
+            onChange={handleFile}
+          />
+          <label
+            for="spacePic"
+            className="w-full cursor-pointer flex h-10  my-2 p-2 border-2 rounded-md border-purple text-center text-purple justify-center items-center"
+          >
+            <Download
+              className="rotate-180 scale-75"
+              color={tailwindConfig.theme.extend.colors.purple}
             />
-            <label
-              for="spacePic"
-              className="w-full cursor-pointer flex h-10  my-2 p-2 border-2 rounded-md border-purple text-center text-purple justify-center items-center"
-            >
-              <Download
-                className="rotate-180 scale-75"
-                color={tailwindConfig.theme.extend.colors.purple}
-              />
-              Upload Space Picture
-            </label>
-          </div>
+            Upload Space Picture
+          </label>
         </div>
       </div>
     </>

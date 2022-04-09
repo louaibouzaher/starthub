@@ -35,10 +35,12 @@ const Spaces = ({ spaces }) => {
             />
           </Link>
         </div>
-        <div className="w-full flex flex-wrap justify-center ">
-          {spaces.map((s) => (
-            <SpaceCard space={s} />
-          ))}
+        <div className="w-full px-60 flex justify-center">
+          <div className="w-full flex flex-wrap ">
+            {spaces.map((s) => (
+              <SpaceCard space={s} />
+            ))}
+          </div>
         </div>
       </div>
     </>

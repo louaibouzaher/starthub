@@ -1,4 +1,6 @@
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import store from '../store'
+import { showNotification } from '../store/Notifications/notifications.actions'
 import { storage } from './index'
 
 export const Uploader = (file, isVideo) => {
@@ -7,6 +9,7 @@ export const Uploader = (file, isVideo) => {
     (isVideo ? 'videos/' : 'images/') + new Date().toUTCString() + file.name
   )
   const path = uploadBytes(storageRef, file).then((snapshot) => snapshot)
+  store.dispatch(showNotification('Picture Uploaded Successfuly', true))
   return path
 }
 

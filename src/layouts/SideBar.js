@@ -102,8 +102,7 @@ const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
         estimatedCapital: `[${value[0]},${value[1]}]`,
         numberOfEmployees: `[${numberOfEmployees[0]},${numberOfEmployees[1]}]`,
         location: location,
-        minYears: yearsInBusiness[0],
-        maxYears: yearsInBusiness[1],
+        yearsInBusiness: `[${yearsInBusiness[0]},${yearsInBusiness[1]}]`,
         industry: selectedFields.map((id) => fields[id].title).join(','),
       })
     )

@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField'
 export default function StepFour({ setSpace, space }) {
   return (
     <>
-      <h2 className="font-bold text-xl">Add Judges</h2>
+      <h2 className="font-bold text-xl my-6">Add Judges</h2>
       <Autocomplete
         multiple
         id="tags-outlined"
@@ -16,7 +16,7 @@ export default function StepFour({ setSpace, space }) {
           // Add Judges here
         }}
         getOptionLabel={(option) => option.firstName + option.lastName}
-        sx={{ width: '50%' }}
+        sx={{ width: '40%' }}
         renderOption={(props, option) => (
           <div class="flex items-center">
             <div>
