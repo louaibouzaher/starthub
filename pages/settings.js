@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import Head from 'next/head'
-import MySpaces from '../src/components/Settings/MySpace'
+import MySpaces from '../src/components/Settings/MySpaces'
 import PersonalInformation from '../src/components/Settings/PersonalInformation'
 import PlatformPreferences from '../src/components/Settings/PlatformPreferences'
 import AccountSecurity from '../src/components/Settings/AccountSecurity'

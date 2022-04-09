@@ -8,6 +8,7 @@ import {
   SET_ADD_SPACE_STATE,
   TOGGLE_ISEDITING,
   SET_CURRENT_SPACE,
+  GET_MY_SPACES,
 } from './spaces.types'
 
 const INITIAL_STATE = {
@@ -16,6 +17,7 @@ const INITIAL_STATE = {
   loading: false,
   addSpaceState: {},
   list: [],
+  mySpacesList: [],
   error: '',
 }
 
@@ -33,6 +35,8 @@ const reducer = (state = INITIAL_STATE, action) => {
       return { ...state, addSpaceState: action.payload }
     case GET_SPACES:
       return { ...state, loading: false, list: action.payload }
+    case GET_MY_SPACES:
+      return { ...state, loading: false, mySpacesList: action.payload }
     case ADD_SPACE:
       return state
     case DELETE_SPACE:

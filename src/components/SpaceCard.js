@@ -8,10 +8,10 @@ const SpaceCard = ({ space }) => {
   console.log(space)
   return (
     <Link href={`space/${space.id}`}>
-      <div className="cursor-pointer hover:shadow-lg w-1/3 flex items-start justify-start bg-white rounded-md shadow-md p-10 m-2">
+      <div className="cursor-pointer hover:shadow-lg flex-1 flex items-start justify-start bg-white rounded-md shadow-md p-10 m-2">
         {space.spacePic ? (
           <div
-            className="rounded-full mr-6"
+            className="rounded-full mr-6 w-1/3"
             style={{
               backgroundImage: 'url(' + space.spacePic + ')',
               backgroundSize: 'cover',
@@ -31,7 +31,7 @@ const SpaceCard = ({ space }) => {
             <MainLogo width={100} />
           </div>
         )}
-        <div className="flex flex-col">
+        <div className="flex flex-col w-2/3">
           <div className="text-2xl break-words">{space.title}</div>
           <div className="text-sm opacity-50">
             {`${getMonth(startsOn.getMonth())}

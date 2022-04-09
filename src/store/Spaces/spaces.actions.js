@@ -8,6 +8,7 @@ import {
   SET_ADD_SPACE_STATE,
   TOGGLE_ISEDITING,
   SET_CURRENT_SPACE,
+  GET_MY_SPACES,
 } from './spaces.types'
 
 export const loading = () => {
@@ -31,6 +32,12 @@ export const addSpaceSuccess = (newSpace) => {
 export const getSpacesSuccess = (payload) => {
   return {
     type: GET_SPACES,
+    payload: payload,
+  }
+}
+export const getMySpacesSuccess = (payload) => {
+  return {
+    type: GET_MY_SPACES,
     payload: payload,
   }
 }
