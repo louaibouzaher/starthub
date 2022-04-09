@@ -14,7 +14,6 @@ if (typeof window !== 'undefined') {
   const refreshToken = localStorage.getItem('refreshToken')
 
   if (token && !store.getState().user.isConnected) {
-    console.log('doing this ')
     store.dispatch(setToken({ access: token, refresh: refreshToken }))
     store.dispatch(getCurrentUser())
     store.dispatch(getProfile(store.getState().user.data.connectedUser.id))

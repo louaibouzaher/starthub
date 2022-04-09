@@ -17,17 +17,11 @@ export default function StepTwo({
   setStep,
 }) {
   const [isDatePickerDisabled, setIsDatePickerDisabled] = useState(false)
-  console.log(
-    (Project.establishedOn?.getYear() % 100) +
-      2000 +
-      '/' +
-      (Project.establishedOn?.getMonth() + 1) +
-      '/' +
-      Project.establishedOn?.getDate()
-  )
+
   const handleLocation = (e, newValue, reason) => {
     setProject({ ...Project, location: newValue })
   }
+  console.log(new Date(Project.establishedOn))
   return (
     <>
       <div className="flex flex-col w-full ">
@@ -51,12 +45,12 @@ export default function StepTwo({
               label="Select Date"
               inputFormat="yyyy/MM/dd"
               value={
-                (Project.establishedOn?.getYear() % 100) +
+                (new Date(Project.establishedOn)?.getYear() % 100) +
                 2000 +
                 '/' +
-                (Project.establishedOn?.getMonth() + 1) +
+                (new Date(Project.establishedOn)?.getMonth() + 1) +
                 '/' +
-                Project.establishedOn?.getDate()
+                new Date(Project.establishedOn)?.getDate()
               }
               onChange={(newValue) => setProject({ ...Project, establishedOn: newValue })}
               renderInput={(params) => <TextField {...params} />}
