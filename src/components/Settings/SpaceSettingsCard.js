@@ -49,7 +49,7 @@ function SpaceSettingsCard({
   }
 
   return (
-    <div className="relative flex w-4/5 items-start flex-row bg-white rounded shadow-lg p-10 m-2">
+    <div className="relative flex w-full items-start flex-row bg-white rounded shadow-lg p-10 m-2">
       <div
         className="h-36 w-36 rounded-full mr-6"
         style={{
@@ -72,7 +72,9 @@ function SpaceSettingsCard({
       </div>
 
       <div className="flex flex-row items-center absolute right-10 top-10 ">
-        <h2 className="border-2 border-dark py-1 px-2 text-sm rounded-md">Owner</h2>
+        <h2 className="border-2 border-dark py-1 px-2 text-sm font-bold rounded-md">
+          Owner
+        </h2>
         <React.Fragment>
           <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
             <Tooltip title="Space settings">
