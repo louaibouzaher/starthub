@@ -15,6 +15,7 @@ import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
 import { defaultSections } from '../../src/data/general'
 import { sectionsInit } from '../../src/store/SectionIndexer/sectionIndexer.actions'
+import OverlayWindow from '../../src/components/OverlayWindow'
 
 function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }) {
   const isOwner = connectedUser.id == user.user.id
@@ -37,6 +38,7 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }
           {user.user.first_name} {user.user.last_name} - StartHub
         </title>
       </Head>
+      <OverlayWindow />
       <Navbar />
       <div className=" w-full pt-20 px-60 min-h-screen text-dark">
         <div className="flex justify-center items-start  rounded-md shadow-md py-6 px-4 ">
@@ -98,7 +100,7 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }
                     btnStyle="w-1/2 bg-white border-2 border-purple text-purple mx-1"
                     label="Message"
                     onClick={() => {
-                      console.log('Follow')
+                      console.log('Message')
                     }}
                   />
                 </>
