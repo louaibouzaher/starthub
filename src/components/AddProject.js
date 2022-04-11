@@ -41,16 +41,15 @@ const AddProject = ({
     changeChild(<Loader />)
     const videoRef = state.file ? await Uploader(state.file, true) : null
     const videoLink = state.file ? await Downloader(videoRef) : null
-
+    const dateObj = new Date(state.establishedOn)
     const formatedDate =
-      (state.establishedOn?.getYear() % 100) +
+      (dateObj?.getYear() % 100) +
       2000 +
       '-' +
-      ((state.establishedOn?.getMonth() < 9 ? '0' : '') +
-        (state.establishedOn?.getMonth() + 1)) +
+      ((dateObj?.getMonth() < 9 ? '0' : '') + (dateObj?.getMonth() + 1)) +
       '-' +
-      state.establishedOn?.getDate()
-    console.log(formatedDate)
+      dateObj?.getDate()
+    console.log(state)
     if (isEditing) {
       store.dispatch(
         putProject(state.id, {

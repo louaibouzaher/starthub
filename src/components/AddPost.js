@@ -34,11 +34,12 @@ const AddPost = ({
     changeChild(<Loader />)
     const pictureRef = state.file ? await Uploader(state.file) : null
     const pictureLink = state.file ? await Downloader(pictureRef) : null
+    console.log(pictureLink)
     if (isEditing) {
       await store.dispatch(
         putPost(state.id, {
           ...state,
-          pictureLink: pictureLink || null,
+          picture: pictureLink || null,
         })
       )
       toggleIsEditing()

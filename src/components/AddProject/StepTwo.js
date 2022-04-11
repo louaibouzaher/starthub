@@ -21,7 +21,6 @@ export default function StepTwo({
   const handleLocation = (e, newValue, reason) => {
     setProject({ ...Project, location: newValue })
   }
-  console.log(new Date(Project.establishedOn))
   return (
     <>
       <div className="flex flex-col w-full ">
