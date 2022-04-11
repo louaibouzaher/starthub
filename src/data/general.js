@@ -101,11 +101,6 @@ export const spaceSections = [
   },
   {
     id: 2,
-    title: 'Participants',
-    Icon: () => <PostsIcon />,
-  },
-  {
-    id: 3,
     title: 'Judges',
     Icon: () => <ProjectsIcon />,
   },

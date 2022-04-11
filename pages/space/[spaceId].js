@@ -125,17 +125,6 @@ const Space = ({
           </div>
         )}
         <div className="w-full flex flex-col justify-start">
-          {!isParticipant && (
-            <>
-              <div className="text-4xl text-dark mt-10 font-bold">
-                What is Happening in <span className="text-green">{space.name}</span>
-              </div>
-              <div className="text-xl text-dark mb-10 mt-2">
-                Check the latest updates about this space.
-              </div>
-            </>
-          )}
-
           <div className="w-full">
             <SectionIndexer sections={spaceSections} />
             {sectionIndexer.selectedSection === 0 && (
@@ -238,24 +227,22 @@ const Space = ({
               // </div>
             )}
             {sectionIndexer.selectedSection === 2 && (
-              <div className="flex flex-wrap space-x-2 space-y-2 ">
-                {space?.participants?.map((p) => (
-                  <Link href={`/profile/${p.user.id}`}>
-                    <div className="cursor-pointer bg-white rounded-md shadow-md p-2 pr-3 flex justify-center items-center">
-                      <UserAvatar
-                        link={p.profile.profilePic}
-                        className="m-1 h-10 w-10"
-                        sizing
-                      />
-                      <div>
-                        {p.user.first_name} {p.user.last_name}
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-            {sectionIndexer.selectedSection === 3 && (
+              // <div className="flex flex-wrap space-x-2 space-y-2 ">
+              //   {space?.participants?.map((p) => (
+              //     <Link href={`/profile/${p.user.id}`}>
+              //       <div className="cursor-pointer bg-white rounded-md shadow-md p-2 pr-3 flex justify-center items-center">
+              //         <UserAvatar
+              //           link={p.profile.profilePic}
+              //           className="m-1 h-10 w-10"
+              //           sizing
+              //         />
+              //         <div>
+              //           {p.user.first_name} {p.user.last_name}
+              //         </div>
+              //       </div>
+              //     </Link>
+              //   ))}
+              // </div>
               <div className="flex flex-col space-x-2 space-y-2 ">
                 {space?.judges?.map((p) => (
                   <div className=" max-w-max bg-white rounded-md shadow-md p-4 flex justify-center items-center">
