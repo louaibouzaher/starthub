@@ -143,7 +143,7 @@ const Project = ({
       {project.video && (
         <div className="w-4/5 flex justify-start items-center rounded-xl mt-6 overflow-hidden">
           {project?.video?.includes('youtu.be') || project?.video?.includes('youtube') ? (
-            <ReactPlayer url={project.video} muted={true} />
+            <ReactPlayer url={project.video} controls />
           ) : (
             <video className="w-full" controls>
               <source src={project.video} type="video/mp4" muted></source>
