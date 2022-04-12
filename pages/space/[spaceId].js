@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, setState } from 'react'
 import Head from 'next/head'
 import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
@@ -23,10 +23,12 @@ import { getProjects } from '../../src/store/Projects/projects.api'
 import { getPosts } from '../../src/store/Posts/posts.api'
 import AddProject from '../../src/components/AddProject'
 import Link from 'next/link'
+import { tr } from 'date-fns/locale'
 
 const Space = ({
   space,
   sectionIndexer,
+  ProjectList,
   toggleOverlay,
   sectionsInit,
   setCurrentSpace,
@@ -34,6 +36,7 @@ const Space = ({
   getProjects,
   getPosts,
 }) => {
+  const [showResults, setShowResults] = React.useState(false)
   const spaceTags = ['Machine Learning', 'Software Engineering', 'Startups']
   const startsOn = new Date(space.startsOn)
   const endsOn = new Date(space.endsOn)
@@ -44,7 +47,11 @@ const Space = ({
     getPosts()
     getProjects()
   }, [])
-
+  const handleOperation=()=>{
+    setState(()=>{
+      showResults:true
+    })
+  }
   useEffect(() => {
     if (sectionIndexer.selectedSection == 0) {
       changeChild(<AddPost />)
@@ -152,7 +159,7 @@ const Space = ({
                   </Link>
                 </div>
                 <div className="mt-4">
-                  Prize <span className="text-purple"> 10.000$ </span>
+                  Prize <span className="text-purple"> $10,000 </span>
                 </div>
 
                 <div className="font-bold text-xl text-purple mt-6">
@@ -203,7 +210,7 @@ const Space = ({
                     </div>
                     <Button
                       onClick={() => {
-                        toggleOverlay()
+                        toggleOverlay() && setShowResults(true)
                       }}
                       label="New Project"
                       btnStyle={
@@ -212,19 +219,29 @@ const Space = ({
                     />
                   </div>
                 </div>
-                <ProjectList />
+                {
+                  showResults?<ProjectList/>: 
+                  <>
+                    <div className="h-full flex flex-col justify-center items-center">
+                    <div className="my-4"> Seems empty here. 🤔</div>
+
+                    
+                      
+                  </div>
+                  </>
+                  
+                }
+                 <Button
+                  onClick={()=>{
+                    handleOperation()
+                  }}
+                  label="Submit Project"
+                  btnStyle={
+                    'max-w-max bg-white border-purple border-2 text-purple w-full text-center hover:bg-purple hover:text-white'
+                  }
+                />
+                
               </>
-
-              // <div className="h-full flex flex-col justify-center items-center">
-              //   <div className="my-4"> Seems empty here. 🤔</div>
-
-              //   <Button
-              //     label="Submit Project"
-              //     btnStyle={
-              //       'max-w-max bg-white border-purple border-2 text-purple w-full text-center hover:bg-purple hover:text-white'
-              //     }
-              //   />
-              // </div>
             )}
             {sectionIndexer.selectedSection === 2 && (
               // <div className="flex flex-wrap space-x-2 space-y-2 ">
