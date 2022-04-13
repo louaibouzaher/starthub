@@ -28,7 +28,7 @@ function Settings({ settingsState, connectedUser, error }) {
       id: 2,
     },
     {
-      title: 'My Spaces',
+      title: 'My Competitions',
       id: 3,
     },
   ]

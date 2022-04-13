@@ -3,7 +3,7 @@ import axios from 'axios'
 import Autocomplete from '@mui/material/Autocomplete'
 import { Box } from '@mui/system'
 import TextField from '@mui/material/TextField'
-import { API_BASEURL } from '../../../appConfig'
+import { API_BASEURL } from '../../../../appConfig'
 
 export default function StepThree({ setSpace, space }) {
   const [users, setUsers] = useState([])

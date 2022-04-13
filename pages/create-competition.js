@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import SpaceWhiteImage from '../src/assets/images/SpaceWhiteImage'
-import AddSpace from '../src/components/AddSpace'
+import AddSpace from '../src/components/Spaces/AddSpace'
 import { setAddSpaceState, toggleIsEditing } from '../src/store/Spaces/spaces.actions'
 import {
   changeChild,
@@ -21,7 +21,7 @@ const CreateSpace = ({ isConnected }) => {
   return (
     <>
       <Head>
-        <title>Create New Space</title>
+        <title>Create New Competition</title>
       </Head>
       <div className="h-screen w-full text-dark bg-purple flex flex-col justify-start items-center ">
         <div className="w-1/2 relative mt-20 bg-white shadow-lg pt-10 px-10 pb-20 rounded-lg ">

@@ -14,7 +14,7 @@ export const Hero = () => {
         </div>
 
         <div className="flex flex-row mt-7">
-          <Link href="/browse" passHref>
+          <Link href="/feed" passHref>
             <Button
               label="Join The Community"
               btnStyle={'bg-green text-white border-2 border-green mx-2'}

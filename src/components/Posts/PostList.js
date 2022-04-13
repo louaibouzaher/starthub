@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Post from './Post'
-import store from '../store'
-import { getPosts } from '../store/Posts/posts.api'
+import store from '../../store'
+import { getPosts } from '../../store/Posts/posts.api'
 
 function PostList({ posts }) {
   useEffect(() => {

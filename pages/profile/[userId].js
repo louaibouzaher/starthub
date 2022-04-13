@@ -7,8 +7,8 @@ import { BiLinkAlt } from 'react-icons/bi'
 import { AiFillLinkedin, AiFillTwitterSquare } from 'react-icons/ai'
 import SectionIndexer from '../../src/components/SectionIndexer'
 import Navbar from '../../src/components/Navbar'
-import Post from '../../src/components/Post'
-import Project from '../../src/components/Project'
+import Post from '../../src/components/Posts/Post'
+import Project from '../../src/components/Projects/Project'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 import { Button } from '../../src/components/Button'
 import axios from 'axios'
@@ -119,7 +119,7 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }
         </div>
         <div className="w-full my-4 min-h-screen rounded-md">
           <SectionIndexer />
-          {sectionIndexer.selectedSection === 0
+          {sectionIndexer.selectedSection === 1
             ? user.posts?.map((p) => (
                 <Post
                   post={p}

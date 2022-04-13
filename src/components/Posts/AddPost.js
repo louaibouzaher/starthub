@@ -1,12 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import store from '../store'
-import { setAddPostState, toggleIsEditing } from '../store/Posts/posts.actions'
-import { postPost, putPost } from '../store/Posts/posts.api'
-import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
-import { Button } from './Button'
-import { Downloader, Uploader } from '../firebase/Helpers'
-import Loader from './Loader'
+import store from '../../store'
+import { setAddPostState, toggleIsEditing } from '../../store/Posts/posts.actions'
+import { postPost, putPost } from '../../store/Posts/posts.api'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../store/OverlayWindow/overlayWindow.actions'
+import { Button } from '../Button'
+import { Downloader, Uploader } from '../../firebase/Helpers'
+import Loader from '../Loader'
 
 const AddPost = ({
   space,
