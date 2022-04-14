@@ -5,7 +5,7 @@ import { showNotification } from '../store/Notifications/notifications.actions'
 export const emailHtmlTemplate = (content) => {
   return `
 <h2>
-${content}
+New Message
 </h2>
 <div>
 ${content}
