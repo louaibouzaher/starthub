@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button } from '../../Button'
 import ButtonArrow from '../../../assets/icons/ButtonArrow'
 import { labelUpload } from '../../../data/general'
+import Tags from '../../Tags'
 export default function StepOne({
   handleChange,
   handleFile,
@@ -41,17 +42,7 @@ export default function StepOne({
           />
         </div>
 
-        <div className="flex flex-col w-1/2 mt-4">
-          <label>Tags</label>
-          <p className="font-light text-xs">Provide values separated by commas.</p>
-          <input
-            type="text"
-            className="border-2 border-dark p-2 rounded-md"
-            name="tags"
-            value={Project.tags}
-            onChange={handleChange}
-          />
-        </div>
+        <Tags value={Project.tags} onChange={handleChange}/>
 
         <div className="flex flex-row items-center mt-2">
           <input

@@ -27,12 +27,14 @@ import {
 } from '../../store/OverlayWindow/overlayWindow.actions'
 import AddProject from './AddProject'
 import { getMonth } from '../../helpers/date'
+import Tags from '../Tags'
 import PostIcon from '../../assets/icons/PostsIcon'
 import AddReview from './AddReview'
 
 const Project = ({
   user,
   project,
+  tags,
   changeChild,
   toggleOverlay,
   toggleIsEditing,
