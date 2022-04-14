@@ -257,6 +257,21 @@ const Space = ({
                 ))}
               </div>
             )}
+            {sectionIndexer.selectedSection === 3 && (
+              <div className="flex flex-col space-x-2 space-y-2 ">
+                {space?.judges?.map((p) => (
+                  <div className=" max-w-max bg-white rounded-md shadow-md p-4 flex justify-center items-center">
+                    <UserAvatar link={p.picture} className="m-1 h-10 w-10" sizing />
+                    <div className="flex flex-col">
+                      <div>
+                        {p.firstName} {p.lastName}
+                      </div>
+                      <div>{p.position}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

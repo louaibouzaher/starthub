@@ -104,6 +104,11 @@ export const spaceSections = [
     title: 'Judges',
     Icon: () => <ProjectsIcon />,
   },
+  {
+    id: 3,
+    title: 'leaderboard',
+    Icon: () => <ProjectsIcon />,
+  },
 ]
 export const defaultSections = [
   {
