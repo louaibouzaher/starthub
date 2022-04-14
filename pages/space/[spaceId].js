@@ -23,12 +23,12 @@ import { getProjects } from '../../src/store/Projects/projects.api'
 import { getPosts } from '../../src/store/Posts/posts.api'
 import AddProject from '../../src/components/AddProject'
 import Link from 'next/link'
+import EmptyState from '../../src/components/EmptyState'
 import { tr } from 'date-fns/locale'
 
 const Space = ({
   space,
   sectionIndexer,
-  ProjectList,
   toggleOverlay,
   sectionsInit,
   setCurrentSpace,
@@ -36,7 +36,6 @@ const Space = ({
   getProjects,
   getPosts,
 }) => {
-  const [showResults, setShowResults] = React.useState(false)
   const spaceTags = ['Machine Learning', 'Software Engineering', 'Startups']
   const startsOn = new Date(space.startsOn)
   const endsOn = new Date(space.endsOn)
@@ -47,11 +46,7 @@ const Space = ({
     getPosts()
     getProjects()
   }, [])
-  const handleOperation=()=>{
-    setState(()=>{
-      showResults:true
-    })
-  }
+
   useEffect(() => {
     if (sectionIndexer.selectedSection == 0) {
       changeChild(<AddPost />)
@@ -210,7 +205,7 @@ const Space = ({
                     </div>
                     <Button
                       onClick={() => {
-                        toggleOverlay() && setShowResults(true)
+                        toggleOverlay()
                       }}
                       label="New Project"
                       btnStyle={
@@ -219,28 +214,8 @@ const Space = ({
                     />
                   </div>
                 </div>
-                {
-                  showResults?<ProjectList/>: 
-                  <>
-                    <div className="h-full flex flex-col justify-center items-center">
-                    <div className="my-4"> Seems empty here. 🤔</div>
-
-                    
-                      
-                  </div>
-                  </>
-                  
-                }
-                 <Button
-                  onClick={()=>{
-                    handleOperation()
-                  }}
-                  label="Submit Project"
-                  btnStyle={
-                    'max-w-max bg-white border-purple border-2 text-purple w-full text-center hover:bg-purple hover:text-white'
-                  }
-                />
-                
+                {/* <EmptyState label={"Submit Project"} onClick={() => {toggleOverlay()}}/> */}
+                <PostList />
               </>
             )}
             {sectionIndexer.selectedSection === 2 && (
