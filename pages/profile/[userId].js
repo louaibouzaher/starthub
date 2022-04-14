@@ -16,8 +16,20 @@ import { API_BASEURL } from '../../appConfig'
 import { defaultSections } from '../../src/data/general'
 import { sectionsInit } from '../../src/store/SectionIndexer/sectionIndexer.actions'
 import OverlayWindow from '../../src/components/OverlayWindow'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../src/store/OverlayWindow/overlayWindow.actions'
+import SendMessage from '../../src/components/SendMessage'
 
-function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }) {
+function Profile({
+  sectionIndexer,
+  user = {},
+  connectedUser = {},
+  sectionsInit,
+  changeChild,
+  toggleOverlay,
+}) {
   const isOwner = connectedUser.id == user.user.id
   const router = useRouter()
   let website
@@ -30,6 +42,11 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }
   useEffect(() => {
     sectionsInit(defaultSections)
   }, [])
+
+  const handleMessage = () => {
+    changeChild(<SendMessage userTo={{ ...user, ...user.user }} />)
+    toggleOverlay()
+  }
 
   return (
     <>
@@ -99,9 +116,7 @@ function Profile({ sectionIndexer, user = {}, connectedUser = {}, sectionsInit }
                   <Button
                     btnStyle="w-1/2 bg-white border-2 border-purple text-purple mx-1"
                     label="Message"
-                    onClick={() => {
-                      console.log('Message')
-                    }}
+                    onClick={handleMessage}
                   />
                 </>
               )}
@@ -189,7 +204,11 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return { sectionsInit: (sections) => dispatch(sectionsInit(sections)) }
+  return {
+    sectionsInit: (sections) => dispatch(sectionsInit(sections)),
+    changeChild: (child) => dispatch(changeChild(child)),
+    toggleOverlay: () => dispatch(toggleOverlay()),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

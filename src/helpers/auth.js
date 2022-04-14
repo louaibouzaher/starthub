@@ -19,7 +19,10 @@ export const setAxiosAuthHeader = (headers = {}) => {
 
 axios.interceptors.request.use(
   (config) => {
-    if (!config.url.endsWith('/auth/login/refresh/')) {
+    if (
+      !config.url.endsWith('/auth/login/refresh/') &&
+      !config.url.endsWith('/auth/register/')
+    ) {
       store.dispatch(refreshToken(store.getState().user.data.token))
     }
     return config

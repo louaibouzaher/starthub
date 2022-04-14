@@ -1,34 +1,30 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { API_BASEURL } from '../../appConfig'
+import axios from 'axios'
 
 import UserAvatar from '../assets/images/UserAvatar'
-import { sendMessage } from '../store/Messages/messages.actions'
+import { emailHtmlTemplate, sendEmail } from '../helpers/email'
+import store from '../store'
+import { showNotification } from '../store/Notifications/notifications.actions'
 import { toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
 import { Button } from './Button'
 
-const SendMessage = ({ userTo, sendMessage, toggleOverlay, connectedUser }) => {
-  const [message, setMessage] = useState({
-    message: '',
-  })
+const SendMessage = ({ userTo, toggleOverlay, connectedUser }) => {
+  const [message, setMessage] = useState('')
   const handleChange = (e) => {
-    setMessage({
-      ...message,
-      [e.target.name]: e.target.value,
-    })
+    setMessage(e.target.value)
   }
 
   const handleSubmit = async () => {
-    // sendMessage({
-    //   ...message,
-    //   time: new Date().toUTCString(),
-    //   user: connectedUser,
-    // })
+    const data = {
+      sender: connectedUser.username,
+      receiver: userTo.username,
+      html: emailHtmlTemplate(message),
+    }
+    await sendEmail(data)
     toggleOverlay()
-    setMessage({ message: '' })
-    // setSubmitted(true)
-    // setTimeout(() => {
-    //   setSubmitted(false)
-    // }, 3000)
+    setMessage('')
   }
 
   return (
@@ -36,7 +32,7 @@ const SendMessage = ({ userTo, sendMessage, toggleOverlay, connectedUser }) => {
       <div className="flex flex-col">
         <div className="text-dark opacity-50 text-sm">Sending message to</div>
         <div className="flex flex-row w-full items-center mt-2 ">
-          <UserAvatar link={userTo.picture} />
+          <UserAvatar link={userTo.profilePic || userTo.picture} />
           <div className="ml-2 flex flex-col items-start">
             <div className="text-dark font-bold">
               {' '}
@@ -53,7 +49,7 @@ const SendMessage = ({ userTo, sendMessage, toggleOverlay, connectedUser }) => {
             className="h-48 border-2 border-dark p-4 rounded-md"
             name="message"
             onChange={handleChange}
-            value={message.message}
+            value={message}
           />
         </div>
       </div>
@@ -82,7 +78,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleOverlay: () => dispatch(toggleOverlay()),
-    sendMessage: () => dispatch(sendMessage()),
   }
 }
 
