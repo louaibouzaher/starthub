@@ -10,6 +10,7 @@ import { countries } from '../data/countries'
 import tailwindConfig from '../../tailwind.config'
 import store from '../store'
 import { getProjects } from '../store/Projects/projects.api'
+import { industries } from '../data/general'
 
 const theme = createTheme({
   palette: {
@@ -24,90 +25,8 @@ function valuetext(value) {
 }
 
 const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
-  const fields = [
-    {
-      title: 'Software Engineering',
-      id: 0,
-    },
-    {
-      title:'Machine Learning',
-      id: 1,
-    },
-    {
-      title: 'Technology Service',
-      id: 2,
-    },
-    {
-      title: 'Education',
-      id: 3,
-    },
-    {
-      title: 'Packaging',
-      id: 4,
-    },
-    {
-      title:  'Music',
-      id: 5,
-    },
-    {
-      title: 'Food',
-      id: 6,
-    },
-    {
-      title: 'Delivery',
-      id: 7,
-    },
-    {
-      title: 'Health Service',
-      id: 8,
-    },
-    {
-      title: 'Health Care',
-      id: 9,
-    },
-    {
-      title: 'Consulting',
-      id: 10,
-    },
-    {
-      title: 'Finance',
-      id: 11,
-    },
-    {
-      title: 'Manufactoring',
-      id: 12,
-    },
-    {
-      title: 'Clothes & Shoes',
-      id: 13,
-    },
-    {
-      title: 'Aerospace',
-      id: 14,
-    },
-    {
-      title: 'Electronic',
-      id: 15,
-    },
-    {
-      title: 'Computer',
-      id: 16,
-    },
-    {
-      title: 'Minnig',
-      id: 17,
-    },
-    {
-      title: 'Entertainment ',
-      id: 18,
-    },{
-      title: ' Agriculture',
-      id: 19,
-    },
-    
-  ]
-  const [fieldsShown, setFieldsShown] = useState(fields.length / 2)
-  const [selectedFields, setSelectedFields] = useState([])
+  const [industriesShown, setIndustriesShown] = useState(3)
+  const [selectedIndustries, setSelectedIndustries] = useState([])
   const [value, setValue] = useState([0, 5000000])
   const [numberOfEmployees, setNumberOfEmployees] = useState([0, 500])
   const [yearsInBusiness, setyearsInBusiness] = useState([0, 20])
@@ -123,19 +42,23 @@ const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
     setyearsInBusiness(newValue)
   }
 
-  const showMoreLess = () => {
-    setFieldsShown((prevState) =>
-      prevState === fields.length ? fields.length / 2 : fields.length
-    )
+  const showMore = () => {
+    const n = industriesShown + 3
+    setIndustriesShown(n > industries.length ? industries.length : n)
+  }
+
+  const showLess = () => {
+    const n = industriesShown - 3
+    setIndustriesShown(n < industries.length ? 3 : n)
   }
 
   const handleCheckbox = (id) => {
-    if (selectedFields.includes(id)) {
-      setSelectedFields((prevSelectedFields) =>
-        prevSelectedFields.filter((s) => s !== id)
+    if (selectedIndustries.includes(id)) {
+      setSelectedIndustries((prevSelectedIndustries) =>
+        prevSelectedIndustries.filter((s) => s !== id)
       )
     } else {
-      setSelectedFields((prevSelectedFields) => [...prevSelectedFields, id])
+      setSelectedIndustries((prevSelectedIndustries) => [...prevSelectedIndustries, id])
     }
   }
 
@@ -159,7 +82,7 @@ const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
         numberOfEmployees: `[${numberOfEmployees[0]},${numberOfEmployees[1]}]`,
         location: location,
         yearsInBusiness: `[${yearsInBusiness[0]},${yearsInBusiness[1]}]`,
-        industry: selectedFields.map((id) => fields[id].title).join(','),
+        industry: selectedIndustries.map((id) => industries[id].title).join(','),
       })
     )
   }
@@ -187,24 +110,29 @@ const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
           <div className="w-full my-2 p-4 bg-white shadow-md rounded-md text-dark">
             <div className="my-2 font-bold">Industry</div>
 
-            {fields.slice(0, fieldsShown).map((f) => {
+            {industries.slice(0, industriesShown).map((f) => {
               return (
                 <div
                   key={f.id}
                   className="flex my-1 items-center"
                   onClick={() => handleCheckbox(f.id)}
                 >
-                  <input type={'checkbox'} checked={selectedFields.includes(f.id)} />
+                  <input type={'checkbox'} checked={selectedIndustries.includes(f.id)} />
                   <span className="mx-1">{f.title}</span>
                 </div>
               )
             })}
-
-            <div
-              className="font-bold text-xs mt-2 text-purple"
-              onClick={() => showMoreLess()}
-            >
-              {fieldsShown === fields.length ? '- Less Options' : '+ More Options'}
+            <div className="flex space-x-3">
+              {industries.length !== industriesShown && (
+                <div className="font-bold text-xs mt-2 text-purple" onClick={showMore}>
+                  + More Options
+                </div>
+              )}
+              {industriesShown !== 3 && (
+                <div className="font-bold text-xs mt-2 text-purple" onClick={showLess}>
+                  - Less Options
+                </div>
+              )}
             </div>
           </div>
 
