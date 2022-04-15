@@ -9,6 +9,7 @@ import SectionIndexer from '../../src/components/SectionIndexer'
 import ProjectList from '../../src/components/Projects/ProjectList'
 import UserAvatar from '../../src/assets/images/UserAvatar'
 import { getMonth } from '../../src/helpers/date'
+import { money } from '../../src/helpers/money'
 import {
   changeChild,
   toggleOverlay,
@@ -126,7 +127,7 @@ const Space = ({
                   </Link>
                 </div>
                 <div className="mt-4">
-                  Prize <span className="text-purple"> $10,000 </span>
+                  Prize <span className="text-purple"> {money(100000)} </span>
                 </div>
 
                 <div className="font-bold text-xl text-purple mt-6">
