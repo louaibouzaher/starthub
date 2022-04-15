@@ -30,15 +30,15 @@ const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
       id: 0,
     },
     {
-      title: 'Music',
+      title:'Machine Learning',
       id: 1,
     },
     {
-      title: 'Delivery',
+      title: 'Technology Service',
       id: 2,
     },
     {
-      title: 'Clothes & Shoes',
+      title: 'Education',
       id: 3,
     },
     {
@@ -46,9 +46,65 @@ const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
       id: 4,
     },
     {
-      title: 'Machine Learning',
+      title:  'Music',
       id: 5,
     },
+    {
+      title: 'Food',
+      id: 6,
+    },
+    {
+      title: 'Delivery',
+      id: 7,
+    },
+    {
+      title: 'Health Service',
+      id: 8,
+    },
+    {
+      title: 'Health Care',
+      id: 9,
+    },
+    {
+      title: 'Consulting',
+      id: 10,
+    },
+    {
+      title: 'Finance',
+      id: 11,
+    },
+    {
+      title: 'Manufactoring',
+      id: 12,
+    },
+    {
+      title: 'Clothes & Shoes',
+      id: 13,
+    },
+    {
+      title: 'Aerospace',
+      id: 14,
+    },
+    {
+      title: 'Electronic',
+      id: 15,
+    },
+    {
+      title: 'Computer',
+      id: 16,
+    },
+    {
+      title: 'Minnig',
+      id: 17,
+    },
+    {
+      title: 'Entertainment ',
+      id: 18,
+    },{
+      title: ' Agriculture',
+      id: 19,
+    },
+    
   ]
   const [fieldsShown, setFieldsShown] = useState(fields.length / 2)
   const [selectedFields, setSelectedFields] = useState([])
