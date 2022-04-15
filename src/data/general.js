@@ -3,33 +3,6 @@ import ProjectsIcon from '../assets/icons/ProjectsIcon'
 
 export const labelUpload = 'Seems empty here 🤔'
 
-export const industry = [
-  {
-    label: 'Software Engineering',
-    code: 1,
-  },
-  {
-    label: 'Music',
-    code: 2,
-  },
-  {
-    label: 'Delivery',
-    code: 3,
-  },
-  {
-    label: 'Clothes & Shoes',
-    code: 4,
-  },
-  {
-    label: 'Packaging',
-    code: 5,
-  },
-  {
-    label: 'Machine Learning',
-    code: 6,
-  },
-]
-
 export const reactionsColors = {
   disabled: '#7B8699',
   like: '#FF5B83',
@@ -115,5 +88,88 @@ export const defaultSections = [
     id: 1,
     title: 'Posts',
     Icon: () => <PostsIcon />,
+  },
+]
+
+export const industries = [
+  {
+    title: 'Software Engineering',
+    id: 0,
+  },
+  {
+    title: 'Machine Learning',
+    id: 1,
+  },
+  {
+    title: 'Transporations',
+    id: 2,
+  },
+  {
+    title: 'Education',
+    id: 3,
+  },
+  {
+    title: 'Packaging',
+    id: 4,
+  },
+  {
+    title: 'Music',
+    id: 5,
+  },
+  {
+    title: 'Nutrition',
+    id: 6,
+  },
+  {
+    title: 'Delivery',
+    id: 7,
+  },
+  {
+    title: 'E-Commerce',
+    id: 8,
+  },
+  {
+    title: 'Health',
+    id: 9,
+  },
+  {
+    title: 'Consulting',
+    id: 10,
+  },
+  {
+    title: 'Finance',
+    id: 11,
+  },
+  {
+    title: 'Manufactoring',
+    id: 12,
+  },
+  {
+    title: 'Clothes & Shoes',
+    id: 13,
+  },
+  {
+    title: 'Aerospace',
+    id: 14,
+  },
+  {
+    title: 'Electronic',
+    id: 15,
+  },
+  {
+    title: 'IT',
+    id: 16,
+  },
+  {
+    title: 'Education',
+    id: 17,
+  },
+  {
+    title: 'Entertainment',
+    id: 18,
+  },
+  {
+    title: 'Agriculture',
+    id: 19,
   },
 ]
