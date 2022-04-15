@@ -28,6 +28,8 @@ import { tr } from 'date-fns/locale'
 
 const Space = ({
   space,
+  projects,
+  posts,
   sectionIndexer,
   toggleOverlay,
   sectionsInit,
@@ -95,37 +97,7 @@ const Space = ({
             </div>{' '}
           </div>
         </div>
-        {!isParticipant && (
-          <div className="flex w-full">
-            <div className="w-1/2 flex flex-col items-start bg-white rounded-md shadow-lg p-10 m-2">
-              <div className="text-2xl text-dark">Participants</div>
-              <div className="flex flex-wrap mt-3 justify-start items-center">
-                {space?.participants?.map((p) => (
-                  <UserAvatar link={p.picture} className="m-1 h-10 w-10" sizing />
-                ))}
-                <div className="h-10 w-10 bg-purple rounded-full flex justify-center items-center cursor-pointer">
-                  <Cross color="white" className={'rotate-45 scale-125'} />
-                </div>
-              </div>
-            </div>
-            <div className="w-1/2 flex flex-col items-start bg-white rounded-md shadow-lg p-10 m-2 ">
-              <div className="text-2xl text-dark">Judges</div>
-              <div className="flex flex-col flex-wrap mt-3">
-                {space?.judges?.map((j) => (
-                  <div className="flex items-center">
-                    <UserAvatar link={j.picture} className="m-1 h-14 w-14" sizing />
-                    <div className="mx-2 text-dark">
-                      <div>
-                        {j.firstName} {j.lastName}{' '}
-                      </div>
-                      <div className="font-bold"> {j.experience} </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
+
         <div className="w-full flex flex-col justify-start">
           <div className="w-full">
             <SectionIndexer sections={spaceSections} />
@@ -167,60 +139,78 @@ const Space = ({
                 <div className="">{`{Insert Rules and Regulations here}`}</div>
                 <div className="font-bold text-xl text-purple mt-6">Submissions</div>
                 <div className="">{`{Insert Submissions Instructions here}`}</div>
-                <div className="flex justify-between mt-10">
-                  <div className="flex flex-col w-full">
-                    <div className="text-4xl text-dark mt-10 font-bold">
-                      What is Happening in{' '}
-                      <span className="text-green">{space.title}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <div className="text-xl text-dark mb-10 mt-2 ">
-                        Check the latest updates about this space.
+                {posts.length > 0 ? (
+                  <>
+                    {' '}
+                    <div className="flex justify-between mt-10">
+                      <div className="flex flex-col w-full">
+                        <div className="text-4xl text-dark mt-10 font-bold">
+                          What is Happening in{' '}
+                          <span className="text-green">{space.title}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <div className="text-xl text-dark mb-10 mt-2 ">
+                            Check the latest updates about this space.
+                          </div>
+                          <Button
+                            onClick={() => {
+                              toggleOverlay()
+                            }}
+                            label="New Post"
+                            btnStyle={
+                              'max-h-10 bg-white border-purple border-2 text-purple text-center hover:bg-purple hover:text-white'
+                            }
+                          />
+                        </div>
                       </div>
-                      <Button
-                        onClick={() => {
-                          toggleOverlay()
-                        }}
-                        label="New Post"
-                        btnStyle={
-                          'max-h-10 bg-white border-purple border-2 text-purple text-center hover:bg-purple hover:text-white'
-                        }
-                      />
                     </div>
-                  </div>
-                </div>
-                <PostList posts={space.posts} />
+                    <PostList />
+                  </>
+                ) : (
+                  <EmptyState
+                    label={'Add Post'}
+                    onClick={() => {
+                      toggleOverlay()
+                    }}
+                  />
+                )}
               </div>
             )}
             {sectionIndexer.selectedSection === 1 && (
               <>
-                <div className="flex flex-col w-full">
-                  <div className="text-4xl text-dark mt-10 font-bold">
-                    Project Submissions in{' '}
-                    <span className="text-green">{space.title}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <div className="text-xl text-dark mb-10 mt-2 ">
-                      Check the projects submitted by participants.
+                {projects.length > 0 ? (
+                  <>
+                    {' '}
+                    <div className="flex flex-col w-full">
+                      <div className="text-4xl text-dark mt-10 font-bold">
+                        Project Submissions in{' '}
+                        <span className="text-green">{space.title}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <div className="text-xl text-dark mb-10 mt-2 ">
+                          Check the projects submitted by participants.
+                        </div>
+                        <Button
+                          onClick={() => {
+                            toggleOverlay()
+                          }}
+                          label="New Project"
+                          btnStyle={
+                            'max-h-10 bg-white border-purple border-2 text-purple text-center hover:bg-purple hover:text-white'
+                          }
+                        />
+                      </div>
                     </div>
-                    <Button
-                      onClick={() => {
-                        toggleOverlay()
-                      }}
-                      label="New Project"
-                      btnStyle={
-                        'max-h-10 bg-white border-purple border-2 text-purple text-center hover:bg-purple hover:text-white'
-                      }
-                    />
-                  </div>
-                </div>
-                <EmptyState
-                  label={'Submit Project'}
-                  onClick={() => {
-                    toggleOverlay()
-                  }}
-                />
-                <PostList />
+                    <PostList />
+                  </>
+                ) : (
+                  <EmptyState
+                    label={'Submit Project'}
+                    onClick={() => {
+                      toggleOverlay()
+                    }}
+                  />
+                )}
               </>
             )}
             {sectionIndexer.selectedSection === 2 && (
@@ -266,6 +256,8 @@ const mapStateToProps = (state) => {
     sectionIndexer: state.sectionIndexer,
     isLoading: state.posts.loading || state.projects.loading,
     isOverlayOpen: state.overlayWindow.isOpen,
+    projects: state.projects.list,
+    posts: state.posts.list,
   }
 }
 
