@@ -1,5 +1,5 @@
 import React from 'react'
-import { space as judges } from '../../data/space'
+import { space as judges } from '../../../data/space'
 import Autocomplete from '@mui/material/Autocomplete'
 import { Box } from '@mui/system'
 import TextField from '@mui/material/TextField'

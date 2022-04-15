@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
-import { Button } from './Button'
+import { Button } from '../Button'
 import Link from 'next/link'
-import StepOne from './CreateSpace/StepOne'
-import StepTwo from './CreateSpace/StepTwo'
-import StepThree from './CreateSpace/StepThree'
-import StepFour from './CreateSpace/StepFour'
-import { putSpace, postSpace } from '../store/Spaces/spaces.api'
-import store from '../store'
-import Loader from './Loader'
-import { setAddSpaceState, toggleIsEditing } from '../store/Spaces/spaces.actions'
-import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
+import StepOne from './AddSpace/StepOne'
+import StepTwo from './AddSpace/StepTwo'
+import StepThree from './AddSpace/StepThree'
+import StepFour from './AddSpace/StepFour'
+import { putSpace, postSpace } from '../../store/Spaces/spaces.api'
+import store from '../../store'
+import Loader from '../Loader'
+import { setAddSpaceState, toggleIsEditing } from '../../store/Spaces/spaces.actions'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../store/OverlayWindow/overlayWindow.actions'
 
 const AddSpace = ({
   toggleOverlay,
@@ -25,8 +28,8 @@ const AddSpace = ({
   const [step, setStep] = useState(0)
 
   const handleCancel = () => {
-    if (router.asPath.endsWith('create-space')) {
-      router.push('/browse')
+    if (router.asPath.endsWith('create-competition')) {
+      router.push('/feed')
     } else {
       toggleOverlay()
     }

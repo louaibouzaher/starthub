@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import Project from './Project'
-import store from '../store'
-import { getProjects } from '../store/Projects/projects.api'
+import store from '../../store'
+import { getProjects } from '../../store/Projects/projects.api'
 
 function ProjectList({ projects }) {
   useEffect(() => {

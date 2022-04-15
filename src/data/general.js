@@ -108,12 +108,12 @@ export const spaceSections = [
 export const defaultSections = [
   {
     id: 0,
-    title: 'Posts',
-    Icon: () => <PostsIcon />,
+    title: 'Projects',
+    Icon: () => <ProjectsIcon />,
   },
   {
     id: 1,
-    title: 'Projects',
-    Icon: () => <ProjectsIcon />,
+    title: 'Posts',
+    Icon: () => <PostsIcon />,
   },
 ]

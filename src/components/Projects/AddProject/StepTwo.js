@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Button } from '../Button'
-import { countries } from '../../data/countries'
+import { Button } from '../../Button'
+import { countries } from '../../../data/countries'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
-import { industry, labelUpload } from '../../data/general'
+import { industry } from '../../../data/general'
 
 export default function StepTwo({
   handleSubmit,

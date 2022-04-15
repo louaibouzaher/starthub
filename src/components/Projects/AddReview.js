@@ -1,12 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
-import store from '../store'
-import { setAddReviewState, toggleIsEditing } from '../store/Reviews/reviews.actions'
-import { postReview, putReview } from '../store/Reviews/reviews.api'
-import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
-import { Button } from './Button'
-import Loader from './Loader'
+import store from '../../store'
+import { setAddReviewState, toggleIsEditing } from '../../store/Reviews/reviews.actions'
+import { postReview, putReview } from '../../store/Reviews/reviews.api'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../store/OverlayWindow/overlayWindow.actions'
+import { Button } from '../Button'
+import Loader from '../Loader'
 const AddReview = ({
   projectReviewed = {},
   space,

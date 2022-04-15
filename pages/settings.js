@@ -7,6 +7,7 @@ import PlatformPreferences from '../src/components/Settings/PlatformPreferences'
 import AccountSecurity from '../src/components/Settings/AccountSecurity'
 import { Button } from '../src/components/Button'
 import store from '../src/store'
+import { setSettingsState } from '../src/store/User/user.actions'
 import { putProfile } from '../src/store/User/user.api'
 import OverlayWindow from '../src/components/OverlayWindow'
 
@@ -27,12 +28,16 @@ function Settings({ settingsState, connectedUser, error }) {
       id: 2,
     },
     {
-      title: 'My Spaces',
+      title: 'My Competitions',
       id: 3,
     },
   ]
   const handleSave = async () => {
     await store.dispatch(putProfile(connectedUser.id, settingsState))
+  }
+
+  const handleDiscard = async () => {
+    await store.dispatch(setSettingsState(connectedUser))
   }
   return (
     <>
@@ -69,9 +74,7 @@ function Settings({ settingsState, connectedUser, error }) {
             <Button
               label="Discard"
               btnStyle="mx-1  border-2 border-dark"
-              onClick={() => {
-                console.log('Discard Changes')
-              }}
+              onClick={handleDiscard}
             />
           </div>
           <div className="w-full">
