@@ -1,7 +1,7 @@
 import React from 'react'
-import {Button} from './Button'
+import { Button } from './Button'
 
-function EmptyState({label, onClick}) {
+function EmptyState({ label, onClick }) {
   return (
     <div className="h-full flex flex-col justify-center items-center">
       <div className="my-4"> Seems empty here. 🤔</div>
