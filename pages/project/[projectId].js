@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { connect } from 'react-redux'
 import { projects } from '../../src/data/projects'
-
+import { money } from '../../src/helpers/money'
 import Navbar from '../../src/components/Navbar'
 import OverlayWindow from '../../src/components/OverlayWindow'
 import SendMessage from '../../src/components/SendMessage'
@@ -120,7 +120,7 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
             </div>
             <div className="my-2  space-x-2">
               <span className=" text-xl font-bold">Capital </span>
-              <span className="text-purple"> {project.estimatedCapital}$ </span>
+              <span className="text-purple"> {money(project.estimatedCapital)} </span>
             </div>
           </div>
         </div>
