@@ -214,7 +214,12 @@ const Space = ({
                     />
                   </div>
                 </div>
-                {/* <EmptyState label={"Submit Project"} onClick={() => {toggleOverlay()}}/> */}
+                <EmptyState
+                  label={'Submit Project'}
+                  onClick={() => {
+                    toggleOverlay()
+                  }}
+                />
                 <PostList />
               </>
             )}
