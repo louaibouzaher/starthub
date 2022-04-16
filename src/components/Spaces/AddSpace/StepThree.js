@@ -1,21 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import Autocomplete from '@mui/material/Autocomplete'
 import { Box } from '@mui/system'
 import TextField from '@mui/material/TextField'
-import { API_BASEURL } from '../../../../appConfig'
 
-export default function StepThree({ setSpace, space }) {
-  const [users, setUsers] = useState([])
-  useEffect(() => {
-    axios
-      .get(API_BASEURL + `profiles/`)
-      .then((result) => {
-        setUsers(result.data)
-      })
-      .catch((e) => {})
-  }, [])
-
+export default function StepThree({ setSpace, space, users }) {
   const handleParticipants = (e, newValue) => {
     setSpace({ ...space, participants: newValue.map((p) => p.user.id) })
   }

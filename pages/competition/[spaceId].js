@@ -3,7 +3,8 @@ import Head from 'next/head'
 import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
 import { connect } from 'react-redux'
-import Cross from '../../src/assets/icons/Cross'
+import { BiLinkAlt } from 'react-icons/bi'
+import { AiFillLinkedin, AiFillTwitterSquare } from 'react-icons/ai'
 import { Button } from '../../src/components/Button'
 import SectionIndexer from '../../src/components/SectionIndexer'
 import ProjectList from '../../src/components/Projects/ProjectList'
@@ -25,7 +26,6 @@ import { getPosts } from '../../src/store/Posts/posts.api'
 import AddProject from '../../src/components/Projects/AddProject'
 import Link from 'next/link'
 import EmptyState from '../../src/components/EmptyState'
-import { tr } from 'date-fns/locale'
 
 const Space = ({
   space,
@@ -42,7 +42,7 @@ const Space = ({
   const spaceTags = ['Machine Learning', 'Software Engineering', 'Startups']
   const startsOn = new Date(space.startsOn)
   const endsOn = new Date(space.endsOn)
-  const isParticipant = true
+
   useEffect(() => {
     sectionsInit(spaceSections)
     setCurrentSpace(space.id)
@@ -58,14 +58,14 @@ const Space = ({
       changeChild(<AddProject />)
     }
   }, [sectionIndexer.selectedSection])
-  console.log(space)
+
   return (
     <>
       <Head>
         <title>{space.title}</title>
       </Head>
       <OverlayWindow />
-      <div className="h-screen w-full flex flex-col justify-start items-start p-20">
+      <div className="text-dark h-screen w-full flex flex-col justify-start items-start p-20">
         <div className="flex w-full">
           <div
             className="w-1/2 flex items-end justify-start bg-white rounded-md shadow-lg p-10 m-2"
@@ -202,7 +202,7 @@ const Space = ({
                         />
                       </div>
                     </div>
-                    <PostList />
+                    <ProjectList />
                   </>
                 ) : (
                   <EmptyState
@@ -231,15 +231,42 @@ const Space = ({
               //     </Link>
               //   ))}
               // </div>
-              <div className="flex flex-col space-x-2 space-y-2 ">
+              <div className="p-10 flex flex-col">
                 {space?.judges?.map((p) => (
-                  <div className=" max-w-max bg-white rounded-md shadow-md p-4 flex justify-center items-center">
-                    <UserAvatar link={p.picture} className="m-1 h-10 w-10" sizing />
+                  <div className="my-2 space-x-4 max-w-max bg-white rounded-md shadow-md px-10 py-6 flex justify-between items-start">
+                    <UserAvatar
+                      link={p.profile.profilePic}
+                      className=" h-20 w-20"
+                      sizing
+                    />
                     <div className="flex flex-col">
-                      <div>
-                        {p.firstName} {p.lastName}
+                      <div className="font-bold">
+                        {p.user.first_name} {p.user.last_name}
                       </div>
-                      <div>{p.position}</div>
+                      <div>{p.profile.position}</div>
+                      <div className="flex space-x-1 my-1">
+                        {p.profile.website_url && (
+                          <Link href={p.profile.website_url} passHref>
+                            <a target="_blank">
+                              <BiLinkAlt size={28} />
+                            </a>
+                          </Link>
+                        )}
+                        {p.profile.linkedin_url && (
+                          <Link href={p.profile.linkedin_url} passHref>
+                            <a target="_blank">
+                              <AiFillLinkedin size={28} />
+                            </a>
+                          </Link>
+                        )}
+                        {p.profile.twitter_url && (
+                          <Link href={p.profile.twitter_url} passHref>
+                            <a target="_blank">
+                              <AiFillTwitterSquare size={28} />
+                            </a>
+                          </Link>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))}
