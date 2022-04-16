@@ -59,7 +59,7 @@ function SpaceSettingsCard({
         }}
       ></div>
       <div className="h-36  w-2/5 ml-1">
-        <Link href={`/space/${space.id}`}>
+        <Link href={`/competition/${space.id}`}>
           <div className="text-2xl text-dark font-bold cursor-pointer hover:text-purple">
             {space.title}
           </div>
