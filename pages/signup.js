@@ -3,11 +3,10 @@ import { useRouter } from 'next/router'
 import { connect } from 'react-redux'
 import Link from 'next/link'
 import Head from 'next/head'
-
-import WhiteLogo from '../src/assets/images/WhiteLogo'
 import { Button } from '../src/components/Button'
 import { signup } from '../src/store/User/user.api'
 import store from '../src/store'
+import { showNotification } from '../src/store/Notifications/notifications.actions'
 
 function Signup({ err }) {
   const router = useRouter()
@@ -82,11 +81,13 @@ function Signup({ err }) {
     } catch (e) {
       console.log(e)
     }
+    store.dispatch(showNotification('Waiting to confirm new registrations...', true))
+
     setTimeout(() => {
       if (!err) {
         router.push('/login')
       }
-    }, 1000)
+    }, 2000)
   }
 
   useEffect(() => {

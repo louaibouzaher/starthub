@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Button } from '../Button'
-import { countries } from '../../data/countries'
+import { Button } from '../../Button'
+import { countries } from '../../../data/countries'
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
-import { industry, labelUpload } from '../../data/general'
+import { industries, industry } from '../../../data/general'
 
 export default function StepTwo({
   handleSubmit,
@@ -29,7 +29,9 @@ export default function StepTwo({
           <Autocomplete
             disablePortal
             id="combo-box-Project"
-            options={industry}
+            options={industries.map((i) => {
+              return { code: i.id, label: i.title }
+            })}
             sx={{ width: 300 }}
             value={Project.industry}
             onChange={(e) => setProject({ ...Project, industry: e.target.innerHTML })}

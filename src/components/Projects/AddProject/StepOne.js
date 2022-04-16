@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button } from '../Button'
-import ButtonArrow from '../../assets/icons/ButtonArrow'
-import { labelUpload } from '../../data/general'
+import { Button } from '../../Button'
+import ButtonArrow from '../../../assets/icons/ButtonArrow'
+import { labelUpload } from '../../../data/general'
 export default function StepOne({
   handleChange,
   handleFile,

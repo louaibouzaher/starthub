@@ -2,26 +2,29 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import Link from 'next/link'
-import { setAddPostState, toggleIsEditing } from '../store/Posts/posts.actions'
-import { deletePost } from '../store/Posts/posts.api'
+import { setAddPostState, toggleIsEditing } from '../../store/Posts/posts.actions'
+import { deletePost } from '../../store/Posts/posts.api'
 
-import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../store/OverlayWindow/overlayWindow.actions'
 
-import Dots from '../assets/icons/Dots'
-import Heart from '../assets/icons/Heart'
-import Comment from '../assets/icons/Comment'
-import ButtonArrow from '../assets/icons/ButtonArrow'
-import Share from '../assets/icons/Share'
-import Saved from '../assets/icons/Saved'
-import Delete from '../assets/icons/Delete'
-import Edit from '../assets/icons/Edit'
-import UserAvatar from '../assets/images/UserAvatar'
-import { Button } from './Button'
-import { reactionsColors } from '../data/general'
-import tailwindConfig from '../../tailwind.config'
-import { getMonth } from '../helpers/date'
+import Dots from '../../assets/icons/Dots'
+import Heart from '../../assets/icons/Heart'
+import Comment from '../../assets/icons/Comment'
+import ButtonArrow from '../../assets/icons/ButtonArrow'
+import Share from '../../assets/icons/Share'
+import Saved from '../../assets/icons/Saved'
+import Delete from '../../assets/icons/Delete'
+import Edit from '../../assets/icons/Edit'
+import UserAvatar from '../../assets/images/UserAvatar'
+import { Button } from '../Button'
+import { reactionsColors } from '../../data/general'
+import tailwindConfig from '../../../tailwind.config'
+import { getMonth } from '../../helpers/date'
 import AddPost from './AddPost'
-import store from '../store'
+import store from '../../store'
 
 const Post = ({
   user,

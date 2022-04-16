@@ -44,7 +44,7 @@ function Login({ token, isConnected }) {
 
   useEffect(() => {
     if (isConnected) {
-      router.push('/browse')
+      router.push('/feed')
     }
   }, [isConnected])
 

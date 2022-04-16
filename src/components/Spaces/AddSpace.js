@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { connect } from 'react-redux'
 import { useRouter } from 'next/router'
-import { Button } from './Button'
+import { Button } from '../Button'
 import Link from 'next/link'
-import StepOne from './CreateSpace/StepOne'
-import StepTwo from './CreateSpace/StepTwo'
-import StepThree from './CreateSpace/StepThree'
-import StepFour from './CreateSpace/StepFour'
-import { putSpace, postSpace } from '../store/Spaces/spaces.api'
-import store from '../store'
-import Loader from './Loader'
-import { setAddSpaceState, toggleIsEditing } from '../store/Spaces/spaces.actions'
-import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
+import StepOne from './AddSpace/StepOne'
+import StepTwo from './AddSpace/StepTwo'
+import StepThree from './AddSpace/StepThree'
+import StepFour from './AddSpace/StepFour'
+import { putSpace, postSpace } from '../../store/Spaces/spaces.api'
+import store from '../../store'
+import { API_BASEURL } from '../../../appConfig'
+import { setAddSpaceState, toggleIsEditing } from '../../store/Spaces/spaces.actions'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../store/OverlayWindow/overlayWindow.actions'
 
 const AddSpace = ({
   toggleOverlay,
@@ -23,10 +27,19 @@ const AddSpace = ({
 }) => {
   const router = useRouter()
   const [step, setStep] = useState(0)
+  const [users, setUsers] = useState([])
+  useEffect(() => {
+    axios
+      .get(API_BASEURL + `profiles/`)
+      .then((result) => {
+        setUsers(result.data)
+      })
+      .catch((e) => {})
+  }, [])
 
   const handleCancel = () => {
-    if (router.asPath.endsWith('create-space')) {
-      router.push('/browse')
+    if (router.asPath.endsWith('create-competition')) {
+      router.push('/feed')
     } else {
       toggleOverlay()
     }
@@ -82,6 +95,7 @@ const AddSpace = ({
         )}
         {step === 2 && (
           <StepThree
+            users={users}
             handleChange={handleChange}
             space={addSpaceState}
             setSpace={setAddSpaceState}
@@ -90,9 +104,10 @@ const AddSpace = ({
         )}
         {step === 3 && (
           <StepFour
+            users={users}
             handleChange={handleChange}
             space={addSpaceState}
-            setSpace={addSpaceState}
+            setSpace={setAddSpaceState}
             toggleOverlay={toggleOverlay}
             handleSubmit={handleSubmit}
           />

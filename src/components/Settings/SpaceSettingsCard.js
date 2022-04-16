@@ -13,7 +13,7 @@ import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import { setAddSpaceState, toggleIsEditing } from '../../store/Spaces/spaces.actions'
-import AddSpace from '../AddSpace'
+import AddSpace from '../Spaces/AddSpace'
 import {
   changeChild,
   toggleOverlay,
@@ -59,7 +59,7 @@ function SpaceSettingsCard({
         }}
       ></div>
       <div className="h-36  w-2/5 ml-1">
-        <Link href={`/space/${space.id}`}>
+        <Link href={`/competition/${space.id}`}>
           <div className="text-2xl text-dark font-bold cursor-pointer hover:text-purple">
             {space.title}
           </div>

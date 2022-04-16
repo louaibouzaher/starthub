@@ -19,28 +19,30 @@ export const setAxiosAuthHeader = (headers = {}) => {
 
 axios.interceptors.request.use(
   (config) => {
-    if (!config.url.endsWith('/auth/login/refresh/')) {
+    if (
+      !config.url.endsWith('/auth/login/refresh/') &&
+      !config.url.endsWith('/auth/register/')
+    ) {
       store.dispatch(refreshToken(store.getState().user.data.token))
     }
     return config
   },
   (error) => {
-    Promise.reject(error)
+    console.log(error)
   }
 )
-// axios.interceptors.response.use(
-//   (res) => {
-//     try {
-//       if (res?.status == 401) {
-//         store.dispatch(showNotification('Error: Log in again.'))
-//         store.dispatch(logout())
-//       }
-//       return res
-//     } catch (error) {
-//       return {}
-//     }
-//   },
-//   (error) => {
-//     Promise.reject(error)
-//   }
-// )
+axios.interceptors.response.use(
+  (response) => {
+    try {
+      return response
+    } catch (error) {
+      console.log(error)
+    }
+  },
+  (error) => {
+    if (error.response?.status == 401) {
+      store.dispatch(showNotification('Error: Log in again.'))
+      store.dispatch(logout())
+    }
+  }
+)

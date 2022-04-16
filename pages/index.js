@@ -1,6 +1,6 @@
 import Navbar from '../src/components/Navbar'
 import { Hero } from '../src/components/Hero'
-import { SpaceMain } from '../src/components/SpaceMain'
+import { SpaceMain } from '../src/components/Spaces/SpaceMain'
 import Head from 'next/head'
 
 function Home() {

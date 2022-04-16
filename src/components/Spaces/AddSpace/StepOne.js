@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Download from '../../assets/icons/Download'
-import tailwindConfig from '../../../tailwind.config'
-import { Downloader, Uploader } from '../../firebase/Helpers'
+import Download from '../../../assets/icons/Download'
+import tailwindConfig from '../../../../tailwind.config'
+import { Downloader, Uploader } from '../../../firebase/Helpers'
 
 export default function StepOne({ space, handleChange, setSpace }) {
   const [file, setFile] = useState(null)
@@ -48,7 +48,7 @@ export default function StepOne({ space, handleChange, setSpace }) {
     <>
       <div>
         <label for="fname" class="block mb-1 text-dark ">
-          Space Title
+          Competition Title
         </label>
         <input
           value={space.spaceTitle}
@@ -63,7 +63,7 @@ export default function StepOne({ space, handleChange, setSpace }) {
       </div>
 
       <label for="TextArea" class="block mb-1 text-dark ">
-        Space Description
+        Competition Description
       </label>
       <textarea
         style={{
@@ -110,7 +110,7 @@ export default function StepOne({ space, handleChange, setSpace }) {
               className="rotate-180 scale-75"
               color={tailwindConfig.theme.extend.colors.purple}
             />
-            Upload Space Picture
+            Upload Competition Picture
           </label>
         </div>
       </div>

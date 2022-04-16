@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import store from '../store'
-import { setAddProjectState, toggleIsEditing } from '../store/Projects/projects.actions'
-import { putProject, postProject } from '../store/Projects/projects.api'
-import { changeChild, toggleOverlay } from '../store/OverlayWindow/overlayWindow.actions'
+import store from '../../store'
+import {
+  setAddProjectState,
+  toggleIsEditing,
+} from '../../store/Projects/projects.actions'
+import { putProject, postProject } from '../../store/Projects/projects.api'
+import {
+  changeChild,
+  toggleOverlay,
+} from '../../store/OverlayWindow/overlayWindow.actions'
 import StepTwo from './AddProject/StepTwo'
 import StepOne from './AddProject/StepOne'
-import { Uploader, Downloader } from '../firebase/Helpers'
-import Loader from './Loader'
-import { notify } from '../helpers/notifications'
+import { Uploader, Downloader } from '../../firebase/Helpers'
+import Loader from '../Loader'
 
 const AddProject = ({
   space,

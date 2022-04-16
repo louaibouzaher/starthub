@@ -45,21 +45,21 @@ const Navbar = ({ connectedUser, isConnected }) => {
       </Link>
 
       <div className="flex flex-row ">
-        <Link href="/space" passHref>
+        <Link href="/feed" passHref>
           <Button
-            label="Spaces"
+            label="Feed"
             btnStyle={connectedStyle ? 'text-white' : 'text-dark'}
             onClick={() => {
-              console.log('Spaces')
+              console.log('Feed')
             }}
           />
         </Link>
-        <Link href="/browse" passHref>
+        <Link href="/competition" passHref>
           <Button
-            label="Browse"
+            label="Competitions"
             btnStyle={connectedStyle ? 'text-white' : 'text-dark'}
             onClick={() => {
-              console.log('Browse')
+              console.log('Competitions')
             }}
           />
         </Link>

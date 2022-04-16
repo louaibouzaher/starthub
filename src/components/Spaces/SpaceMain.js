@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import SpaceMainImage from '../assets/images/SpaceMainImage'
-import { Button } from './Button'
+import SpaceMainImage from '../../assets/images/SpaceMainImage'
+import { Button } from '../Button'
 
 export const SpaceMain = () => {
   return (
@@ -22,7 +22,7 @@ export const SpaceMain = () => {
         </p>
       </div>
       <div className="flex justify-center items-center mt-5">
-        <Link href="/create-space" passHref>
+        <Link href="/create-competition" passHref>
           <Button
             label="Create New Space"
             btnStyle={'bg-green text-white border-2 border-green mx-2'}
