@@ -26,6 +26,7 @@ import { getPosts } from '../../src/store/Posts/posts.api'
 import AddProject from '../../src/components/Projects/AddProject'
 import Link from 'next/link'
 import EmptyState from '../../src/components/EmptyState'
+import LeaderBoardCard from '../../src/components/LeaderBoardCard'
 
 const Space = ({
   space,
@@ -270,6 +271,15 @@ const Space = ({
                     </div>
                   </div>
                 ))}
+              </div>
+            )}
+            {sectionIndexer.selectedSection === 3 && (
+              <div className="p-10">
+                <div className="p-10 flex flex-col justify-center items-center">
+                  {projects?.slice(0, 3).map((p, idx) => (
+                    <LeaderBoardCard project={p} Grade={10 - idx} Rank={idx + 1} />
+                  ))}
+                </div>
               </div>
             )}
           </div>
