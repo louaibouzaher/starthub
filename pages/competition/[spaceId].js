@@ -26,6 +26,7 @@ import { getPosts } from '../../src/store/Posts/posts.api'
 import AddProject from '../../src/components/Projects/AddProject'
 import Link from 'next/link'
 import EmptyState from '../../src/components/EmptyState'
+import LeaderBoardCard from '../../src/components/LeaderBoardCard'
 
 const Space = ({
   space,
@@ -273,18 +274,13 @@ const Space = ({
               </div>
             )}
             {sectionIndexer.selectedSection === 3 && (
-              <div className="flex flex-col space-x-2 space-y-2 ">
-                {space?.judges?.map((p) => (
-                  <div className=" max-w-max bg-white rounded-md shadow-md p-4 flex justify-center items-center">
-                    <UserAvatar link={p.picture} className="m-1 h-10 w-10" sizing />
-                    <div className="flex flex-col">
-                      <div>
-                        {p.firstName} {p.lastName}
-                      </div>
-                      <div>{p.position}</div>
-                    </div>
-                  </div>
-                ))}
+              <div className="p-10">
+               <div className="p-10 flex flex-col">
+                 <LeaderBoardCard ProjectName={"Spotify"} Grade={9.8} Rank= {1}/>
+                 <LeaderBoardCard ProjectName={"StartHub"} Grade={9.7} Rank= {2}/>
+                 <LeaderBoardCard ProjectName={"Mango"} Grade={9} Rank= {3}/>
+                 <LeaderBoardCard ProjectName={"Next"} Grade={8.5} Rank= {4}/>
+                </div>
               </div>
             )}
           </div>
