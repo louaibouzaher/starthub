@@ -79,7 +79,7 @@ export const spaceSections = [
   },
   {
     id: 3,
-    title: 'leaderboard',
+    title: 'Winners',
     Icon: () => <ProjectsIcon />,
   },
 ]

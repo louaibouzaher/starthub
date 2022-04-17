@@ -275,11 +275,10 @@ const Space = ({
             )}
             {sectionIndexer.selectedSection === 3 && (
               <div className="p-10">
-               <div className="p-10 flex flex-col">
-                 <LeaderBoardCard ProjectName={"Spotify"} Grade={9.8} Rank= {1}/>
-                 <LeaderBoardCard ProjectName={"StartHub"} Grade={9.7} Rank= {2}/>
-                 <LeaderBoardCard ProjectName={"Mango"} Grade={9} Rank= {3}/>
-                 <LeaderBoardCard ProjectName={"Next"} Grade={8.5} Rank= {4}/>
+                <div className="p-10 flex flex-col justify-center items-center">
+                  {projects.map((p, idx) => (
+                    <LeaderBoardCard project={p} Grade={10 - idx} Rank={idx + 1} />
+                  ))}
                 </div>
               </div>
             )}
