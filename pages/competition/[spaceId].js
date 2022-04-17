@@ -276,7 +276,7 @@ const Space = ({
             {sectionIndexer.selectedSection === 3 && (
               <div className="p-10">
                 <div className="p-10 flex flex-col justify-center items-center">
-                  {projects.map((p, idx) => (
+                  {projects?.slice(0, 3).map((p, idx) => (
                     <LeaderBoardCard project={p} Grade={10 - idx} Rank={idx + 1} />
                   ))}
                 </div>
