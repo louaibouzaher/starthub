@@ -42,7 +42,7 @@ const AddPost = ({
       await store.dispatch(
         putPost(state.id, {
           ...state,
-          picture: pictureLink || null,
+          picture: state.file ? pictureLink : state.picture,
         })
       )
       toggleIsEditing()
