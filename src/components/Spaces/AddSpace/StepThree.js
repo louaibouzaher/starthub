@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import { Box } from '@mui/system'
 import TextField from '@mui/material/TextField'
+import { ListUsers } from './ListUsers'
 
 export default function StepThree({ setSpace, space, users }) {
   const handleParticipants = (e, newValue) => {
@@ -31,6 +32,10 @@ export default function StepThree({ setSpace, space, users }) {
         )}
         renderInput={(params) => <TextField {...params} label="Select Participants" />}
       />
+      {/* <ListUsers
+        label="Already participants in this competition"
+        list={space.participants}
+      /> */}
     </>
   )
 }

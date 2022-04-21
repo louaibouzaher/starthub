@@ -55,14 +55,7 @@ const Post = ({
     setIsDotsListOpen(false)
     toggleIsEditing()
     setAddPostState({ ...post, user: user })
-    changeChild(
-      <AddPost
-        initialState={{ ...post, user: user }}
-        setSubmitted={(r) => {
-          console.log(r)
-        }}
-      />
-    )
+    changeChild(<AddPost />)
     toggleOverlay()
   }
   const time = new Date(post.time)

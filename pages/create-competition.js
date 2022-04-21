@@ -23,7 +23,7 @@ const CreateSpace = ({ isConnected }) => {
       <Head>
         <title>Create New Competition</title>
       </Head>
-      <div className="h-screen w-full text-dark bg-purple flex flex-col justify-start items-center ">
+      <div className="min-h-screen w-full text-dark bg-purple flex flex-col justify-start items-center ">
         <div className="w-1/2 relative mt-20 bg-white shadow-lg pt-10 px-10 pb-20 rounded-lg ">
           <AddSpace />
         </div>

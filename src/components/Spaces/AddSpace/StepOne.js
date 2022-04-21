@@ -9,6 +9,7 @@ export default function StepOne({ space, handleChange, setSpace }) {
     spaceTitle: false,
     spaceDescription: false,
   })
+  const url = file ? URL.createObjectURL(file) : space.spacePic
   const handleFile = async (e) => {
     const file = e.target.files[0]
     setFile(e.target.files[0])
@@ -51,7 +52,7 @@ export default function StepOne({ space, handleChange, setSpace }) {
           Competition Title
         </label>
         <input
-          value={space.spaceTitle}
+          value={space.title}
           name="title"
           type="text"
           class="bg-indigo-50 px-4 py-2 border-2 border-dark outline-none rounded-md w-full"
@@ -69,7 +70,7 @@ export default function StepOne({ space, handleChange, setSpace }) {
         style={{
           resize: 'none',
         }}
-        value={space.spaceDescription}
+        value={space.description}
         className="h-44 border-2 border-dark p-4 rounded-md bg-indigo-50  w-full"
         placeholder="Provide clear and consise description of your space."
         name="description"
@@ -80,18 +81,16 @@ export default function StepOne({ space, handleChange, setSpace }) {
       </div>
       <div className="flex items-center w-full">
         <div className="w-full flex justify-center py-4">
-          {file && (
-            <div
-              style={{
-                backgroundImage: 'url(' + URL.createObjectURL(file) + ')',
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                height: 200,
-                width: 200,
-              }}
-              className="flex justify-center rounded-full shadow-md items-center p-10 "
-            ></div>
-          )}
+          <div
+            style={{
+              backgroundImage: `url(${url})`,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              height: 200,
+              width: 200,
+            }}
+            className="flex justify-center rounded-full shadow-md items-center p-10 "
+          ></div>
         </div>
         <div className="ml-10 flex flex-col justify-start w-full">
           <input

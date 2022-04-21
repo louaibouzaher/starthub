@@ -6,7 +6,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
-import { industries, industry } from '../../../data/general'
+import { industries } from '../../../data/general'
 
 export default function StepTwo({
   handleSubmit,
@@ -15,6 +15,7 @@ export default function StepTwo({
   Project,
   toggleOverlay,
   setStep,
+  handleCancel,
 }) {
   const [isDatePickerDisabled, setIsDatePickerDisabled] = useState(false)
 
@@ -119,7 +120,7 @@ export default function StepTwo({
           btnStyle="border-2 border-dark mx-2"
           onClick={() => {
             setStep(0)
-            toggleOverlay()
+            handleCancel()
           }}
         />
         <Button

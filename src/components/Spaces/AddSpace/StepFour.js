@@ -1,14 +1,13 @@
-import React from 'react'
-import { space as judges } from '../../../data/space'
+import React, { useEffect, useState } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import { Box } from '@mui/system'
 import TextField from '@mui/material/TextField'
+import { ListUsers } from './ListUsers'
 
 export default function StepFour({ setSpace, space, users }) {
   const handleJudges = (e, newValue) => {
     setSpace({ ...space, judges: newValue.map((p) => p.user.id) })
   }
-
   return (
     <>
       <h2 className="font-bold text-xl my-6">Add Judges</h2>
@@ -32,6 +31,7 @@ export default function StepFour({ setSpace, space, users }) {
         )}
         renderInput={(params) => <TextField {...params} label="Select judges" />}
       />
+      {/* <ListUsers label="Already judges in this competition" list={space.judges} /> */}
     </>
   )
 }

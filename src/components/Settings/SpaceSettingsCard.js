@@ -19,6 +19,8 @@ import {
   toggleOverlay,
 } from '../../store/OverlayWindow/overlayWindow.actions'
 import { deleteSpace } from '../../store/Spaces/spaces.api'
+import axios from 'axios'
+import { API_BASEURL } from '../../../appConfig'
 
 function SpaceSettingsCard({
   space,
@@ -28,7 +30,6 @@ function SpaceSettingsCard({
   setAddSpaceState,
   toggleIsEditing,
 }) {
-  const pt = ['Judge', 'Owner', 'Participant']
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -41,10 +42,13 @@ function SpaceSettingsCard({
     store.dispatch(deleteSpace(space.id))
   }
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     toggleIsEditing()
-    setAddSpaceState({ ...space, user: user })
-    changeChild(<AddSpace space={{ ...space, user: user }} />)
+    const { data } = await axios.get(`${API_BASEURL}spaces/${space.id}`)
+    data.participants = data.participants.map((p) => p.user.id)
+    data.judges = data.judges.map((j) => j.user.id)
+    setAddSpaceState({ ...data })
+    changeChild(<AddSpace space={{ ...space }} />)
     toggleOverlay()
   }
 

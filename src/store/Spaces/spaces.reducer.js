@@ -15,9 +15,7 @@ const INITIAL_STATE = {
   currentSpace: 1,
   isEditing: false,
   loading: false,
-  addSpaceState: {
-    participants: [],
-  },
+  addSpaceState: {},
   list: [],
   mySpacesList: [],
   error: '',
