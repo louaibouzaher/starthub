@@ -25,6 +25,7 @@ import tailwindConfig from '../../../tailwind.config'
 import { getMonth } from '../../helpers/date'
 import AddPost from './AddPost'
 import store from '../../store'
+import Reactions from '../Reactions'
 
 const Post = ({
   user,
@@ -158,44 +159,7 @@ const Post = ({
           'w-full flex flex-row justify-between items-center mt-7 text-sm font-light'
         }
       >
-        <div className="flex">
-          <Heart isClicked={reactions[0]} className="mx-1" />
-          <div
-            className="mr-2"
-            style={{
-              color: reactions[0] ? reactionsColors.like : reactionsColors.disabled,
-            }}
-          >
-            Like
-          </div>
-          <Comment isCommented={reactions[1]} className="mx-1" />
-          <div
-            className=" mr-2"
-            style={{
-              color: reactions[1] ? reactionsColors.comment : reactionsColors.disabled,
-            }}
-          >
-            Comment
-          </div>
-          <Share isClicked={reactions[2]} className="mx-1" />
-          <div
-            className=" mr-2"
-            style={{
-              color: reactions[2] ? reactionsColors.share : reactionsColors.disabled,
-            }}
-          >
-            Share
-          </div>
-          <Saved isClicked={reactions[3]} className="mx-1" />
-          <div
-            className=" mr-2"
-            style={{
-              color: reactions[3] ? reactionsColors.save : reactionsColors.disabled,
-            }}
-          >
-            Save
-          </div>
-        </div>
+        <Reactions />
         <Link href={'/post/' + post.id}>
           <div
             className={

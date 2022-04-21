@@ -1,19 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactPlayer from 'react-player'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import store from '../../store'
 import tailwindConfig from '../../../tailwind.config'
 import Dots from '../../assets/icons/Dots'
-import Heart from '../../assets/icons/Heart'
-import Comment from '../../assets/icons/Comment'
-import Share from '../../assets/icons/Share'
-import Saved from '../../assets/icons/Saved'
+
 import Delete from '../../assets/icons/Delete'
 import Edit from '../../assets/icons/Edit'
 import UserAvatar from '../../assets/images/UserAvatar'
 import Location from '../../assets/icons/Location'
 import { Button } from '../Button'
-import { reactionsColors } from '../../data/general'
 import Link from 'next/link'
 import ButtonArrow from '../../assets/icons/ButtonArrow'
 import {
@@ -29,6 +26,8 @@ import AddProject from './AddProject'
 import { getMonth } from '../../helpers/date'
 import PostIcon from '../../assets/icons/PostsIcon'
 import AddReview from './AddReview'
+import Reactions from '../Reactions'
+import { API_BASEURL } from '../../../appConfig'
 
 const Project = ({
   user,
@@ -38,15 +37,11 @@ const Project = ({
   toggleIsEditing,
   setAddProjectState,
   connectedUser,
+  currentSpace,
 }) => {
   const [isDotsListOpen, setIsDotsListOpen] = useState(false)
+  const [canEvaluate, setCanEvaluate] = useState(false)
   const isOwner = user.id == connectedUser?.id
-  const reactions = [
-    Math.floor(Math.random() * 2),
-    Math.floor(Math.random() * 2),
-    Math.floor(Math.random() * 2),
-    Math.floor(Math.random() * 2),
-  ]
 
   const handleDelete = () => {
     setIsDotsListOpen(false)
@@ -67,8 +62,22 @@ const Project = ({
     changeChild(<AddReview projectReviewed={{ ...project, user: user }} />)
     toggleOverlay()
   }
-  const time = new Date(project.time)
 
+  const canUserReview = async () => {
+    const { data } = await axios.get(`${API_BASEURL}spaces/${currentSpace}`)
+    data.judges.forEach((j) => {
+      if (j.user.id == connectedUser.id) {
+        setCanEvaluate(true)
+      }
+    })
+    setCanEvaluate(false)
+  }
+
+  useEffect(() => {
+    canUserReview()
+  }, [])
+
+  const time = new Date(project.time)
   return (
     <div
       className={
@@ -102,6 +111,10 @@ const Project = ({
                   <Delete color={tailwindConfig.theme.extend.colors.dark} />
                   <div className="mx-1"> Delete Permanently</div>
                 </div>
+              </>
+            )}
+            {currentSpace != 1 && canEvaluate && (
+              <>
                 <div
                   className="bg-dark rounded-full opacity-5"
                   style={{
@@ -110,12 +123,12 @@ const Project = ({
                 >
                   {' '}
                 </div>
+                <div className="cursor-pointer flex my-1" onClick={() => handleReview()}>
+                  <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
+                  <div className="mx-1"> Submit Evaluation</div>
+                </div>
               </>
             )}
-            <div className="cursor-pointer flex my-1" onClick={() => handleReview()}>
-              <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
-              <div className="mx-1"> Submit Review</div>
-            </div>
           </div>
         )}
       </div>
@@ -185,44 +198,7 @@ const Project = ({
           'w-full flex flex-row justify-between items-center mt-7 text-sm font-light'
         }
       >
-        <div className="flex">
-          <Heart isClicked={reactions[0]} className="mx-1" />
-          <div
-            className="mr-2"
-            style={{
-              color: reactions[0] ? reactionsColors.like : reactionsColors.disabled,
-            }}
-          >
-            Like
-          </div>
-          <Comment isCommented={reactions[1]} className="mx-1" />
-          <div
-            className=" mr-2"
-            style={{
-              color: reactions[1] ? reactionsColors.comment : reactionsColors.disabled,
-            }}
-          >
-            Comment
-          </div>
-          <Share isClicked={reactions[2]} className="mx-1" />
-          <div
-            className=" mr-2"
-            style={{
-              color: reactions[2] ? reactionsColors.share : reactionsColors.disabled,
-            }}
-          >
-            Share
-          </div>
-          <Saved isClicked={reactions[3]} className="mx-1" />
-          <div
-            className=" mr-2"
-            style={{
-              color: reactions[3] ? reactionsColors.save : reactionsColors.disabled,
-            }}
-          >
-            Save
-          </div>
-        </div>
+        <Reactions />
         <Link href={'/project/' + project.id}>
           <div className="text-dark flex items-center cursor-pointer opacity-40">
             <div>Learn more</div>
@@ -240,6 +216,7 @@ const Project = ({
 const mapStateToProps = (state) => {
   return {
     connectedUser: state.user.data.connectedUser,
+    currentSpace: state.spaces.currentSpace,
   }
 }
 
