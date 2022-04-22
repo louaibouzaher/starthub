@@ -64,13 +64,17 @@ const Project = ({
   }
 
   const canUserReview = async () => {
-    const { data } = await axios.get(`${API_BASEURL}spaces/${currentSpace}`)
-    data.judges.forEach((j) => {
-      if (j.user.id == connectedUser.id) {
-        setCanEvaluate(true)
-      }
-    })
-    setCanEvaluate(false)
+    try {
+      const { data } = await axios.get(`${API_BASEURL}spaces/${currentSpace}`)
+      data.judges.forEach((j) => {
+        if (j.user.id == connectedUser.id) {
+          setCanEvaluate(true)
+        }
+      })
+      setCanEvaluate(false)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
