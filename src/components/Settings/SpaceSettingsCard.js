@@ -52,6 +52,13 @@ function SpaceSettingsCard({
     toggleOverlay()
   }
 
+  const toggleWinners = () => {
+    putSpace(space.id, {
+      ...space,
+      showWinners: true,
+    })
+  }
+
   return (
     <div className="relative flex w-full items-start flex-row bg-white rounded shadow-lg p-10 m-2">
       <div
@@ -124,7 +131,7 @@ function SpaceSettingsCard({
                   top: 0,
                   right: 14,
                   width: 10,
-                  height: 10,
+                  height: 6,
                   bgcolor: 'background.paper',
                   transform: 'translateY(-50%) rotate(45deg)',
                   zIndex: 0,
@@ -135,14 +142,23 @@ function SpaceSettingsCard({
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <MenuItem>
-              <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
+              <div className="cursor-pointer flex" onClick={() => toggleWinners()}>
+                <Edit color={tailwindConfig.theme.extend.colors.dark} />
+                <div className="mx-1">
+                  {space.showWinners ? `Release Winners` : `Hide Winners`}
+                </div>
+              </div>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <div className="cursor-pointer flex" onClick={() => handleEdit()}>
                 <Edit color={tailwindConfig.theme.extend.colors.dark} />
                 <div className="mx-1"> Edit Space</div>
               </div>
             </MenuItem>
             <Divider />
             <MenuItem>
-              <div className="cursor-pointer flex my-1" onClick={() => handleDelete()}>
+              <div className="cursor-pointer flex" onClick={() => handleDelete()}>
                 <Delete color={tailwindConfig.theme.extend.colors.dark} />
                 <div className="mx-1"> Delete Permanently</div>
               </div>
