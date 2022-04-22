@@ -142,7 +142,9 @@ const Space = ({
                 </div>
                 <div className="">{space.regulation}</div>
                 <div className="font-bold text-xl text-purple mt-6">Judging Criteria</div>
-                <div className="">Your projects will be evaluated according to the following criterias</div>
+                <div className="">
+                  Your projects will be evaluated according to the following criterias
+                </div>
                 <div className="">
                   <pre>
                     1){space.creteriaOne}
