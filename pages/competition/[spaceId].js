@@ -137,7 +137,7 @@ const Space = ({
             {sectionIndexer.selectedSection === 0 && (
               <div className="p-10">
                 <div className="space-x-1">
-                  {spaceTags.map((p) => (
+                  {space?.tags.split(',').map((p) => (
                     <span
                       className="p-1 text-purple border-purple rounded-md"
                       style={{
@@ -159,7 +159,8 @@ const Space = ({
                   </Link>
                 </div>
                 <div className="mt-4">
-                  Prize <span className="text-purple"> {money(100000)} </span>
+                  Prize{' '}
+                  <span className="text-purple"> {money(parseInt(space.prize))} </span>
                 </div>
 
                 <div className="font-bold text-xl text-purple mt-6">
@@ -169,9 +170,7 @@ const Space = ({
                 <div className="font-bold text-xl text-purple mt-6">
                   {`Rules & Regulations`}
                 </div>
-                <div className="">{`{Insert Rules and Regulations here}`}</div>
-                <div className="font-bold text-xl text-purple mt-6">Submissions</div>
-                <div className="">{`{Insert Submissions Instructions here}`}</div>
+                <div className="whitespace-pre-line">{space.rules}</div>
                 {posts.length > 0 ? (
                   <>
                     {' '}
@@ -261,6 +260,7 @@ const Space = ({
               </>
             )}
             {sectionIndexer.selectedSection === 2 && (
+              // TODO: Show Participants in the future
               // <div className="flex flex-wrap space-x-2 space-y-2 ">
               //   {space?.participants?.map((p) => (
               //     <Link href={`/profile/${p.user.id}`}>
@@ -320,11 +320,17 @@ const Space = ({
             )}
             {sectionIndexer.selectedSection === 3 && (
               <div className="p-10">
-                <div className="p-10 flex flex-col justify-center items-center">
-                  {projects?.slice(0, 3).map((p, idx) => (
-                    <LeaderBoardCard project={p} Grade={10 - idx} Rank={idx + 1} />
-                  ))}
-                </div>
+                {space.showWinners ? (
+                  <div className="flex p-10 justify-center items-center">
+                    Winners are not announced yet. 🕑
+                  </div>
+                ) : (
+                  <div className="p-10 flex flex-col justify-center items-center">
+                    <LeaderBoardCard project={space.firstWinner} Grade={10} Rank={1} />
+                    <LeaderBoardCard project={space.secondWinner} Grade={10} Rank={2} />
+                    <LeaderBoardCard project={space.secondWinner} Grade={10} Rank={3} />
+                  </div>
+                )}
               </div>
             )}
           </div>
