@@ -43,13 +43,17 @@ function SpaceSettingsCard({
   }
 
   const handleEdit = async () => {
-    toggleIsEditing()
-    const { data } = await axios.get(`${API_BASEURL}spaces/${space.id}`)
-    data.participants = data.participants.map((p) => p.user.id)
-    data.judges = data.judges.map((j) => j.user.id)
-    setAddSpaceState({ ...data })
-    changeChild(<AddSpace space={{ ...space }} />)
-    toggleOverlay()
+    try {
+      toggleIsEditing()
+      const { data } = await axios.get(`${API_BASEURL}spaces/${space.id}`)
+      data.participants = data.participants.map((p) => p.user.id)
+      data.judges = data.judges.map((j) => j.user.id)
+      setAddSpaceState({ ...data })
+      changeChild(<AddSpace space={{ ...space }} />)
+      toggleOverlay()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const toggleWinners = () => {
