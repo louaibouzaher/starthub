@@ -96,6 +96,8 @@ const Space = ({
             <div className="w-1/3 flex flex-col m-2">
               <div>At</div>
               <div className="text-2xl break-words text-purple">{space.location}</div>
+              {/* <div>Adress</div>
+              <div className="text-2xl break-words text-purple">{space.location}</div> */}
             </div>{' '}
           </div>
         </div>
@@ -138,7 +140,7 @@ const Space = ({
                 <div className="font-bold text-xl text-purple mt-6">
                   {`Rules & Regulations`}
                 </div>
-                <div className="">{`{Insert Rules and Regulations here}`}</div>
+                <div className="">{space.regulation}</div>
                 <div className="font-bold text-xl text-purple mt-6">Submissions</div>
                 <div className="">{`{Insert Submissions Instructions here}`}</div>
                 {posts.length > 0 ? (
