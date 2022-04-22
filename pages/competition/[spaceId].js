@@ -326,9 +326,15 @@ const Space = ({
                   </div>
                 ) : (
                   <div className="p-10 flex flex-col justify-center items-center">
-                    <LeaderBoardCard project={space.firstWinner} Grade={10} Rank={1} />
-                    <LeaderBoardCard project={space.secondWinner} Grade={10} Rank={2} />
-                    <LeaderBoardCard project={space.secondWinner} Grade={10} Rank={3} />
+                    {space.firstWinner && (
+                      <LeaderBoardCard project={space.firstWinner} Grade={10} Rank={1} />
+                    )}
+                    {space.secondWinner && (
+                      <LeaderBoardCard project={space.secondWinner} Grade={10} Rank={2} />
+                    )}
+                    {space.thirdWinner && (
+                      <LeaderBoardCard project={space.thirdWinner} Grade={10} Rank={3} />
+                    )}
                   </div>
                 )}
               </div>
