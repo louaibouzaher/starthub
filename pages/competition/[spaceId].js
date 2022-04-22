@@ -141,8 +141,17 @@ const Space = ({
                   {`Rules & Regulations`}
                 </div>
                 <div className="">{space.regulation}</div>
-                <div className="font-bold text-xl text-purple mt-6">Submissions</div>
-                <div className="">{`{Insert Submissions Instructions here}`}</div>
+                <div className="font-bold text-xl text-purple mt-6">Judging Criteria</div>
+                <div className="">Your projects will be evaluated according to the following criterias</div>
+                <div className="">
+                  <pre>
+                    1){space.creteriaOne}
+                    2){space.creteriaTwo}
+                    3){space.creteriaThree}
+                    4){space.creteriaFour}
+                    5){space.creteriaFive}
+                  </pre>
+                </div>
                 {posts.length > 0 ? (
                   <>
                     {' '}
