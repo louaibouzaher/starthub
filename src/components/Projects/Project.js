@@ -37,6 +37,7 @@ const Project = ({
   toggleIsEditing,
   setAddProjectState,
   connectedUser,
+  isConnected,
   currentSpace,
 }) => {
   const [isDotsListOpen, setIsDotsListOpen] = useState(false)
@@ -88,55 +89,62 @@ const Project = ({
         'relative m-4 p-10 rounded-lg shadow-lg flex flex-col items-start justify-between bg-white'
       }
     >
-      <div className="absolute flex flex-col items-end top-8 right-8">
-        <Dots
-          isDark
-          className="scale-125"
-          onClick={() => setIsDotsListOpen(!isDotsListOpen)}
-        />
+      {isConnected && (
+        <div className="absolute flex flex-col items-end top-8 right-8">
+          <Dots
+            isDark
+            className="scale-125"
+            onClick={() => setIsDotsListOpen(!isDotsListOpen)}
+          />
 
-        {isDotsListOpen && (
-          <div className="z-10 text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
-            {isOwner && (
-              <>
-                <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
-                  <Edit color={tailwindConfig.theme.extend.colors.dark} />
-                  <div className="mx-1"> Edit Project</div>
-                </div>
-                <div
-                  className="bg-dark rounded-full opacity-5"
-                  style={{
-                    height: 2,
-                  }}
-                >
-                  {' '}
-                </div>
-                <div className="cursor-pointer flex my-1" onClick={() => handleDelete()}>
-                  <Delete color={tailwindConfig.theme.extend.colors.dark} />
-                  <div className="mx-1"> Delete Permanently</div>
-                </div>
-              </>
-            )}
-            {currentSpace != 1 && canEvaluate && (
-              <>
-                <div
-                  className="bg-dark rounded-full opacity-5"
-                  style={{
-                    height: 2,
-                  }}
-                >
-                  {' '}
-                </div>
-                <div className="cursor-pointer flex my-1" onClick={() => handleReview()}>
-                  <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
-                  <div className="mx-1"> Submit Evaluation</div>
-                </div>
-              </>
-            )}
-          </div>
-        )}
-      </div>
-
+          {isDotsListOpen && (
+            <div className="z-10 text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
+              {isOwner && (
+                <>
+                  <div className="cursor-pointer flex my-1" onClick={() => handleEdit()}>
+                    <Edit color={tailwindConfig.theme.extend.colors.dark} />
+                    <div className="mx-1"> Edit Project</div>
+                  </div>
+                  <div
+                    className="bg-dark rounded-full opacity-5"
+                    style={{
+                      height: 2,
+                    }}
+                  >
+                    {' '}
+                  </div>
+                  <div
+                    className="cursor-pointer flex my-1"
+                    onClick={() => handleDelete()}
+                  >
+                    <Delete color={tailwindConfig.theme.extend.colors.dark} />
+                    <div className="mx-1"> Delete Permanently</div>
+                  </div>
+                </>
+              )}
+              {currentSpace != 1 && canEvaluate && (
+                <>
+                  <div
+                    className="bg-dark rounded-full opacity-5"
+                    style={{
+                      height: 2,
+                    }}
+                  >
+                    {' '}
+                  </div>
+                  <div
+                    className="cursor-pointer flex my-1"
+                    onClick={() => handleReview()}
+                  >
+                    <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
+                    <div className="mx-1"> Submit Evaluation</div>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      )}
       <div className="text-4xl text-dark font-bold">{project.title}</div>
       <div className="text-xs opacity-50">
         {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()} at{' '}
@@ -220,6 +228,7 @@ const Project = ({
 const mapStateToProps = (state) => {
   return {
     connectedUser: state.user.data.connectedUser,
+    isConnected: state.user.isConnected,
     currentSpace: state.spaces.currentSpace,
   }
 }
