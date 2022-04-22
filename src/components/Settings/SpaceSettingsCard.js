@@ -53,10 +53,12 @@ function SpaceSettingsCard({
   }
 
   const toggleWinners = () => {
-    putSpace(space.id, {
-      ...space,
-      showWinners: true,
-    })
+    store.dispatch(
+      putSpace(space.id, {
+        ...space,
+        showWinners: !space.showWinners,
+      })
+    )
   }
 
   return (
