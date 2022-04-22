@@ -84,7 +84,7 @@ function SpaceSettingsCard({
 
       <div className="flex flex-row items-center absolute right-10 top-10 ">
         <h2 className="border-2 border-dark py-1 px-2 text-sm font-bold rounded-md">
-          Owner
+          {space.role}
         </h2>
         <React.Fragment>
           <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
