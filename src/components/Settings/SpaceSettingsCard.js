@@ -18,7 +18,7 @@ import {
   changeChild,
   toggleOverlay,
 } from '../../store/OverlayWindow/overlayWindow.actions'
-import { deleteSpace } from '../../store/Spaces/spaces.api'
+import { deleteSpace, putSpace } from '../../store/Spaces/spaces.api'
 import axios from 'axios'
 import { API_BASEURL } from '../../../appConfig'
 
