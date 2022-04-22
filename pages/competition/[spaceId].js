@@ -137,7 +137,7 @@ const Space = ({
             {sectionIndexer.selectedSection === 0 && (
               <div className="p-10">
                 <div className="space-x-1">
-                  {space?.tags.split(',').map((p) => (
+                  {space?.tags?.split(',').map((p) => (
                     <span
                       className="p-1 text-purple border-purple rounded-md"
                       style={{
