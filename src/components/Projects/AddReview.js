@@ -23,29 +23,12 @@ const AddReview = ({
   isLoading,
   error,
 }) => {
-  // const [grade,setGrade]=useState({
-  //   criteriaOne:0,
-  //   criteriaTwo:0,
-  //   criteriaThree:0,
-  //   criteriaFour:0,
-  //   criteriaFive:0
-  // })
   const handleChange = (e) => {
-    console.log(e.target.name,e.target.value)
-
-    // const setNewGrade=(e)=>({
-    //   ...grade,
-    //   [e.target.name]: e.target.value,
-    // })
+    console.log(e.target.name, e.target.value)
     setAddReviewState({
-        ...state,
-        [e.target.name]: e.target.value,
-      })
-
-    
-    
-
-
+      ...state,
+      [e.target.name]: e.target.value,
+    })
   }
   const handleSubmit = async () => {
     changeChild(<Loader />)
@@ -91,11 +74,11 @@ const AddReview = ({
         </div>
         <div className="flex flex-col">
           <div className="font-bold flex-1 w-full py-2">
-            IS THE INTERVENTION DOING THE RIGHT THINGS? 
+            IS THE INTERVENTION DOING THE RIGHT THINGS?
           </div>
-          <div className='w-1/2 ml-6'>
+          <div className="w-1/2 ml-6">
             <Slider
-              name='criteriaOne'
+              name="criteriaOne"
               onChange={handleChange}
               valueLabelDisplay="auto"
               defaultValue={0}
@@ -109,12 +92,12 @@ const AddReview = ({
         </div>
         <div className="flex flex-col ">
           <div className="font-bold flex-1 w-full py-2">
-            IS THE INTERVENTION DOING THE RIGHT THINGS? 
+            HOW WELL DOES THE INTERVENTION FIT?
           </div>
-          <div className='w-1/2 ml-6'>
+          <div className="w-1/2 ml-6">
             <Slider
               defaultValue={0}
-              name='criteriaTwo'
+              name="criteriaTwo"
               onChange={handleChange}
               valueLabelDisplay="auto"
               value={state.criteriaTwo}
@@ -127,12 +110,12 @@ const AddReview = ({
         </div>
         <div className="flex flex-col ">
           <div className="font-bold flex-1 w-full py-2">
-            IS THE INTERVENTION DOING THE RIGHT THINGS? 
+            IS THE INTERVENTION ACHIEVING ITS OBJECTIVES?
           </div>
-          <div className='w-1/2 ml-6'>
+          <div className="w-1/2 ml-6">
             <Slider
               defaultValue={0}
-              name='criteriaThree'
+              name="criteriaThree"
               onChange={handleChange}
               valueLabelDisplay="auto"
               value={state.criteriaThree}
@@ -145,12 +128,12 @@ const AddReview = ({
         </div>
         <div className="flex flex-col">
           <div className="font-bold flex-1 w-full py-2">
-            IS THE INTERVENTION DOING THE RIGHT THINGS? {space.criteriaOne}
+            HOW WELL ARE RESOURCES BEING USED?
           </div>
-          <div className='w-1/2 ml-6'>
+          <div className="w-1/2 ml-6">
             <Slider
               defaultValue={0}
-              name='criteriaFour'
+              name="criteriaFour"
               onChange={handleChange}
               valueLabelDisplay="auto"
               value={state.criteriaFour}
@@ -163,12 +146,12 @@ const AddReview = ({
         </div>
         <div className="flex flex-col">
           <div className="font-bold flex-1 w-full py-2">
-            IS THE INTERVENTION DOING THE RIGHT THINGS? 
+            WHAT DIFFERENCE DOES THE INTERVENTION MAKE?
           </div>
-          <div className='w-1/2 ml-6'>
+          <div className="w-1/2 ml-6">
             <Slider
               defaultValue={0}
-              name='criteriaFive'
+              name="criteriaFive"
               onChange={handleChange}
               valueLabelDisplay="auto"
               value={state.criteriaFive}
