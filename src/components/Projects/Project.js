@@ -91,12 +91,13 @@ const Project = ({
     >
       {isConnected && (
         <div className="absolute flex flex-col items-end top-8 right-8">
-          <Dots
-            isDark
-            className="scale-125"
-            onClick={() => setIsDotsListOpen(!isDotsListOpen)}
-          />
-
+          {(isOwner || canEvaluate) && (
+            <Dots
+              isDark
+              className="scale-125"
+              onClick={() => setIsDotsListOpen(!isDotsListOpen)}
+            />
+          )}
           {isDotsListOpen && (
             <div className="z-10 text-dark flex flex-col bg-gray-100 py-4 px-6 mt-2 rounded-md shadow-md">
               {isOwner && (
