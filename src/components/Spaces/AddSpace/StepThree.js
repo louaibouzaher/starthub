@@ -12,7 +12,7 @@ export default function StepThree({ space, handleChange }) {
       <div className=" w-full">
         <div className="flex  items-center">
           {' '}
-          <label for="prize" class="block mr-4 text-dark ">
+          <label for="prize" className="my-2 mr-3 font-bold text-dark">
             Prize
           </label>
           <input

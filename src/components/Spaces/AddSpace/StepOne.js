@@ -48,7 +48,7 @@ export default function StepOne({ space, handleChange, setSpace }) {
   return (
     <>
       <div>
-        <label for="fname" class="block mb-1 text-dark ">
+        <label for="fname" className="my-2 font-bold text-dark">
           Competition Title
         </label>
         <input
@@ -63,7 +63,7 @@ export default function StepOne({ space, handleChange, setSpace }) {
         </div>
       </div>
 
-      <label for="TextArea" class="block mb-1 text-dark ">
+      <label for="TextArea" className="my-2 font-bold text-dark">
         Competition Description
       </label>
       <textarea
