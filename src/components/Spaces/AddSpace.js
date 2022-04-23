@@ -47,7 +47,6 @@ const AddSpace = ({
   }
 
   const handleChange = (e) => {
-    console.log(addSpaceState)
     setAddSpaceState({
       ...addSpaceState,
       [e.target.name]: e.target.value,
