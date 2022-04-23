@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 import store from '../../store'
