@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState }  from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 import store from '../../store'
@@ -10,6 +10,7 @@ import {
 } from '../../store/OverlayWindow/overlayWindow.actions'
 import { Button } from '../Button'
 import Loader from '../Loader'
+import { Slider, SliderMark } from '@mui/material'
 const AddReview = ({
   projectReviewed = {},
   space,
@@ -22,18 +23,30 @@ const AddReview = ({
   isLoading,
   error,
 }) => {
+  // const [grade,setGrade]=useState({
+  //   criteriaOne:0,
+  //   criteriaTwo:0,
+  //   criteriaThree:0,
+  //   criteriaFour:0,
+  //   criteriaFive:0
+  // })
   const handleChange = (e) => {
-    if (e.target.name == 'grade') {
-      if (e.target.value > 10 || e.target.value < 0) {
-        return
-      }
-    }
-    setAddReviewState({
-      ...state,
-      [e.target.name]: e.target.value,
-    })
-  }
+    console.log(e.target.name,e.target.value)
 
+    // const setNewGrade=(e)=>({
+    //   ...grade,
+    //   [e.target.name]: e.target.value,
+    // })
+    setAddReviewState({
+        ...state,
+        [e.target.name]: e.target.value,
+      })
+
+    
+    
+
+
+  }
   const handleSubmit = async () => {
     changeChild(<Loader />)
     console.log({
@@ -76,15 +89,95 @@ const AddReview = ({
             </span>
           </Link>
         </div>
-        <div className="flex w-1/2 items-center">
-          <input
-            type="number"
-            className="border-2 border-dark p-2 rounded-md w-1/2 text-center"
-            name="grade"
-            onChange={handleChange}
-            value={state.grade}
-          />
-          <div className="font-bold flex-1 px-2">/ 10</div>
+        <div className="flex flex-col">
+          <div className="font-bold flex-1 w-full py-2">
+            IS THE INTERVENTION DOING THE RIGHT THINGS? 
+          </div>
+          <div className='w-1/2 ml-6'>
+            <Slider
+              name='criteriaOne'
+              onChange={handleChange}
+              valueLabelDisplay="auto"
+              defaultValue={0}
+              value={state.criteriaOne}
+              min={0}
+              max={10}
+              step={1}
+              color="primary"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col ">
+          <div className="font-bold flex-1 w-full py-2">
+            IS THE INTERVENTION DOING THE RIGHT THINGS? 
+          </div>
+          <div className='w-1/2 ml-6'>
+            <Slider
+              defaultValue={0}
+              name='criteriaTwo'
+              onChange={handleChange}
+              valueLabelDisplay="auto"
+              value={state.criteriaTwo}
+              min={0}
+              max={10}
+              step={1}
+              color="primary"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col ">
+          <div className="font-bold flex-1 w-full py-2">
+            IS THE INTERVENTION DOING THE RIGHT THINGS? 
+          </div>
+          <div className='w-1/2 ml-6'>
+            <Slider
+              defaultValue={0}
+              name='criteriaThree'
+              onChange={handleChange}
+              valueLabelDisplay="auto"
+              value={state.criteriaThree}
+              min={0}
+              max={10}
+              step={1}
+              color="primary"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <div className="font-bold flex-1 w-full py-2">
+            IS THE INTERVENTION DOING THE RIGHT THINGS? {space.criteriaOne}
+          </div>
+          <div className='w-1/2 ml-6'>
+            <Slider
+              defaultValue={0}
+              name='criteriaFour'
+              onChange={handleChange}
+              valueLabelDisplay="auto"
+              value={state.criteriaFour}
+              min={0}
+              max={10}
+              step={1}
+              color="primary"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <div className="font-bold flex-1 w-full py-2">
+            IS THE INTERVENTION DOING THE RIGHT THINGS? 
+          </div>
+          <div className='w-1/2 ml-6'>
+            <Slider
+              defaultValue={0}
+              name='criteriaFive'
+              onChange={handleChange}
+              valueLabelDisplay="auto"
+              value={state.criteriaFive}
+              min={0}
+              max={10}
+              step={1}
+              color="primary"
+            />
+          </div>
         </div>
         <div className="flex flex-col w-2/3 mt-4">
           <textarea
