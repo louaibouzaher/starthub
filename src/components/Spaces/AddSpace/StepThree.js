@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
+import { ListUsers } from './ListUsers'
 
 export default function StepThree({ space, handleChange }) {
   const [errors, setErrors] = useState({
@@ -14,10 +15,10 @@ export default function StepThree({ space, handleChange }) {
           style={{
             resize: 'none',
           }}
-          value={space.spaceRegulation}
+          value={space.rules}
           className="h-44 border-2 border-dark p-4 rounded-md bg-indigo-50  w-full ui placeholder"
           placeholder="     Provide clear and consise rules & regulations concerning your space "
-          name="description"
+          name="rules"
           onChange={handleChange}
         />
       </div>

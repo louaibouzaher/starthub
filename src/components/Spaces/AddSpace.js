@@ -47,6 +47,7 @@ const AddSpace = ({
   }
 
   const handleChange = (e) => {
+    console.log(addSpaceState)
     setAddSpaceState({
       ...addSpaceState,
       [e.target.name]: e.target.value,
@@ -67,6 +68,7 @@ const AddSpace = ({
         })
       )
     }
+    handleCancel()
     setAddSpaceState({})
   }
   return (
@@ -74,7 +76,7 @@ const AddSpace = ({
       <div
         className=" w-full flex flex-col justify-center items-start"
         style={{
-          maxHeight: '8vh',
+          maxHeight: '7vh',
           minHeight: 500,
         }}
       >
@@ -96,7 +98,6 @@ const AddSpace = ({
         )}
         {step === 2 && (
           <StepThree
-            users={users}
             handleChange={handleChange}
             space={addSpaceState}
             setSpace={setAddSpaceState}
@@ -115,7 +116,6 @@ const AddSpace = ({
         )}
         {step === 4 && (
           <StepFive
-            users={users}
             handleChange={handleChange}
             space={addSpaceState}
             setSpace={setAddSpaceState}
@@ -141,7 +141,9 @@ const AddSpace = ({
             <Button
               label="Next"
               btnStyle="bg-purple text-white border-2 border-purple mx-2"
-              onClick={() => setStep(step + 1)}
+              onClick={() => {
+                setStep(step + 1)
+              }}
             />
           )}
           {step == 4 && (

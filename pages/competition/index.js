@@ -16,7 +16,7 @@ const Spaces = ({ spaces }) => {
       </Head>
       <OverlayWindow />
       <div className="text-dark h-screen w-full flex flex-col justify-start items-start pt-28 p-20">
-        <div className="w-full flex flex-col justify-center items-center">
+        <div className="w-full flex flex-col justify-center items-center my-6">
           <SpaceMainImage
             className={'flex flex-col w-full justify-left items-center scale-120'}
           />
@@ -48,9 +48,14 @@ const Spaces = ({ spaces }) => {
 }
 
 export async function getServerSideProps({ params }) {
-  const spaces = await axios.get(API_BASEURL + `spaces/`).then((res) => {
-    return res.data
-  })
+  const spaces = await axios
+    .get(API_BASEURL + `spaces/`)
+    .then((res) => {
+      return res.data
+    })
+    .catch((e) => {
+      console.log(e)
+    })
 
   return {
     props: {

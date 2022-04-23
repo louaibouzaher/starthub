@@ -39,11 +39,13 @@ const Space = ({
   changeChild,
   getProjects,
   getPosts,
+  currentSpace,
+  connectedUser,
 }) => {
   const spaceTags = ['Machine Learning', 'Software Engineering', 'Startups']
   const startsOn = new Date(space.startsOn)
   const endsOn = new Date(space.endsOn)
-
+  const [canPost, setCanPost] = useState(false)
   useEffect(() => {
     sectionsInit(spaceSections)
     setCurrentSpace(space.id)
@@ -59,6 +61,35 @@ const Space = ({
       changeChild(<AddProject />)
     }
   }, [sectionIndexer.selectedSection])
+
+  const canUserPost = async () => {
+    try {
+      const { data } = await axios.get(`${API_BASEURL}spaces/${currentSpace}`)
+      if (data?.owner.id == connectedUser.id) {
+        setCanPost(true)
+        return
+      }
+      data?.participants.forEach((p) => {
+        if (p.user.id == connectedUser.id) {
+          setCanPost(true)
+          return
+        }
+      })
+      data?.judges.forEach((p) => {
+        if (p.user.id == connectedUser.id) {
+          setCanPost(true)
+          return
+        }
+      })
+      setCanPost(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    canUserPost()
+  }, [])
 
   return (
     <>
@@ -108,7 +139,7 @@ const Space = ({
             {sectionIndexer.selectedSection === 0 && (
               <div className="p-10">
                 <div className="space-x-1">
-                  {spaceTags.map((p) => (
+                  {space?.tags?.split(',').map((p) => (
                     <span
                       className="p-1 text-purple border-purple rounded-md"
                       style={{
@@ -130,7 +161,8 @@ const Space = ({
                   </Link>
                 </div>
                 <div className="mt-4">
-                  Prize <span className="text-purple"> {money(100000)} </span>
+                  Prize{' '}
+                  <span className="text-purple"> {money(parseInt(space.prize))} </span>
                 </div>
 
                 <div className="font-bold text-xl text-purple mt-6">
@@ -140,7 +172,7 @@ const Space = ({
                 <div className="font-bold text-xl text-purple mt-6">
                   {`Rules & Regulations`}
                 </div>
-                <div className="">{space.regulation}</div>
+                <div className="whitespace-pre-line">{space.rules}</div>
                 <div className="font-bold text-xl text-purple mt-6">Judging Criteria</div>
                 <div className="">
                   Your projects will be evaluated according to the following criterias
@@ -167,27 +199,34 @@ const Space = ({
                           <div className="text-xl text-dark mb-10 mt-2 ">
                             Check the latest updates about this space.
                           </div>
-                          <Button
-                            onClick={() => {
-                              toggleOverlay()
-                            }}
-                            label="New Post"
-                            btnStyle={
-                              'max-h-10 bg-white border-purple border-2 text-purple text-center hover:bg-purple hover:text-white'
-                            }
-                          />
+                          {canPost && (
+                            <Button
+                              onClick={() => {
+                                toggleOverlay()
+                              }}
+                              label="New Post"
+                              btnStyle={
+                                'max-h-10 bg-white border-purple border-2 text-purple text-center hover:bg-purple hover:text-white'
+                              }
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
                     <PostList />
                   </>
-                ) : (
+                ) : canPost ? (
                   <EmptyState
                     label={'Add Post'}
                     onClick={() => {
                       toggleOverlay()
                     }}
                   />
+                ) : (
+                  <div className="w-full flex my-6 text-left">
+                    You are not part of this competition. 🚫 <br />
+                    Contact the owner to become a participant.
+                  </div>
                 )}
               </div>
             )}
@@ -205,30 +244,38 @@ const Space = ({
                         <div className="text-xl text-dark mb-10 mt-2 ">
                           Check the projects submitted by participants.
                         </div>
-                        <Button
-                          onClick={() => {
-                            toggleOverlay()
-                          }}
-                          label="New Project"
-                          btnStyle={
-                            'max-h-10 bg-white border-purple border-2 text-purple text-center hover:bg-purple hover:text-white'
-                          }
-                        />
+                        {canPost && (
+                          <Button
+                            onClick={() => {
+                              toggleOverlay()
+                            }}
+                            label="Submit Project"
+                            btnStyle={
+                              'max-h-10 bg-white border-purple border-2 text-purple text-center hover:bg-purple hover:text-white'
+                            }
+                          />
+                        )}
                       </div>
                     </div>
                     <ProjectList />
                   </>
-                ) : (
+                ) : canPost ? (
                   <EmptyState
                     label={'Submit Project'}
                     onClick={() => {
                       toggleOverlay()
                     }}
                   />
+                ) : (
+                  <div className="w-full flex m-6 text-left">
+                    You are not part of this competition. 🚫 <br />
+                    Contact the owner to become a participant and submit a project.
+                  </div>
                 )}
               </>
             )}
             {sectionIndexer.selectedSection === 2 && (
+              // TODO: Show Participants in the future
               // <div className="flex flex-wrap space-x-2 space-y-2 ">
               //   {space?.participants?.map((p) => (
               //     <Link href={`/profile/${p.user.id}`}>
@@ -288,11 +335,23 @@ const Space = ({
             )}
             {sectionIndexer.selectedSection === 3 && (
               <div className="p-10">
-                <div className="p-10 flex flex-col justify-center items-center">
-                  {projects?.slice(0, 3).map((p, idx) => (
-                    <LeaderBoardCard project={p} Grade={10 - idx} Rank={idx + 1} />
-                  ))}
-                </div>
+                {space.showWinners ? (
+                  <div className="flex p-10 justify-center items-center">
+                    Winners are not announced yet. 🕑
+                  </div>
+                ) : (
+                  <div className="p-10 flex flex-col justify-center items-center">
+                    {space.firstWinner && (
+                      <LeaderBoardCard project={space.firstWinner} Grade={10} Rank={1} />
+                    )}
+                    {space.secondWinner && (
+                      <LeaderBoardCard project={space.secondWinner} Grade={10} Rank={2} />
+                    )}
+                    {space.thirdWinner && (
+                      <LeaderBoardCard project={space.thirdWinner} Grade={10} Rank={3} />
+                    )}
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -309,6 +368,8 @@ const mapStateToProps = (state) => {
     isOverlayOpen: state.overlayWindow.isOpen,
     projects: state.projects.list,
     posts: state.posts.list,
+    currentSpace: state.spaces.currentSpace,
+    connectedUser: state.user.data.connectedUser,
   }
 }
 

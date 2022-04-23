@@ -42,7 +42,9 @@ const SpaceCard = ({ space }) => {
             ${endsOn.getDate()}
             ${endsOn.getFullYear()}`}
           </div>
-          <div className="text-sm break-words mt-2">{space.description}</div>
+          <div className="text-sm break-words mt-2">
+            {space.description.substring(0, 100)}...
+          </div>
         </div>
       </div>
     </Link>

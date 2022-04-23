@@ -11,6 +11,8 @@ import tailwindConfig from '../../tailwind.config'
 import store from '../store'
 import { getProjects } from '../store/Projects/projects.api'
 import { industries } from '../data/general'
+import { setAddPostState } from '../store/Posts/posts.actions'
+import { setAddProjectState } from '../store/Projects/projects.actions'
 
 const theme = createTheme({
   palette: {
@@ -92,6 +94,8 @@ const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
         <Button
           onClick={() => {
             toggleOverlay()
+            store.dispatch(setAddPostState({}))
+            store.dispatch(setAddProjectState({}))
           }}
           label={`New ${sectionIndexer?.sections[
             sectionIndexer?.selectedSection

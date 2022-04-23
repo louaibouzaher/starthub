@@ -42,6 +42,11 @@ const AddProject = ({
     setAddProjectState({ ...state, file: e.target.files[0] })
   }
 
+  const handleCancel = () => {
+    toggleOverlay()
+    if (isEditing) toggleIsEditing()
+  }
+
   const handleSubmit = async () => {
     changeChild(<Loader />)
     const videoRef = state.file ? await Uploader(state.file, true) : null
@@ -92,6 +97,7 @@ const AddProject = ({
           setFile={setFile}
           toggleOverlay={toggleOverlay}
           handleFile={handleFile}
+          handleCancel={handleCancel}
         />
       )}
       {step === 1 && (
@@ -102,6 +108,7 @@ const AddProject = ({
           handleSubmit={handleSubmit}
           setStep={setStep}
           toggleOverlay={toggleOverlay}
+          handleCancel={handleCancel}
         />
       )}
     </>

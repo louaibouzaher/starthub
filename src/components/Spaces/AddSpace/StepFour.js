@@ -1,21 +1,19 @@
-import React from 'react'
-import { space as judges } from '../../../data/space'
+import React, { useEffect, useState } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import { Box } from '@mui/system'
 import TextField from '@mui/material/TextField'
+import { ListUsers } from './ListUsers'
 
 export default function StepFour({ setSpace, space, users }) {
   const handleParticipants = (e, newValue) => {
     setSpace({
       ...space,
       participants: newValue.map((p) => p.user.id),
-      judges: newValue.map((p) => p.user.id),
     })
   }
   const handleJudges = (e, newValue) => {
     setSpace({ ...space, judges: newValue.map((p) => p.user.id) })
   }
-
   return (
     <>
       <div className=" w-full">
