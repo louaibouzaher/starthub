@@ -127,13 +127,15 @@ const Space = ({
             <div className="w-1/3 flex flex-col m-2">
               <div>At</div>
               <div className="text-2xl break-words text-purple">{space.location}</div>
+              <div className="my-1">Address</div>
+              <div className="text-xl break-words text-purple">{space.address}</div>
             </div>{' '}
           </div>
         </div>
 
         <div className="w-full flex flex-col justify-start">
           <div className="w-full">
-            <SectionIndexer sections={spaceSections} />
+            <SectionIndexer />
             {sectionIndexer.selectedSection === 0 && (
               <div className="p-10">
                 <div className="space-x-1">
@@ -158,10 +160,12 @@ const Space = ({
                     </span>
                   </Link>
                 </div>
-                <div className="mt-4">
-                  Prize{' '}
-                  <span className="text-purple"> {money(parseInt(space.prize))} </span>
-                </div>
+                {space.prize && (
+                  <div className="mt-4">
+                    Prize{' '}
+                    <span className="text-purple"> {money(parseInt(space.prize))} </span>
+                  </div>
+                )}
 
                 <div className="font-bold text-xl text-purple mt-6">
                   About {space.title}
@@ -171,6 +175,18 @@ const Space = ({
                   {`Rules & Regulations`}
                 </div>
                 <div className="whitespace-pre-line">{space.rules}</div>
+                <div className="font-bold text-xl text-purple mt-6">Judging Criteria</div>
+                <div className="my-1">
+                  Your projects will be evaluated according to the following criterias
+                </div>
+                <div>
+                  {space?.judgingCriterias?.map((jC, idx) => (
+                    <div>
+                      {' '}
+                      {idx + 1} - {jC}{' '}
+                    </div>
+                  ))}
+                </div>
                 {posts.length > 0 ? (
                   <>
                     {' '}

@@ -46,21 +46,12 @@ const Navbar = ({ connectedUser, isConnected }) => {
 
       <div className="flex flex-row ">
         <Link href="/feed" passHref>
-          <Button
-            label="Feed"
-            btnStyle={connectedStyle ? 'text-white' : 'text-dark'}
-            onClick={() => {
-              console.log('Feed')
-            }}
-          />
+          <Button label="Feed" btnStyle={connectedStyle ? 'text-white' : 'text-dark'} />
         </Link>
         <Link href="/competition" passHref>
           <Button
             label="Competitions"
             btnStyle={connectedStyle ? 'text-white' : 'text-dark'}
-            onClick={() => {
-              console.log('Competitions')
-            }}
           />
         </Link>
         {!connectedStyle && (
@@ -69,30 +60,24 @@ const Navbar = ({ connectedUser, isConnected }) => {
               <Button
                 label="Login"
                 btnStyle={'bg-green border-green border-2 text-white shadow-md mx-2 '}
-                onClick={() => {
-                  console.log('Login')
-                }}
               />
             </Link>
             <Link href="/signup" passHref>
               <Button
                 label="Sign up"
                 btnStyle={'bg-white border-2 border-dark text-dark shadow-md mx-2'}
-                onClick={() => {
-                  console.log('Signup')
-                }}
               />
             </Link>
           </>
         )}
         {connectedStyle && (
           <div className="flex flex-row items-center">
-            <Link href="/message" passHref>
+            {/* <Link href="/message" passHref>
               <a>
                 <Messages className="mx-3" />
               </a>
-            </Link>
-            <Notification className="mx-3" />
+            </Link> */}
+            {/* <Notification className="mx-3" /> */}
             <Link href="/settings" passHref>
               <a>
                 <Settings className="mx-3 mr-10" />

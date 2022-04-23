@@ -8,6 +8,7 @@ import StepOne from './AddSpace/StepOne'
 import StepTwo from './AddSpace/StepTwo'
 import StepThree from './AddSpace/StepThree'
 import StepFour from './AddSpace/StepFour'
+import StepFive from './AddSpace/StepFive'
 import { putSpace, postSpace } from '../../store/Spaces/spaces.api'
 import store from '../../store'
 import { API_BASEURL } from '../../../appConfig'
@@ -46,7 +47,6 @@ const AddSpace = ({
   }
 
   const handleChange = (e) => {
-    console.log(addSpaceState)
     setAddSpaceState({
       ...addSpaceState,
       [e.target.name]: e.target.value,
@@ -97,7 +97,6 @@ const AddSpace = ({
         )}
         {step === 2 && (
           <StepThree
-            users={users}
             handleChange={handleChange}
             space={addSpaceState}
             setSpace={setAddSpaceState}
@@ -107,6 +106,15 @@ const AddSpace = ({
         {step === 3 && (
           <StepFour
             users={users}
+            handleChange={handleChange}
+            space={addSpaceState}
+            setSpace={setAddSpaceState}
+            toggleOverlay={toggleOverlay}
+            handleSubmit={handleSubmit}
+          />
+        )}
+        {step === 4 && (
+          <StepFive
             handleChange={handleChange}
             space={addSpaceState}
             setSpace={setAddSpaceState}
@@ -128,7 +136,7 @@ const AddSpace = ({
               onClick={() => setStep(step - 1)}
             />
           )}
-          {step != 3 && (
+          {step != 4 && (
             <Button
               label="Next"
               btnStyle="bg-purple text-white border-2 border-purple mx-2"
@@ -137,7 +145,7 @@ const AddSpace = ({
               }}
             />
           )}
-          {step == 3 && (
+          {step == 4 && (
             <Link href="settings/" passHref>
               <Button
                 label="Submit"
