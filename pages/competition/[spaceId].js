@@ -235,7 +235,14 @@ const Space = ({
                   <>
                     {' '}
                     <div className="flex flex-col w-full">
-                      <div className="text-4xl text-dark mt-10 font-bold">
+                      {space.owner.id == connectedUser.id && (
+                        <div className="w-ful flex justify-end">
+                          <Link href={`/competition/evaluations/${space.id}`}>
+                            <div className="text-purple mt-6 text-xl cursor-pointer mx-10">{`Projects Evaluations >`}</div>
+                          </Link>
+                        </div>
+                      )}
+                      <div className="text-4xl text-dark mt-6 font-bold">
                         Project Submissions in{' '}
                         <span className="text-green">{space.title}</span>
                       </div>
@@ -333,25 +340,44 @@ const Space = ({
               </div>
             )}
             {sectionIndexer.selectedSection === 3 && (
-              <div className="p-10">
-                {space.showWinners ? (
-                  <div className="flex p-10 justify-center items-center">
-                    Winners are not announced yet. 🕑
-                  </div>
-                ) : (
-                  <div className="p-10 flex flex-col justify-center items-center">
-                    {space.firstWinner && (
-                      <LeaderBoardCard project={space.firstWinner} Grade={10} Rank={1} />
-                    )}
-                    {space.secondWinner && (
-                      <LeaderBoardCard project={space.secondWinner} Grade={10} Rank={2} />
-                    )}
-                    {space.thirdWinner && (
-                      <LeaderBoardCard project={space.thirdWinner} Grade={10} Rank={3} />
-                    )}
+              <>
+                {space.owner.id == connectedUser.id && (
+                  <div className="w-ful flex justify-end">
+                    <div className="text-purple mt-6 text-xl cursor-pointer mx-10">{`Set Winners >`}</div>
                   </div>
                 )}
-              </div>
+                <div className="p-10">
+                  {space.showWinners ? (
+                    <div className="flex p-10 justify-center items-center">
+                      Winners are not announced yet. 🕑
+                    </div>
+                  ) : (
+                    <div className="p-10 flex flex-col justify-center items-center">
+                      {space.firstWinner && (
+                        <LeaderBoardCard
+                          project={space.firstWinner}
+                          Grade={10}
+                          Rank={1}
+                        />
+                      )}
+                      {space.secondWinner && (
+                        <LeaderBoardCard
+                          project={space.secondWinner}
+                          Grade={10}
+                          Rank={2}
+                        />
+                      )}
+                      {space.thirdWinner && (
+                        <LeaderBoardCard
+                          project={space.thirdWinner}
+                          Grade={10}
+                          Rank={3}
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
+              </>
             )}
           </div>
         </div>

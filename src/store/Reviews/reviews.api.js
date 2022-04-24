@@ -11,11 +11,11 @@ import {
 } from '../Reviews/reviews.actions'
 import { showNotification } from '../Notifications/notifications.actions'
 
-export const getReviews = () => {
+export const getReviews = (spaceId) => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .get(API_BASEURL + `projects/reviews/`)
+      .get(API_BASEURL + `projects/reviews/?space=${spaceId}`)
       .then((result) => {
         console.log(result)
         dispatch(getReviewsSuccess(result.data))

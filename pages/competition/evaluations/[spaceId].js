@@ -1,5 +1,6 @@
 import React, { useEffect, useState, setState } from 'react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import axios from 'axios'
 import { API_BASEURL } from '../../../appConfig'
 import { connect } from 'react-redux'
@@ -27,9 +28,14 @@ import AddProject from '../../../src/components/Projects/AddProject'
 import Link from 'next/link'
 import EmptyState from '../../../src/components/EmptyState'
 import LeaderBoardCard from '../../../src/components/LeaderBoardCard'
+import { getReviews } from '../../../src/store/Reviews/reviews.api'
+import store from '../../../src/store'
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { getSummaryOfRows, parseRows } from '../../../src/helpers/evaluations'
 
 const Evaluations = ({
   space,
+  evaluations,
   projects,
   posts,
   sectionIndexer,
@@ -42,36 +48,64 @@ const Evaluations = ({
   currentSpace,
   connectedUser,
 }) => {
-  // useEffect(() => {
-  //   sectionsInit(spaceSections)
-  //   setCurrentSpace(space.id)
-  //   getPosts()
-  //   getProjects()
-  // }, [])
+  const router = useRouter()
 
-  // useEffect(() => {
-  //   canUserPost()
-  // }, [])
+  const columns = [
+    { field: 'judge', headerName: 'Judge', width: 140 },
+    { field: 'projectName', headerName: 'Project Name', width: 140 },
+    { field: 'criteriaOne', headerName: 'Criteria One', width: 140 },
+    { field: 'criteriaTwo', headerName: 'Criteria Two', width: 140 },
+    { field: 'criteriaThree', headerName: 'Criteria Three', width: 140 },
+    { field: 'criteriaFour', headerName: 'Criteria Four', width: 140 },
+    { field: 'criteriaFive', headerName: 'Criteria Five', width: 140 },
+    {
+      field: 'overallGrade',
+      headerName: 'Overall Grade',
+      type: 'number',
+      width: 140,
+    },
+  ]
 
+  const rows = parseRows(evaluations)
+  // const rowsSummary = getSummaryOfRows(rows)
+  useEffect(() => {
+    if (connectedUser.id == space.owner.id) {
+      store.dispatch(getReviews(space.id))
+    } else {
+      router.push(`/competition/${space.id}`)
+    }
+  }, [])
   return (
     <>
       <Head>
-        <title>{space.title}</title>
+        <title>{space.title} - Evaluations</title>
       </Head>
       <OverlayWindow />
-      <div className="text-dark h-screen w-full flex flex-col justify-start items-start p-20">
-        <div className="flex w-full">
-          <div
-            className="w-full flex items-end justify-start bg-white rounded-md shadow-lg p-10 m-2"
-            style={{
-              backgroundImage:
-                'url(' + space.spacePic + '),  linear-gradient(#FFFFFF 10%, #212121)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundBlendMode: 'darken',
-            }}
-          >
-            <div className="text-4xl text-white ">{space.title} - Evaluations</div>
+      <div className="text-dark  w-full flex flex-col justify-start items-start p-20">
+        <div className="w-full">
+          <Link href={`/competition/${space.id}`}>
+            <div className="text-purple my-4 cursor-pointer ">{`< Go Back`}</div>
+          </Link>
+          <div className="text-2xl font-bold text-dark my-2">
+            {space.title} - Projects Evaluations
+          </div>
+          {/* <div className="text-dark text-xl my-1">Summary of Evaluations</div>
+          <div className="h-96 w-full">
+          <DataGrid
+              rows={rowsSummary}
+              columns={columns}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
+            /> 
+          </div> */}
+          <div className="text-dark text-xl my-1">All Evaluations</div>
+          <div className="h-96 w-full">
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSize={10}
+              rowsPerPageOptions={[10]}
+            />
           </div>
         </div>
       </div>
@@ -81,6 +115,7 @@ const Evaluations = ({
 
 const mapStateToProps = (state) => {
   return {
+    evaluations: state.reviews.list,
     sectionIndexer: state.sectionIndexer,
     isLoading: state.posts.loading || state.projects.loading,
     isOverlayOpen: state.overlayWindow.isOpen,
