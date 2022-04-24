@@ -15,6 +15,7 @@ import { API_BASEURL, theme } from '../../../appConfig'
 import axios from 'axios'
 
 const AddReview = ({
+  project,
   toggleOverlay,
   addReviewState,
   isEditing,
@@ -29,7 +30,6 @@ const AddReview = ({
     })
   }
   const handleSubmit = async () => {
-    console.log(addReviewState)
     // if (isEditing) {
     //   await store.dispatch(putReview(addReviewState.id, addReviewState))
     //   toggleIsEditing()
@@ -59,12 +59,12 @@ const AddReview = ({
       >
         <div className="mb-6">
           You are now reviewing{' '}
-          <Link href={`/project/${addReviewState.id}`}>
+          <Link href={`/project/${project.id}`}>
             <span
               onClick={toggleOverlay}
               className="hover:text-purple font-bold cursor-pointer"
             >
-              {addReviewState.title}
+              {project.title}
             </span>
           </Link>
         </div>

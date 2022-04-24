@@ -66,7 +66,7 @@ const Project = ({
       project: project.id,
       space: store.getState().spaces.currentSpace,
     })
-    changeChild(<AddReview />)
+    changeChild(<AddReview project={project} />)
     toggleOverlay()
   }
 
