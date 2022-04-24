@@ -21,6 +21,7 @@ import {
 import { deleteSpace, putSpace } from '../../store/Spaces/spaces.api'
 import axios from 'axios'
 import { API_BASEURL } from '../../../appConfig'
+import ShowHide from '../../assets/icons/ShowHide'
 
 function SpaceSettingsCard({
   space,
@@ -56,13 +57,19 @@ function SpaceSettingsCard({
     }
   }
 
-  const toggleWinners = () => {
-    store.dispatch(
-      putSpace(space.id, {
-        ...space,
-        showWinners: !space.showWinners,
-      })
-    )
+  const toggleWinners = async () => {
+    try {
+      const { data } = await axios.get(`${API_BASEURL}spaces/${space.id}`)
+      console.log(data)
+      data.participants = data.participants.map((p) => p.user.id)
+      data.judges = data.judges.map((j) => j.user.id)
+      store.dispatch(
+        putSpace(data.id, {
+          ...data,
+          showWinners: !data.showWinners,
+        })
+      )
+    } catch (error) {}
   }
 
   return (
@@ -149,8 +156,11 @@ function SpaceSettingsCard({
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
               <MenuItem>
-                <div className="cursor-pointer flex" onClick={() => toggleWinners()}>
-                  <Edit color={tailwindConfig.theme.extend.colors.dark} />
+                <div className="cursor-pointer flex" onClick={toggleWinners}>
+                  <ShowHide
+                    color={tailwindConfig.theme.extend.colors.dark}
+                    show={space.showWinners}
+                  />
                   <div className="mx-1">
                     {space.showWinners ? `Release Winners` : `Hide Winners`}
                   </div>
