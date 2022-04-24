@@ -5,7 +5,6 @@ import axios from 'axios'
 import store from '../../store'
 import tailwindConfig from '../../../tailwind.config'
 import Dots from '../../assets/icons/Dots'
-
 import Delete from '../../assets/icons/Delete'
 import Edit from '../../assets/icons/Edit'
 import UserAvatar from '../../assets/images/UserAvatar'
@@ -17,6 +16,7 @@ import {
   setAddProjectState,
   toggleIsEditing,
 } from '../../store/Projects/projects.actions'
+import { setAddReviewState } from '../../store/Reviews/reviews.actions'
 import { deleteProject } from '../../store/Projects/projects.api'
 import {
   changeChild,
@@ -36,6 +36,8 @@ const Project = ({
   toggleOverlay,
   toggleIsEditing,
   setAddProjectState,
+  setAddReviewState,
+  addReviewState,
   connectedUser,
   isConnected,
   currentSpace,
@@ -59,8 +61,12 @@ const Project = ({
   const handleReview = () => {
     setIsDotsListOpen(false)
     toggleIsEditing()
-    // setAddReviewState({ ...project, user: user })
-    changeChild(<AddReview projectReviewed={{ ...project, user: user }} />)
+    setAddReviewState({
+      ...addReviewState,
+      project: project.id,
+      space: store.getState().spaces.currentSpace,
+    })
+    changeChild(<AddReview />)
     toggleOverlay()
   }
 
@@ -72,7 +78,6 @@ const Project = ({
           setCanEvaluate(true)
         }
       })
-      setCanEvaluate(false)
     } catch (error) {
       console.log(error)
     }
@@ -121,10 +126,6 @@ const Project = ({
                     <Delete color={tailwindConfig.theme.extend.colors.dark} />
                     <div className="mx-1"> Delete Permanently</div>
                   </div>
-                </>
-              )}
-              {currentSpace != 1 && canEvaluate && (
-                <>
                   <div
                     className="bg-dark rounded-full opacity-5"
                     style={{
@@ -133,6 +134,10 @@ const Project = ({
                   >
                     {' '}
                   </div>
+                </>
+              )}
+              {currentSpace != 1 && canEvaluate && (
+                <>
                   <div
                     className="cursor-pointer flex my-1"
                     onClick={() => handleReview()}
@@ -231,6 +236,7 @@ const mapStateToProps = (state) => {
     connectedUser: state.user.data.connectedUser,
     isConnected: state.user.isConnected,
     currentSpace: state.spaces.currentSpace,
+    addReviewState: state.reviews.addReviewState,
   }
 }
 
@@ -239,6 +245,7 @@ const mapDispatchToProps = (dispatch) => {
     deleteProject: (projectId) => dispatch(deleteProject(projectId)),
     toggleOverlay: () => dispatch(toggleOverlay()),
     setAddProjectState: (project) => dispatch(setAddProjectState(project)),
+    setAddReviewState: (review) => dispatch(setAddReviewState(review)),
     toggleIsEditing: () => dispatch(toggleIsEditing()),
     changeChild: (child) => dispatch(changeChild(child)),
   }

@@ -14,10 +14,11 @@ const INITIAL_STATE = {
   error: false,
   isEditing: false,
   addReviewState: {
-    title: '',
-    content: '',
-    picture: null,
-    file: null,
+    criteriaOne: 0,
+    criteriaTwo: 0,
+    criteriaThree: 0,
+    criteriaFour: 0,
+    criteriaFive: 0,
   },
   list: [],
 }

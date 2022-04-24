@@ -1,101 +1,173 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { ThemeProvider } from '@mui/material/styles'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 import store from '../../store'
 import { setAddReviewState, toggleIsEditing } from '../../store/Reviews/reviews.actions'
-import { postReview, putReview } from '../../store/Reviews/reviews.api'
+import { postReview } from '../../store/Reviews/reviews.api'
 import {
   changeChild,
   toggleOverlay,
 } from '../../store/OverlayWindow/overlayWindow.actions'
 import { Button } from '../Button'
-import Loader from '../Loader'
+import { Slider } from '@mui/material'
+import { API_BASEURL, theme } from '../../../appConfig'
+import axios from 'axios'
+
 const AddReview = ({
-  projectReviewed = {},
-  space,
   toggleOverlay,
-  state,
+  addReviewState,
   isEditing,
   setAddReviewState,
   toggleIsEditing,
-  changeChild,
-  isLoading,
-  error,
 }) => {
+  const [space, setSpace] = useState({ judgingCriterias: ['', '', '', '', ''] })
   const handleChange = (e) => {
-    if (e.target.name == 'grade') {
-      if (e.target.value > 10 || e.target.value < 0) {
-        return
-      }
-    }
     setAddReviewState({
-      ...state,
+      ...addReviewState,
       [e.target.name]: e.target.value,
     })
   }
-
   const handleSubmit = async () => {
-    changeChild(<Loader />)
-    console.log({
-      ...state,
-      project: projectReviewed.id,
-      space: space,
-    })
-    if (isEditing) {
-      await store.dispatch(
-        putReview(state.id, {
-          ...state,
-        })
-      )
-      toggleIsEditing()
-    } else {
-      await store.dispatch(
-        postReview({
-          ...state,
-          project: projectReviewed.id,
-          space: space,
-        })
-      )
-    }
+    console.log(addReviewState)
+    // if (isEditing) {
+    //   await store.dispatch(putReview(addReviewState.id, addReviewState))
+    //   toggleIsEditing()
+    // } else {
+    await store.dispatch(postReview(addReviewState))
+    // }
     toggleOverlay()
     setAddReviewState({})
   }
+  const getJudgingCriteria = async () => {
+    try {
+      const { data } = await axios.get(`${API_BASEURL}spaces/${addReviewState.space}`)
+      setSpace(data)
+    } catch (error) {}
+  }
+  useEffect(() => {
+    getJudgingCriteria()
+  }, [])
 
-  const labelUpload = 'Seems empty here 🤔'
   return (
     <>
-      <div className="flex flex-col">
+      <div
+        className="flex flex-col h-96 overflow-scroll rounded-md p-4 "
+        style={{
+          boxShadow: 'inset 0 0 5px #c4c4c4',
+        }}
+      >
         <div className="mb-6">
           You are now reviewing{' '}
-          <Link href={`/project/${projectReviewed.id}`}>
+          <Link href={`/project/${addReviewState.id}`}>
             <span
               onClick={toggleOverlay}
               className="hover:text-purple font-bold cursor-pointer"
             >
-              {projectReviewed.title}
+              {addReviewState.title}
             </span>
           </Link>
         </div>
-        <div className="flex w-1/2 items-center">
-          <input
-            type="number"
-            className="border-2 border-dark p-2 rounded-md w-1/2 text-center"
-            name="grade"
-            onChange={handleChange}
-            value={state.grade}
-          />
-          <div className="font-bold flex-1 px-2">/ 10</div>
+        <div className="flex flex-col">
+          <div className="font-bold flex-1 w-full py-2">{space.judgingCriterias[0]}</div>
+          <div className="w-1/2 ml-6">
+            <ThemeProvider theme={theme}>
+              <Slider
+                name="criteriaOne"
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                defaultValue={0}
+                value={addReviewState.criteriaOne}
+                min={0}
+                max={10}
+                step={1}
+                color="primary"
+              />
+            </ThemeProvider>
+          </div>
+        </div>
+        <div className="flex flex-col ">
+          <div className="font-bold flex-1 w-full py-2">{space.judgingCriterias[1]}</div>
+          <div className="w-1/2 ml-6">
+            <ThemeProvider theme={theme}>
+              <Slider
+                defaultValue={0}
+                name="criteriaTwo"
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                value={addReviewState.criteriaTwo}
+                min={0}
+                max={10}
+                step={1}
+                color="primary"
+              />
+            </ThemeProvider>
+          </div>
+        </div>
+        <div className="flex flex-col ">
+          <div className="font-bold flex-1 w-full py-2">{space.judgingCriterias[2]}</div>
+          <div className="w-1/2 ml-6">
+            <ThemeProvider theme={theme}>
+              <Slider
+                defaultValue={0}
+                name="criteriaThree"
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                value={addReviewState.criteriaThree}
+                min={0}
+                max={10}
+                step={1}
+                color="primary"
+              />
+            </ThemeProvider>
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <div className="font-bold flex-1 w-full py-2">{space.judgingCriterias[3]}</div>
+          <div className="w-1/2 ml-6">
+            <ThemeProvider theme={theme}>
+              <Slider
+                defaultValue={0}
+                name="criteriaFour"
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                value={addReviewState.criteriaFour}
+                min={0}
+                max={10}
+                step={1}
+                color="primary"
+              />
+            </ThemeProvider>
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <div className="font-bold flex-1 w-full py-2">{space.judgingCriterias[4]}</div>
+          <div className="w-1/2 ml-6">
+            <ThemeProvider theme={theme}>
+              <Slider
+                defaultValue={0}
+                name="criteriaFive"
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                value={addReviewState.criteriaFive}
+                min={0}
+                max={10}
+                step={1}
+                color="primary"
+              />
+            </ThemeProvider>
+          </div>
         </div>
         <div className="flex flex-col w-2/3 mt-4">
           <textarea
-            placeholder="Provide this project with feedback"
+            placeholder={space.feedbackQuestion}
             style={{
               resize: 'none',
             }}
             className="h-36 border-2 border-dark p-4 rounded-md"
             name="feedback"
             onChange={handleChange}
-            value={state.feedback}
+            value={addReviewState.feedback}
           />
         </div>
       </div>
@@ -115,13 +187,13 @@ const AddReview = ({
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (addReviewState) => {
   return {
-    state: state.reviews.addReviewState,
-    isEditing: state.reviews.isEditing,
-    connectedUser: state.user.data.connectedUser,
-    isLoading: state.reviews.loading,
-    error: state.reviews.error,
+    addReviewState: addReviewState.reviews.addReviewState,
+    isEditing: addReviewState.reviews.isEditing,
+    connectedUser: addReviewState.user.data.connectedUser,
+    isLoading: addReviewState.reviews.loading,
+    error: addReviewState.reviews.error,
   }
 }
 
@@ -130,7 +202,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleOverlay: () => dispatch(toggleOverlay()),
     changeChild: (newChild) => dispatch(changeChild(newChild)),
     toggleIsEditing: () => dispatch(toggleIsEditing()),
-    setAddReviewState: (state) => dispatch(setAddReviewState(state)),
+    setAddReviewState: (addReviewState) => dispatch(setAddReviewState(addReviewState)),
   }
 }
 
