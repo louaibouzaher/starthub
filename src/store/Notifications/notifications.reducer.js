@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SHOW_NOTIFICATION:
-      if (state.message == action.payload.message) {
+      if (state.message != action.payload.message) {
         notify(action.payload.message, action.payload.isSuccess)
       }
       return { message: action.payload.message, isSuccess: action.payload.isSuccess }
