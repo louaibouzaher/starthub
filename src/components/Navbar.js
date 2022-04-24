@@ -87,15 +87,20 @@ const Navbar = ({ connectedUser, isConnected }) => {
             </Link> */}
 
             <div
+              className="cursor-pointer py-1 px-3 rounded-md flex justify-start items-center"
               onClick={() => {
                 setIsUserListOpen(!isUserListOpen)
               }}
             >
               <UserAvatar link={connectedUser.picture} className="cursor-pointer" />
+              <div className="font-light text-sm text-white ml-4">
+                {' '}
+                {connectedUser.firstName} {connectedUser.lastName}
+              </div>
             </div>
 
             {isUserListOpen && (
-              <div className="flex flex-col items-start z-50 top-16 right-2 absolute bg-white shadow-md py-4 px-6 space-y-2 rounded-md">
+              <div className="w-48 flex flex-col items-start z-50 top-16 right-1 absolute bg-white shadow-md p-2 space-y-2 rounded-md">
                 <Link href={`/profile/${connectedUser.id}`} passHref>
                   <Button
                     label="Profile"

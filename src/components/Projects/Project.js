@@ -86,7 +86,7 @@ const Project = ({
   return (
     <div
       className={
-        'relative m-4 p-10 rounded-lg shadow-lg flex flex-col items-start justify-between bg-white'
+        'font-light relative m-4 p-10 rounded-lg shadow-lg flex flex-col items-start justify-between bg-white'
       }
     >
       {isConnected && (

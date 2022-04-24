@@ -64,7 +64,7 @@ const Post = ({
   return (
     <div
       className={
-        'relative m-4 p-10 rounded-lg shadow-md flex flex-col items-start ' +
+        'font-light relative m-4 p-10 rounded-lg shadow-md flex flex-col items-start ' +
         (post.picture == null ? ' bg-white justify-start' : 'justify-end')
       }
       style={{
