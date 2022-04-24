@@ -11,7 +11,7 @@ const SpaceCard = ({ space }) => {
       <div className="cursor-pointer hover:shadow-lg flex-1 flex items-start justify-start bg-white rounded-md shadow-md p-10 m-2">
         {space.spacePic ? (
           <div
-            className="rounded-full mr-6 w-1/3"
+            className="rounded-full mr-6"
             style={{
               backgroundImage: 'url(' + space.spacePic + ')',
               backgroundSize: 'cover',

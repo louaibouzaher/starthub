@@ -37,9 +37,7 @@ const Spaces = ({ spaces }) => {
         </div>
         <div className="w-full px-60 flex justify-center">
           <div className="w-full flex flex-wrap ">
-            {spaces.map((s) => (
-              <SpaceCard space={s} key={s.id} />
-            ))}
+            {spaces.map((s) => (s.id == 1 ? <></> : <SpaceCard space={s} key={s.id} />))}
           </div>
         </div>
       </div>
