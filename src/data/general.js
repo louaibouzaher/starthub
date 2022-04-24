@@ -1,5 +1,8 @@
+import JudgesIcon from '../assets/icons/JudgesIcon'
 import PostsIcon from '../assets/icons/PostsIcon'
 import ProjectsIcon from '../assets/icons/ProjectsIcon'
+import WinnersIcon from '../assets/icons/WinnersIcon'
+import OverviewIcon from '../assets/icons/OverviewIcon'
 
 export const labelUpload = 'Seems empty here 🤔'
 
@@ -65,7 +68,7 @@ export const spaceSections = [
   {
     id: 0,
     title: 'Overview',
-    Icon: () => <PostsIcon />,
+    Icon: () => <OverviewIcon />,
   },
   {
     id: 1,
@@ -75,12 +78,12 @@ export const spaceSections = [
   {
     id: 2,
     title: 'Judges',
-    Icon: () => <ProjectsIcon />,
+    Icon: () => <JudgesIcon />,
   },
   {
     id: 3,
     title: 'Winners',
-    Icon: () => <ProjectsIcon />,
+    Icon: () => <WinnersIcon />,
   },
 ]
 export const defaultSections = [
