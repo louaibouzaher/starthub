@@ -25,7 +25,11 @@ function Signup({ err }) {
     passwordStrength: false,
     passwordNotMatching: false,
   })
-
+  const handleKeyPress = (e) => {
+    if (e.key == 'Enter') {
+      handleSubmit()
+    }
+  }
   const handleChange = (e) => {
     switch (e.target.name) {
       case 'firstName':
@@ -119,6 +123,7 @@ function Signup({ err }) {
                     onChange={handleChange}
                     type="text"
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                    onKeyPress={handleKeyPress}
                   />
                   <div className="text-red-600 text-sm h-4">
                     {errors.firstName && 'First name is required'}
@@ -133,6 +138,7 @@ function Signup({ err }) {
                     name="lastName"
                     onChange={handleChange}
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                    onKeyPress={handleKeyPress}
                   />
 
                   <div className="text-red-600 text-sm h-4">
@@ -150,6 +156,7 @@ function Signup({ err }) {
                     name="email"
                     onChange={handleChange}
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                    onKeyPress={handleKeyPress}
                   />
 
                   <div className="text-red-600 text-sm h-4 ">
@@ -167,6 +174,7 @@ function Signup({ err }) {
                     name="password"
                     onChange={handleChange}
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                    onKeyPress={handleKeyPress}
                   />
                   {errors.passwordStrength && (
                     <div className="text-red-600 text-sm ">
@@ -186,6 +194,7 @@ function Signup({ err }) {
                     name="confirmPassword"
                     onChange={handleChange}
                     class="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                    onKeyPress={handleKeyPress}
                   />
                   {errors.passwordNotMatching && (
                     <div className="text-red-600 text-sm "> Passwords not matching. </div>

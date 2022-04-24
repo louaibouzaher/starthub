@@ -27,6 +27,12 @@ function Login({ token, isConnected }) {
     })
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key == 'Enter') {
+      handleSubmit()
+    }
+  }
+
   const handleSubmit = async () => {
     if (!state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
       setErrors({ ...errors, email: true })
@@ -70,6 +76,7 @@ function Login({ token, isConnected }) {
                   name="email"
                   type="text"
                   className="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  onKeyPress={handleKeyPress}
                 />
                 <div className="text-red-600 text-sm h-4 ">
                   {errors.email && 'Please enter a valid email'}
@@ -85,6 +92,7 @@ function Login({ token, isConnected }) {
                   name="password"
                   type="password"
                   className="bg-indigo-50 px-4 py-2 outline-none rounded-md w-full"
+                  onKeyPress={handleKeyPress}
                 />
                 <div className="text-red-600 text-sm h-4 ">
                   {errors.passwordWrong && 'Wrong password'}
@@ -104,7 +112,7 @@ function Login({ token, isConnected }) {
                 New to StartHub?{' '}
                 <span className="hover:text-purple hove:text-purple px-2 ">
                   <Link href="/signup" className>
-                    Sign Up
+                    Signup
                   </Link>
                 </span>
               </p>
