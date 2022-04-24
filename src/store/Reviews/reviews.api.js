@@ -15,7 +15,7 @@ export const getReviews = () => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .get(API_BASEURL + `space-reviews/`)
+      .get(API_BASEURL + `projects/reviews/`)
       .then((result) => {
         console.log(result)
         dispatch(getReviewsSuccess(result.data))
@@ -29,7 +29,7 @@ export const postReview = (review) => {
   return function (dispatch) {
     dispatch(loading())
     axios
-      .post(API_BASEURL + 'space-reviews/', review)
+      .post(API_BASEURL + 'projects/reviews/', review)
       .then((result) => {
         dispatch(addReviewSuccess(result.data))
         dispatch(showNotification('Review Created Successfully ✅', true))

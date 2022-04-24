@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Slider from '@mui/material/Slider'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import { connect } from 'react-redux'
@@ -13,14 +13,7 @@ import { getProjects } from '../store/Projects/projects.api'
 import { industries } from '../data/general'
 import { setAddPostState } from '../store/Posts/posts.actions'
 import { setAddProjectState } from '../store/Projects/projects.actions'
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: tailwindConfig.theme.extend.colors.purple,
-    },
-  },
-})
+import { theme } from '../../appConfig'
 
 function valuetext(value) {
   return `${value}$`
