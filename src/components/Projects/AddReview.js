@@ -52,7 +52,7 @@ const AddReview = ({
   return (
     <>
       <div
-        className="flex flex-col h-96 overflow-scroll rounded-md p-4 "
+        className="flex flex-col h-96 overflow-y-scroll rounded-md p-4 "
         style={{
           boxShadow: 'inset 0 0 5px #c4c4c4',
         }}
