@@ -14,6 +14,8 @@ import { showNotification } from '../store/Notifications/notifications.actions'
 
 const Navbar = ({ connectedUser, isConnected }) => {
   const [connectedStyle, setConnectedStyle] = useState(false)
+  const [isUserListOpen, setIsUserListOpen] = useState(false)
+
   useEffect(() => {
     if (isConnected) {
       setConnectedStyle(true)
@@ -34,7 +36,7 @@ const Navbar = ({ connectedUser, isConnected }) => {
   return (
     <div
       className={
-        'z-50 fixed w-full h-16 shadow-lg flex justify-between items-center px-20 py-6 font-bold ' +
+        'z-40 fixed w-full h-16 shadow-lg flex justify-between items-center px-20 py-6 font-bold ' +
         (connectedStyle ? 'bg-purple' : 'bg-white')
       }
     >
@@ -51,7 +53,7 @@ const Navbar = ({ connectedUser, isConnected }) => {
         <Link href="/competition" passHref>
           <Button
             label="Competitions"
-            btnStyle={connectedStyle ? 'text-white' : 'text-dark'}
+            btnStyle={'mr-4 ' + (connectedStyle ? 'text-white' : 'text-dark')}
           />
         </Link>
         {!connectedStyle && (
@@ -71,26 +73,55 @@ const Navbar = ({ connectedUser, isConnected }) => {
           </>
         )}
         {connectedStyle && (
-          <div className="flex flex-row items-center">
+          <div className="relative flex flex-row items-center">
             {/* <Link href="/message" passHref>
               <a>
                 <Messages className="mx-3" />
               </a>
             </Link> */}
             {/* <Notification className="mx-3" /> */}
-            <Link href="/settings" passHref>
+            {/* <Link href="/settings" passHref>
               <a>
                 <Settings className="mx-3 mr-10" />
               </a>
-            </Link>
-            <Link href={`/profile/${connectedUser.id}`} passHref>
-              <a>
-                <UserAvatar link={connectedUser.picture} className="cursor-pointer" />
-              </a>
-            </Link>
-            <Link href="/" passHref>
-              <Button label="Logout" btnStyle="text-white" onClick={handleLogout} />
-            </Link>
+            </Link> */}
+
+            <div
+              onClick={() => {
+                setIsUserListOpen(!isUserListOpen)
+              }}
+            >
+              <UserAvatar link={connectedUser.picture} className="cursor-pointer" />
+            </div>
+
+            {isUserListOpen && (
+              <div className="flex flex-col items-start z-50 top-16 right-2 absolute bg-white shadow-md py-4 px-6 space-y-2 rounded-md">
+                <Link href={`/profile/${connectedUser.id}`} passHref>
+                  <Button
+                    label="Profile"
+                    btnStyle="text-purple border-2 hover:border-purple border-2 w-full"
+                    onClick={() => setIsUserListOpen(false)}
+                  />
+                </Link>
+                <Link href={`/settings`} passHref>
+                  <Button
+                    label="Settings"
+                    btnStyle="text-purple border-2 hover:border-purple border-2 w-full"
+                    onClick={() => setIsUserListOpen(false)}
+                  />
+                </Link>
+                <Link href="/" passHref>
+                  <Button
+                    label="Logout"
+                    btnStyle="text-purple border-2 hover:border-purple border-2 w-full"
+                    onClick={() => {
+                      handleLogout()
+                      setIsUserListOpen(false)
+                    }}
+                  />
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
