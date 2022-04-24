@@ -1,36 +1,41 @@
-import React, { useEffect, useState } from 'react'
-import Autocomplete from '@mui/material/Autocomplete'
-import { Box } from '@mui/system'
+import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
+import { ListUsers } from './ListUsers'
 
-export default function StepThree({ setSpace, space, users }) {
-  const handleParticipants = (e, newValue) => {
-    setSpace({ ...space, participants: newValue.map((p) => p.user.id) })
-  }
+export default function StepThree({ space, handleChange }) {
+  const [errors, setErrors] = useState({
+    spaceRegulation: false,
+  })
 
   return (
     <>
-      <h2 className="font-bold text-xl my-6">Add Prticipants</h2>
-      <Autocomplete
-        multiple
-        id="tags-outlined"
-        options={users}
-        onChange={handleParticipants}
-        getOptionLabel={(option) => `${option.user.first_name} ${option.user.last_name}`}
-        sx={{ width: '100%' }}
-        renderOption={(props, option) => (
-          <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-            <img
-              class=" rounded-full border-2 border-white shadow-md"
-              loading="lazy"
-              width="40"
-              src={option.profilePic}
-            />
-            {option.user.first_name} {option.user.last_name}
-          </Box>
-        )}
-        renderInput={(params) => <TextField {...params} label="Select Participants" />}
-      />
+      <div className=" w-full">
+        <div className="flex  items-center">
+          {' '}
+          <label for="prize" className="my-2 mr-3 font-bold text-dark">
+            Prize
+          </label>
+          <input
+            value={space.prize}
+            min={0}
+            name="prize"
+            type="number"
+            class="w-32 bg-indigo-50 px-4 py-2 border-2 border-dark outline-none rounded-md"
+            onChange={handleChange}
+          />
+        </div>
+        <h2 className="font-bold text-xl my-6">{`Add Some Rules & Regulations`}</h2>
+        <textarea
+          style={{
+            resize: 'none',
+          }}
+          value={space.rules}
+          className="h-52 border-2 border-dark p-4 rounded-md bg-indigo-50  w-full ui placeholder"
+          placeholder={`Provide clear and consise rules & regulations concerning your space`}
+          name="rules"
+          onChange={handleChange}
+        />
+      </div>
     </>
   )
 }

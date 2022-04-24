@@ -10,6 +10,7 @@ export default function StepOne({
   Project,
   setProject,
   toggleOverlay,
+  handleCancel,
 }) {
   const [showYoutube, setShowYoutube] = useState(false)
 
@@ -100,7 +101,7 @@ export default function StepOne({
           btnStyle="border-2 border-dark mx-2"
           onClick={() => {
             setStep(0)
-            toggleOverlay()
+            handleCancel()
           }}
         />
         <Button

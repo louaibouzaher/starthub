@@ -12,6 +12,7 @@ export default function StepTwo({ space, handleChange, setSpace }) {
   const handleLocation = (e, newValue, reason) => {
     setSpace({ ...space, location: newValue })
   }
+
   return (
     <>
       <div className="my-2 font-bold text-dark">Start Date</div>
@@ -61,6 +62,14 @@ export default function StepTwo({ space, handleChange, setSpace }) {
           </Box>
         )}
         renderInput={(params) => <TextField {...params} label="Select a country" />}
+      />
+      <div className="my-2 font-bold text-dark">Address</div>
+      <input
+        value={space.address}
+        name="address"
+        type="text"
+        class="w-2/3 bg-indigo-50 px-4 py-2 border-2 border-dark outline-none rounded-md"
+        onChange={handleChange}
       />
     </>
   )

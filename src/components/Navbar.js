@@ -14,6 +14,8 @@ import { showNotification } from '../store/Notifications/notifications.actions'
 
 const Navbar = ({ connectedUser, isConnected }) => {
   const [connectedStyle, setConnectedStyle] = useState(false)
+  const [isUserListOpen, setIsUserListOpen] = useState(false)
+
   useEffect(() => {
     if (isConnected) {
       setConnectedStyle(true)
@@ -34,7 +36,7 @@ const Navbar = ({ connectedUser, isConnected }) => {
   return (
     <div
       className={
-        'z-50 fixed w-full h-16 shadow-lg flex justify-between items-center px-20 py-6 font-bold ' +
+        'z-40 fixed w-full h-16 shadow-lg flex justify-between items-center px-20 py-6 font-bold ' +
         (connectedStyle ? 'bg-purple' : 'bg-white')
       }
     >
@@ -46,21 +48,12 @@ const Navbar = ({ connectedUser, isConnected }) => {
 
       <div className="flex flex-row ">
         <Link href="/feed" passHref>
-          <Button
-            label="Feed"
-            btnStyle={connectedStyle ? 'text-white' : 'text-dark'}
-            onClick={() => {
-              console.log('Feed')
-            }}
-          />
+          <Button label="Feed" btnStyle={connectedStyle ? 'text-white' : 'text-dark'} />
         </Link>
         <Link href="/competition" passHref>
           <Button
             label="Competitions"
-            btnStyle={connectedStyle ? 'text-white' : 'text-dark'}
-            onClick={() => {
-              console.log('Competitions')
-            }}
+            btnStyle={'mr-4 ' + (connectedStyle ? 'text-white' : 'text-dark')}
           />
         </Link>
         {!connectedStyle && (
@@ -69,43 +62,71 @@ const Navbar = ({ connectedUser, isConnected }) => {
               <Button
                 label="Login"
                 btnStyle={'bg-green border-green border-2 text-white shadow-md mx-2 '}
-                onClick={() => {
-                  console.log('Login')
-                }}
               />
             </Link>
             <Link href="/signup" passHref>
               <Button
                 label="Sign up"
                 btnStyle={'bg-white border-2 border-dark text-dark shadow-md mx-2'}
-                onClick={() => {
-                  console.log('Signup')
-                }}
               />
             </Link>
           </>
         )}
         {connectedStyle && (
-          <div className="flex flex-row items-center">
-            <Link href="/message" passHref>
+          <div className="relative flex flex-row items-center">
+            {/* <Link href="/message" passHref>
               <a>
                 <Messages className="mx-3" />
               </a>
-            </Link>
-            <Notification className="mx-3" />
-            <Link href="/settings" passHref>
+            </Link> */}
+            {/* <Notification className="mx-3" /> */}
+            {/* <Link href="/settings" passHref>
               <a>
                 <Settings className="mx-3 mr-10" />
               </a>
-            </Link>
-            <Link href={`/profile/${connectedUser.id}`} passHref>
-              <a>
-                <UserAvatar link={connectedUser.picture} className="cursor-pointer" />
-              </a>
-            </Link>
-            <Link href="/" passHref>
-              <Button label="Logout" btnStyle="text-white" onClick={handleLogout} />
-            </Link>
+            </Link> */}
+
+            <div
+              className="cursor-pointer py-1 px-3 rounded-md flex justify-start items-center"
+              onClick={() => {
+                setIsUserListOpen(!isUserListOpen)
+              }}
+            >
+              <UserAvatar link={connectedUser.picture} className="cursor-pointer" />
+              <div className="font-light text-sm text-white ml-4">
+                {' '}
+                {connectedUser.firstName} {connectedUser.lastName}
+              </div>
+            </div>
+
+            {isUserListOpen && (
+              <div className="w-48 flex flex-col items-start z-50 top-16 right-1 absolute bg-white shadow-md p-2 space-y-2 rounded-md">
+                <Link href={`/profile/${connectedUser.id}`} passHref>
+                  <Button
+                    label="Profile"
+                    btnStyle="text-purple border-2 hover:border-purple border-2 w-full"
+                    onClick={() => setIsUserListOpen(false)}
+                  />
+                </Link>
+                <Link href={`/settings`} passHref>
+                  <Button
+                    label="Settings"
+                    btnStyle="text-purple border-2 hover:border-purple border-2 w-full"
+                    onClick={() => setIsUserListOpen(false)}
+                  />
+                </Link>
+                <Link href="/" passHref>
+                  <Button
+                    label="Logout"
+                    btnStyle="text-purple border-2 hover:border-purple border-2 w-full"
+                    onClick={() => {
+                      handleLogout()
+                      setIsUserListOpen(false)
+                    }}
+                  />
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>

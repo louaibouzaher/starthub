@@ -33,11 +33,15 @@ const AddPost = ({
     setAddPostState({ ...state, file: e.target.files[0] })
   }
 
+  const handleCancel = () => {
+    toggleOverlay()
+    if (isEditing) toggleIsEditing()
+  }
+
   const handleSubmit = async () => {
     changeChild(<Loader />)
     const pictureRef = state.file ? await Uploader(state.file) : null
     const pictureLink = state.file ? await Downloader(pictureRef) : null
-    console.log(pictureLink)
     if (isEditing) {
       await store.dispatch(
         putPost(state.id, {
@@ -107,7 +111,7 @@ const AddPost = ({
         <Button
           label="Cancel"
           btnStyle="border-2 border-dark mx-2"
-          onClick={() => toggleOverlay()}
+          onClick={handleCancel}
         />
         <Button
           label="Share"

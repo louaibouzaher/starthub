@@ -36,12 +36,12 @@ axios.interceptors.response.use(
     try {
       return response
     } catch (error) {
-      console.log(error)
+      console.log(`error ${error}`)
     }
   },
   (error) => {
     if (error.response?.status == 401) {
-      store.dispatch(showNotification('Error: Log in again.'))
+      store.dispatch(showNotification('Session Expired: Log in again.'))
       store.dispatch(logout())
     }
   }
