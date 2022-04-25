@@ -51,7 +51,6 @@ const Space = ({
     setCurrentSpace(space.id)
     getPosts()
     getProjects()
-    canUserPost()
   }, [])
 
   useEffect(() => {
@@ -91,7 +90,9 @@ const Space = ({
       console.log(error)
     }
   }
-
+  useEffect(() => {
+    canUserPost()
+  }, sectionIndexer.selectedSection)
   return (
     <>
       <Head>

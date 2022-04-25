@@ -48,7 +48,7 @@ const AddProject = ({
   }
 
   const handleSubmit = async () => {
-    changeChild(<Loader />)
+    // changeChild(<Loader />)
     const videoRef = state.file ? await Uploader(state.file, true) : null
     const videoLink = state.file ? await Downloader(videoRef) : null
     const dateObj = new Date(state.establishedOn)

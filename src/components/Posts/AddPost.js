@@ -39,7 +39,6 @@ const AddPost = ({
   }
 
   const handleSubmit = async () => {
-    changeChild(<Loader />)
     const pictureRef = state.file ? await Uploader(state.file) : null
     const pictureLink = state.file ? await Downloader(pictureRef) : null
     if (isEditing) {
@@ -60,6 +59,7 @@ const AddPost = ({
       )
     }
     toggleOverlay()
+
     setAddPostState({})
   }
 
