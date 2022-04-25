@@ -9,7 +9,12 @@ export const Uploader = (file, isVideo) => {
     (isVideo ? 'videos/' : 'images/') + new Date().toUTCString() + file.name
   )
   const path = uploadBytes(storageRef, file).then((snapshot) => snapshot)
-  store.dispatch(showNotification('Picture Uploaded Successfuly', true))
+  store.dispatch(
+    showNotification(
+      isVideo ? 'Video Uploaded Successfuly' : 'Picture Uploaded Successfuly',
+      true
+    )
+  )
   return path
 }
 
