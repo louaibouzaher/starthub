@@ -33,18 +33,19 @@ export default function Follow({ userId, classNames }) {
   }, [])
   return (
     <>
-      {store.getState().user.isConnected && (
-        <Button
-          btnStyle={
-            ` ${classNames} ` +
-            (!isFollowed
-              ? ' mx-3 break-normal  bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white'
-              : 'text-gray-500  opacity-50')
-          }
-          label={isFollowed ? 'Unfollow ' : 'Follow'}
-          onClick={handleFollow}
-        />
-      )}
+      {store.getState().user.isConnected &&
+        store.getState().user.data.connectedUser.id != userId && (
+          <Button
+            btnStyle={
+              ` ${classNames} ` +
+              (!isFollowed
+                ? ' mx-3 break-normal  bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white'
+                : 'text-gray-500  opacity-50')
+            }
+            label={isFollowed ? 'Unfollow ' : 'Follow'}
+            onClick={handleFollow}
+          />
+        )}
     </>
   )
 }

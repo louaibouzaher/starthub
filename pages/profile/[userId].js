@@ -22,6 +22,7 @@ import {
 } from '../../src/store/OverlayWindow/overlayWindow.actions'
 import SendMessage from '../../src/components/SendMessage'
 import Follow from '../../src/components/User/Follow'
+import Listing from '../../src/components/User/Listing'
 
 function Profile({
   sectionIndexer,
@@ -49,11 +50,21 @@ function Profile({
     toggleOverlay()
   }
 
+  const showListing = (isFollowers) => {
+    changeChild(
+      <Listing
+        toggleOverlay={toggleOverlay}
+        list={isFollowers ? user.followers : user.followings}
+        isFollowers={isFollowers}
+      />
+    )
+    toggleOverlay()
+  }
   return (
     <>
       <Head>
         <title>
-          {user.user.first_name} {user.user.lastName} - StartHub
+          {user.user.first_name} {user.user.last_name} - StartHub
         </title>
       </Head>
       <OverlayWindow />
@@ -67,10 +78,10 @@ function Profile({
             </div>
             <div className="text-xs text-gray-400 px-2">{user.position}</div>
             <div className="flex space-x-2 w-full mt-2">
-              <div>
+              <div onClick={() => showListing(true)}>
                 <span className="text-purple">{user.followers.length}</span> Followers
               </div>
-              <div>
+              <div onClick={() => showListing(false)}>
                 <span className="text-purple">{user.followings.length}</span> Following
               </div>
               <div>
