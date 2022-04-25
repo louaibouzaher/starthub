@@ -50,7 +50,9 @@ const Post = ({ post, connectedUser }) => {
         <div className="text-xs opacity-50">
           {getMonth(time.getMonth()) + ' ' + time.getDate() + ',' + time.getFullYear()}
         </div>
-        <div className="flex space-x-2 mt-4 justify-start ">{post.content}</div>
+        <div className="flex space-x-2 mt-4 justify-start whitespace-pre-line">
+          {post.content}
+        </div>
 
         {post.picture && (
           <img

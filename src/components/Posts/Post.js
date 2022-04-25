@@ -143,7 +143,8 @@ const Post = ({
       )}
       <div
         className={
-          'mt-4 p-2 w-3/4 text-left ' + (post.picture ? 'text-white text-lg' : 'text-sm')
+          'mt-4 p-2 w-3/4 text-left whitespace-pre-line ' +
+          (post.picture ? 'text-white text-lg' : 'text-sm')
         }
       >
         {post.picture ? post.title : post.content}
