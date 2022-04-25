@@ -7,6 +7,7 @@ import tailwindConfig from '../../../tailwind.config'
 import Dots from '../../assets/icons/Dots'
 import Delete from '../../assets/icons/Delete'
 import Edit from '../../assets/icons/Edit'
+import EvaluationIcon from '../../assets/icons/EvaluationIcon'
 import UserAvatar from '../../assets/images/UserAvatar'
 import Location from '../../assets/icons/Location'
 import { Button } from '../Button'
@@ -143,7 +144,7 @@ const Project = ({
                     className="cursor-pointer flex my-1"
                     onClick={() => handleReview()}
                   >
-                    <PostIcon color={tailwindConfig.theme.extend.colors.dark} />
+                    <EvaluationIcon color={tailwindConfig.theme.extend.colors.dark} />
                     <div className="mx-1"> Submit Evaluation</div>
                   </div>
                 </>

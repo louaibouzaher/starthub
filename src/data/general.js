@@ -1,5 +1,5 @@
 import JudgesIcon from '../assets/icons/JudgesIcon'
-import PostsIcon from '../assets/icons/PostsIcon'
+import Edit from '../assets/icons/Edit'
 import ProjectsIcon from '../assets/icons/ProjectsIcon'
 import WinnersIcon from '../assets/icons/WinnersIcon'
 import OverviewIcon from '../assets/icons/OverviewIcon'
@@ -95,7 +95,7 @@ export const defaultSections = [
   {
     id: 1,
     title: 'Posts',
-    Icon: () => <PostsIcon />,
+    Icon: () => <Edit />,
   },
 ]
 
