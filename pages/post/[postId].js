@@ -14,8 +14,9 @@ import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
 import Head from 'next/head'
 import { getMonth } from '../../src/helpers/date'
+import Follow from '../../src/components/User/Follow'
 
-const Post = ({ post }) => {
+const Post = ({ post, connectedUser }) => {
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
@@ -40,12 +41,7 @@ const Post = ({ post }) => {
             <div className={'text-xs opacity-50'}>{post.profile.position}</div>
           </div>
 
-          <Button
-            label={'Follow'}
-            btnStyle={
-              'border-2 border-green text-green text-sm ml-6 hover:bg-green hover:text-white'
-            }
-          />
+          {connectedUser.id != post.owner.id && <Follow userId={post.owner.id} />}
         </div>
 
         <div className=" w-full flex justify-between  text-3xl text-dark font-bold pt-8  ">
@@ -133,7 +129,9 @@ export async function getServerSideProps({ params }) {
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    connectedUser: state.user.connectedUser,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

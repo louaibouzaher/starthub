@@ -28,6 +28,7 @@ import PostIcon from '../../assets/icons/PostsIcon'
 import AddReview from './AddReview'
 import Reactions from '../Reactions'
 import { API_BASEURL } from '../../../appConfig'
+import Follow from '../User/Follow'
 
 const Project = ({
   user,
@@ -202,14 +203,7 @@ const Project = ({
           </Link>
           <div className={'text-xs opacity-50'}>{user.position}</div>
         </div>
-        {!isOwner && (
-          <Button
-            label={'Follow'}
-            btnStyle={
-              'border-2 border-green text-green text-sm ml-6 hover:bg-green hover:text-white'
-            }
-          />
-        )}
+        {!isOwner && <Follow userId={user.id} />}
       </div>
       <div
         className={

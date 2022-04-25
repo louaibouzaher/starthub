@@ -22,6 +22,7 @@ import Head from 'next/head'
 import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
 import { getMonth } from '../../src/helpers/date'
+import Follow from '../../src/components/User/Follow'
 
 const Project = ({ toggleOverlay, changeChild, project }) => {
   const reactions = [
@@ -56,13 +57,7 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
             </div>
             <div className={'text-xs opacity-50'}>{project.profile.position}</div>
           </div>
-
-          <Button
-            label={'Follow'}
-            btnStyle={
-              'border-2 border-green text-green text-sm ml-6 hover:bg-green hover:text-white'
-            }
-          />
+          {connectedUser.id != project.owner.id && <Follow userId={post.owner.id} />}
         </div>
         <div className=" w-full flex justify-between mb-4 text-4xl text-dark font-bold pt-8  ">
           <div>{project.title}</div>
@@ -205,7 +200,9 @@ export async function getServerSideProps({ params }) {
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    connectedUser: state.user.connectedUser,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

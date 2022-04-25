@@ -26,6 +26,7 @@ import { getMonth } from '../../helpers/date'
 import AddPost from './AddPost'
 import store from '../../store'
 import Reactions from '../Reactions'
+import Follow from '../User/Follow'
 
 const Post = ({
   user,
@@ -135,14 +136,7 @@ const Post = ({
             at {time.getHours() + ':' + time.getMinutes()}
           </div>
         </div>
-        {!isOwner && Math.floor(Math.random() * 2) === 0 && (
-          <Button
-            label={'Follow'}
-            btnStyle={
-              'border-2 border-green text-green text-sm ml-6 hover:bg-green hover:text-white max-h-10 '
-            }
-          />
-        )}
+        {!isOwner && Math.floor(Math.random() * 2) === 0 && <Follow userId={user.id} />}
       </div>
       {!post.picture && (
         <div className={'mt-4 p-2 w-3/4 text-left text-lg font-bold '}>{post.title}</div>

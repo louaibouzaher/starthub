@@ -21,6 +21,7 @@ import {
   toggleOverlay,
 } from '../../src/store/OverlayWindow/overlayWindow.actions'
 import SendMessage from '../../src/components/SendMessage'
+import Follow from '../../src/components/User/Follow'
 
 function Profile({
   sectionIndexer,
@@ -52,7 +53,7 @@ function Profile({
     <>
       <Head>
         <title>
-          {user.user.first_name} {user.user.last_name} - StartHub
+          {user.user.first_name} {user.user.lastName} - StartHub
         </title>
       </Head>
       <OverlayWindow />
@@ -67,10 +68,10 @@ function Profile({
             <div className="text-xs text-gray-400 px-2">{user.position}</div>
             <div className="flex space-x-2 w-full mt-2">
               <div>
-                <span className="text-purple">0</span> Followers
+                <span className="text-purple">{user.followers.length}</span> Followers
               </div>
               <div>
-                <span className="text-purple">0</span> Following
+                <span className="text-purple">{user.followings.length}</span> Following
               </div>
               <div>
                 <span className="text-purple">{user.posts.length}</span> Posts
@@ -106,13 +107,7 @@ function Profile({
             <div className="flex w-full mt-2">
               {!isOwner && (
                 <>
-                  <Button
-                    btnStyle="w-1/2 bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white mx-1"
-                    label="Follow"
-                    onClick={() => {
-                      console.log('Follow')
-                    }}
-                  />
+                  <Follow userId={user.user.id} classNames="w-1/2" />
                   <Button
                     btnStyle="w-1/2 bg-white border-2 border-purple text-purple mx-1"
                     label="Message"
@@ -168,32 +163,34 @@ function Profile({
 }
 
 export async function getServerSideProps({ params }) {
-  const profile = await axios
-    .get(API_BASEURL + `profiles/${params.userId}`)
-    .then((res) => {
-      return res.data
-    })
-  const projects = await axios
-    .get(API_BASEURL + `projects/?owner=${params.userId}&space=1`)
-    .then((res) => {
-      return res.data
-    })
-  const posts = await axios
-    .get(API_BASEURL + `posts/?owner=${params.userId}&space=1`)
-    .then((res) => {
-      return res.data
-    })
+  try {
+    const profile = await axios
+      .get(API_BASEURL + `profiles/${params.userId}`)
+      .then((res) => {
+        return res.data
+      })
+    const projects = await axios
+      .get(API_BASEURL + `projects/?owner=${params.userId}&space=1`)
+      .then((res) => {
+        return res.data
+      })
+    const posts = await axios
+      .get(API_BASEURL + `posts/?owner=${params.userId}&space=1`)
+      .then((res) => {
+        return res.data
+      })
 
-  const user = {
-    ...profile,
-    projects,
-    posts,
-  }
-  return {
-    props: {
-      user,
-    },
-  }
+    const user = {
+      ...profile,
+      projects,
+      posts,
+    }
+    return {
+      props: {
+        user,
+      },
+    }
+  } catch (error) {}
 }
 
 const mapStateToProps = (state) => {
