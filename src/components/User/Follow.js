@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '../Button'
 import axios from 'axios'
 import { API_BASEURL } from '../../../appConfig'
-
+import store from '../../store'
 export default function Follow({ userId, classNames }) {
   const [isFollowed, setIsFollowed] = useState(false)
   const handleFollow = async () => {
@@ -33,16 +33,18 @@ export default function Follow({ userId, classNames }) {
   }, [])
   return (
     <>
-      <Button
-        btnStyle={
-          ` ${classNames} ` +
-          (!isFollowed
-            ? ' mx-3 break-normal  bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white'
-            : 'text-gray-500  opacity-50')
-        }
-        label={isFollowed ? 'Unfollow ' : 'Follow'}
-        onClick={handleFollow}
-      />
+      {store.getState().user.isConnected && (
+        <Button
+          btnStyle={
+            ` ${classNames} ` +
+            (!isFollowed
+              ? ' mx-3 break-normal  bg-purple border-2 border-purple text-white hover:text-purple hover:bg-white'
+              : 'text-gray-500  opacity-50')
+          }
+          label={isFollowed ? 'Unfollow ' : 'Follow'}
+          onClick={handleFollow}
+        />
+      )}
     </>
   )
 }
