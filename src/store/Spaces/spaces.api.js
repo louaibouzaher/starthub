@@ -83,6 +83,7 @@ export const putSpace = (spaceId, editedSpace) => {
     axios
       .put(API_BASEURL + `spaces/${spaceId}/`, editedSpace)
       .then((result) => {
+        console.log(result)
         dispatch(editSpaceSuccess(result.data))
         dispatch(showNotification('Space Updated Successfully ✅', true))
         store.dispatch(getMySpaces())

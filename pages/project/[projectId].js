@@ -201,7 +201,7 @@ export async function getServerSideProps({ params }) {
 
 const mapStateToProps = (state) => {
   return {
-    connectedUser: state.user.connectedUser,
+    connectedUser: state.user.data.connectedUser,
   }
 }
 

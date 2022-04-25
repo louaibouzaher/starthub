@@ -27,6 +27,7 @@ import AddProject from '../../src/components/Projects/AddProject'
 import Link from 'next/link'
 import EmptyState from '../../src/components/EmptyState'
 import LeaderBoardCard from '../../src/components/LeaderBoardCard'
+import AddWinners from '../../src/components/Spaces/AddWinners'
 
 const Space = ({
   space,
@@ -42,7 +43,6 @@ const Space = ({
   currentSpace,
   connectedUser,
 }) => {
-  const spaceTags = ['Machine Learning', 'Software Engineering', 'Startups']
   const startsOn = new Date(space.startsOn)
   const endsOn = new Date(space.endsOn)
   const [canPost, setCanPost] = useState(false)
@@ -60,6 +60,9 @@ const Space = ({
     }
     if (sectionIndexer.selectedSection == 1) {
       changeChild(<AddProject />)
+    }
+    if (sectionIndexer.selectedSection == 3) {
+      changeChild(<AddWinners />)
     }
   }, [sectionIndexer.selectedSection])
 
@@ -343,7 +346,10 @@ const Space = ({
               <>
                 {space.owner.id == connectedUser.id && (
                   <div className="w-ful flex justify-end">
-                    <div className="text-purple mt-6 text-xl cursor-pointer mx-10">{`Set Winners >`}</div>
+                    <div
+                      onClick={toggleOverlay}
+                      className="text-purple mt-6 text-xl cursor-pointer mx-10"
+                    >{`Set Winners >`}</div>
                   </div>
                 )}
                 <div className="p-10">
@@ -353,26 +359,14 @@ const Space = ({
                     </div>
                   ) : (
                     <div className="p-10 flex flex-col justify-center items-center">
-                      {space.firstWinner && (
-                        <LeaderBoardCard
-                          project={space.firstWinner}
-                          Grade={10}
-                          Rank={1}
-                        />
+                      {space.secondWinnerId && (
+                        <LeaderBoardCard winnerId={space.secondWinnerId} Rank={1} />
                       )}
-                      {space.secondWinner && (
-                        <LeaderBoardCard
-                          project={space.secondWinner}
-                          Grade={10}
-                          Rank={2}
-                        />
+                      {space.secondWinnerId && (
+                        <LeaderBoardCard winnerId={space.secondWinnerId} Rank={2} />
                       )}
-                      {space.thirdWinner && (
-                        <LeaderBoardCard
-                          project={space.thirdWinner}
-                          Grade={10}
-                          Rank={3}
-                        />
+                      {space.thirdWinnerId && (
+                        <LeaderBoardCard winnerId={space.thirdWinnerId} Rank={3} />
                       )}
                     </div>
                   )}

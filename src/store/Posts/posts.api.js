@@ -33,7 +33,6 @@ export const postPost = (post) => {
       .then((result) => {
         dispatch(addPostSuccess(result.data))
         dispatch(showNotification('Post Created Successfully ✅', true))
-
         store.dispatch(getPosts())
       })
       .catch((error) => {
