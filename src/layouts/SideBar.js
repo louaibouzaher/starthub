@@ -60,6 +60,7 @@ const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
   const handleLocation = (event, newInputValue, reason) => {
     if (reason === 'clear') {
       setLocation('')
+
       return
     } else {
       setLocation(newInputValue)
@@ -67,6 +68,13 @@ const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
   }
 
   const handleReset = () => {
+    setLocation('')
+    setIndustriesShown(3)
+    setSelectedIndustries([])
+    setValue([0, 5000000])
+    setNumberOfEmployees([0, 500])
+    setyearsInBusiness([0, 20])
+    setSelectedIndustries([])
     store.dispatch(getProjects())
   }
 
