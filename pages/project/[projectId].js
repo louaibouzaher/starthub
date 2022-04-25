@@ -24,7 +24,7 @@ import { API_BASEURL } from '../../appConfig'
 import { getMonth } from '../../src/helpers/date'
 import Follow from '../../src/components/User/Follow'
 
-const Project = ({ toggleOverlay, changeChild, project }) => {
+const Project = ({ toggleOverlay, changeChild, project, connectedUser }) => {
   const reactions = [
     Math.floor(Math.random() * 2),
     Math.floor(Math.random() * 2),
@@ -57,7 +57,7 @@ const Project = ({ toggleOverlay, changeChild, project }) => {
             </div>
             <div className={'text-xs opacity-50'}>{project.profile.position}</div>
           </div>
-          {connectedUser.id != project.owner.id && <Follow userId={post.owner.id} />}
+          {connectedUser.id != project.owner.id && <Follow userId={project.owner.id} />}
         </div>
         <div className=" w-full flex justify-between mb-4 text-4xl text-dark font-bold pt-8  ">
           <div>{project.title}</div>
