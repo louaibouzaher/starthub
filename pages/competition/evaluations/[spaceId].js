@@ -53,16 +53,20 @@ const Evaluations = ({
   const columns = [
     { field: 'judge', headerName: 'Judge', width: 140 },
     { field: 'projectName', headerName: 'Project Name', width: 140 },
-    { field: 'criteriaOne', headerName: 'Criteria One', width: 140 },
-    { field: 'criteriaTwo', headerName: 'Criteria Two', width: 140 },
-    { field: 'criteriaThree', headerName: 'Criteria Three', width: 140 },
-    { field: 'criteriaFour', headerName: 'Criteria Four', width: 140 },
-    { field: 'criteriaFive', headerName: 'Criteria Five', width: 140 },
+    { field: 'criteriaOne', headerName: '1', width: 50 },
+    { field: 'criteriaTwo', headerName: '2', width: 50 },
+    { field: 'criteriaThree', headerName: '3', width: 50 },
+    { field: 'criteriaFour', headerName: '4', width: 50 },
+    { field: 'criteriaFive', headerName: '5', width: 50 },
     {
       field: 'overallGrade',
       headerName: 'Overall Grade',
-      type: 'number',
-      width: 140,
+      width: 150,
+    },
+    {
+      field: 'feedback',
+      headerName: 'Feedback',
+      width: 500,
     },
   ]
 
