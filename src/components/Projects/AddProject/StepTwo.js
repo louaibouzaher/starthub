@@ -67,7 +67,6 @@ export default function StepTwo({
             onClick={() => {
               setProject({
                 ...Project,
-                isEstablished: !Project.isEstablished,
                 establishedOn: null,
               })
               setIsDatePickerDisabled(!isDatePickerDisabled)
@@ -126,7 +125,14 @@ export default function StepTwo({
         <Button
           label="Share"
           btnStyle="bg-purple text-white border-2 border-purple mx-2"
-          onClick={handleSubmit}
+          onClick={() => {
+            setProject({
+              ...Project,
+              isEstablished: !isDatePickerDisabled,
+              establishedOn: null,
+            })
+            handleSubmit()
+          }}
         />
       </div>
     </>

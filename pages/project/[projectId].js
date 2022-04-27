@@ -105,7 +105,7 @@ const Project = ({ toggleOverlay, changeChild, project, connectedUser }) => {
             <div className="my-2  space-x-2">
               <span className=" text-xl font-bold ">Inception Date </span>
               <span className="text-purple">
-                {project.establishedOn
+                {project.isEstablished
                   ? establishedOn.getDate() +
                     '-' +
                     (establishedOn.getMonth() + 1) +
