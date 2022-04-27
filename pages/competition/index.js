@@ -15,7 +15,7 @@ const Spaces = ({ spaces }) => {
         <title>StartHub Competitions</title>
       </Head>
       <OverlayWindow />
-      <div className="text-dark h-screen w-full flex flex-col justify-start items-start pt-28 p-20">
+      <div className="text-dark h-screen w-full flex flex-col justify-start sm:items-start items-center pt-28 sm:p-20">
         <div className="w-full flex flex-col justify-center items-center my-6">
           <SpaceMainImage
             className={'flex flex-col w-full justify-left items-center scale-120'}
@@ -33,7 +33,7 @@ const Spaces = ({ spaces }) => {
             />
           </Link>
         </div>
-        <div className="w-full px-60 flex justify-center">
+        <div className="w-full sm:px-60 flex justify-center">
           <div className="w-full flex flex-wrap ">
             {spaces.map((s) => (s.id == 1 ? <></> : <SpaceCard space={s} key={s.id} />))}
           </div>

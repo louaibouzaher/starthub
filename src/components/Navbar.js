@@ -36,17 +36,17 @@ const Navbar = ({ connectedUser, isConnected }) => {
   return (
     <div
       className={
-        'z-40 fixed w-full h-16 shadow-lg flex justify-between items-center px-20 py-6 font-bold ' +
+        'z-40 fixed w-full h-16 shadow-lg flex md:justify-between items-center md:px-20 md:py-6 font-bold ' +
         (connectedStyle ? 'bg-purple' : 'bg-white')
       }
     >
       <Link href="/" passHref className="cursor-pointer">
-        <div className="cursor-pointer">
+        <div className="hidden sm:block cursor-pointer">
           {connectedStyle ? <WhiteLogo /> : <MainLogo />}
         </div>
       </Link>
 
-      <div className="flex flex-row ">
+      <div className="flex flex-row h-10">
         <Link href="/feed" passHref>
           <Button label="Feed" btnStyle={connectedStyle ? 'text-white' : 'text-dark'} />
         </Link>
@@ -61,13 +61,13 @@ const Navbar = ({ connectedUser, isConnected }) => {
             <Link href="/login" passHref>
               <Button
                 label="Login"
-                btnStyle={'bg-green border-green border-2 text-white shadow-md mx-2 '}
+                btnStyle={'bg-green border-green border-2 text-white shadow-md md:mx-2 '}
               />
             </Link>
             <Link href="/signup" passHref>
               <Button
                 label="Sign up"
-                btnStyle={'bg-white border-2 border-dark text-dark shadow-md mx-2'}
+                btnStyle={'bg-white border-2 border-dark text-dark shadow-md md:mx-2'}
               />
             </Link>
           </>

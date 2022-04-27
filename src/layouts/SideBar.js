@@ -90,7 +90,7 @@ const SideBar = ({ sectionIndexer, toggleOverlay, connectedUser }) => {
     )
   }
   return (
-    <div className="absolute left-10 z-10 px-4 pt-24 mb-10 w-1/5 min-h-screen flex flex-col justify-start items-start">
+    <div className="hidden md:flex absolute left-10 z-10 px-4 pt-24 mb-10 w-1/5 min-h-screen  flex-col justify-start items-start">
       {connectedUser?.id && (
         <Button
           onClick={() => {

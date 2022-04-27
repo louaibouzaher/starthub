@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import 'tailwindcss/tailwind.css'
+
 import { Provider } from 'react-redux'
 import store from '../src/store'
 import { Notification } from '../src/components/Notification'
@@ -22,6 +23,16 @@ if (typeof window !== 'undefined') {
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
+      <div
+        className="p-4 fixed flex sm:hidden w-full h-full bg-gray-100  justify-center items-center overflow-hidden"
+        style={{
+          zIndex: 100,
+        }}
+      >
+        StartHub is not available for phones and tablets (screens less than 640px in
+        width). Please use your desktop browser.
+      </div>
+
       <Navbar />
       <Notification />
       <Component {...pageProps} />
