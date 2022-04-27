@@ -23,6 +23,7 @@ import axios from 'axios'
 import { API_BASEURL } from '../../appConfig'
 import { getMonth } from '../../src/helpers/date'
 import Follow from '../../src/components/User/Follow'
+import Reactions from '../../src/components/Reactions'
 
 const Project = ({ toggleOverlay, changeChild, project, connectedUser }) => {
   const reactions = [
@@ -129,44 +130,7 @@ const Project = ({ toggleOverlay, changeChild, project, connectedUser }) => {
           )}
         </div>
         <div className="py-6 w-full">
-          <div className={'flex flex-row mt-6 text-sm font-light'}>
-            <Heart isClicked={reactions[0]} className="mx-1" />
-            <div
-              className="mr-2"
-              style={{
-                color: reactions[0] ? reactionsColors.like : reactionsColors.disabled,
-              }}
-            >
-              Like
-            </div>
-            <Comment isCommented={reactions[1]} className="mx-1" />
-            <div
-              className="mr-2"
-              style={{
-                color: reactions[1] ? reactionsColors.comment : reactionsColors.disabled,
-              }}
-            >
-              Comment
-            </div>
-            <Share isClicked={reactions[2]} className="mx-1" />
-            <div
-              className="mr-2"
-              style={{
-                color: reactions[2] ? reactionsColors.share : reactionsColors.disabled,
-              }}
-            >
-              Share
-            </div>
-            <Saved isClicked={reactions[3]} className="mx-1" />
-            <div
-              className="mr-2"
-              style={{
-                color: reactions[3] ? reactionsColors.save : reactionsColors.disabled,
-              }}
-            >
-              Save
-            </div>
-          </div>
+          <Reactions />
           <div className="mt-5 rounded-md  ">
             {users
               .slice(Math.floor(Math.random() * users.length - 1), users.length)

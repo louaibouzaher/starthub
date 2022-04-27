@@ -5,7 +5,6 @@ import { getMonth } from '../../helpers/date'
 const SpaceCard = ({ space }) => {
   const startsOn = new Date(space.startsOn)
   const endsOn = new Date(space.endsOn)
-  console.log(space)
   return (
     <Link href={`competition/${space.id}`}>
       <div className="cursor-pointer hover:shadow-lg flex-1 flex items-start justify-start bg-white rounded-md shadow-md p-10 m-2">
