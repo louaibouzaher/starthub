@@ -3,12 +3,15 @@ import store from '../store'
 import { showNotification } from '../store/Notifications/notifications.actions'
 import { storage } from './index'
 
-export const Uploader = (file, isVideo) => {
-  const storageRef = ref(
+export const Uploader = async (file, isVideo) => {
+  store.dispatch(
+    showNotification(isVideo ? 'Uploading Video...' : 'Uploading Picture...', true)
+  )
+  const storageRef = await ref(
     storage,
     (isVideo ? 'videos/' : 'images/') + new Date().toUTCString() + file.name
   )
-  const path = uploadBytes(storageRef, file).then((snapshot) => snapshot)
+  const path = await uploadBytes(storageRef, file).then((snapshot) => snapshot)
   store.dispatch(
     showNotification(
       isVideo ? 'Video Uploaded Successfuly' : 'Picture Uploaded Successfuly',
