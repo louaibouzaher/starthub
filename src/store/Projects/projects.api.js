@@ -12,14 +12,13 @@ import {
 import { showNotification } from '../Notifications/notifications.actions'
 
 export const getProjects = (queryParams = {}) => {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch(loading())
-    axios
+    await axios
       .get(API_BASEURL + `projects/?space=${store.getState().spaces.currentSpace}`, {
         params: queryParams,
       })
       .then((result) => {
-        console.log(result)
         dispatch(getProjectsSuccess(result.data))
       })
       .catch((error) => {

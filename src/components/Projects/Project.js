@@ -80,9 +80,7 @@ const Project = ({
           setCanEvaluate(true)
         }
       })
-    } catch (error) {
-      console.log(error)
-    }
+    } catch (error) {}
   }
 
   useEffect(() => {

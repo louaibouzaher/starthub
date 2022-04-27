@@ -68,14 +68,13 @@ const Space = ({
   const canUserPost = async () => {
     try {
       const { data } = await axios.get(`${API_BASEURL}spaces/${currentSpace}`)
-      console.log(data)
+
       if (data?.owner.id == connectedUser.id) {
         setCanPost(true)
         return
       }
       data?.participants.forEach((p) => {
         if (p.user.id == connectedUser.id) {
-          console.log(p.user.id, connectedUser.id)
           setCanPost(true)
           return
         }
@@ -86,9 +85,7 @@ const Space = ({
           return
         }
       })
-    } catch (error) {
-      console.log(error)
-    }
+    } catch (error) {}
   }
   useEffect(() => {
     canUserPost()

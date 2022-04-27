@@ -82,9 +82,7 @@ function Signup({ err }) {
           password2: state.confirmPassword,
         })
       )
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (e) {}
     store.dispatch(showNotification('Waiting to confirm new registrations...', true))
 
     setTimeout(() => {

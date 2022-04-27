@@ -59,7 +59,7 @@ const AddProject = ({
       ((dateObj?.getMonth() < 9 ? '0' : '') + (dateObj?.getMonth() + 1)) +
       '-' +
       dateObj?.getDate()
-    console.log(state)
+
     if (isEditing) {
       store.dispatch(
         putProject(state.id, {

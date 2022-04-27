@@ -29,9 +29,7 @@ const Spaces = ({ spaces }) => {
             <Button
               label="Create New Competition"
               btnStyle={'bg-green text-white border-2 border-green mx-2'}
-              onClick={() => {
-                console.log('Create New Competition')
-              }}
+              onClick={() => {}}
             />
           </Link>
         </div>
@@ -51,9 +49,7 @@ export async function getServerSideProps({ params }) {
     .then((res) => {
       return res.data
     })
-    .catch((e) => {
-      console.log(e)
-    })
+    .catch((e) => {})
 
   return {
     props: {

@@ -1,6 +1,5 @@
 import '../styles/globals.css'
 import 'tailwindcss/tailwind.css'
-
 import { Provider } from 'react-redux'
 import store from '../src/store'
 import { Notification } from '../src/components/Notification'

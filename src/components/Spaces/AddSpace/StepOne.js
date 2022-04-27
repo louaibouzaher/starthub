@@ -16,8 +16,7 @@ export default function StepOne({ space, handleChange, setSpace }) {
 
     const pictureRef = file ? await Uploader(file) : null
     const pictureLink = file ? await Downloader(pictureRef) : null
-    console.log(file)
-    console.log(pictureLink)
+
     setSpace({ ...space, spacePic: pictureLink })
   }
   // const handleChange = (e) => {

@@ -26,9 +26,7 @@ export const SpaceMain = () => {
           <Button
             label="Create New Space"
             btnStyle={'bg-green text-white border-2 border-green mx-2'}
-            onClick={() => {
-              console.log('Create a Space')
-            }}
+            onClick={() => {}}
           />
         </Link>
       </div>

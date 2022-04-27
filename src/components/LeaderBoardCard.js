@@ -11,9 +11,7 @@ function LeaderBoardCard({ winnerId, Rank }) {
       .then((res) => {
         setProject(res.data)
       })
-      .catch((e) => {
-        console.log(e)
-      })
+      .catch((e) => {})
   }
   useEffect(() => {
     getProject()

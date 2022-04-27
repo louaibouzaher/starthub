@@ -43,7 +43,6 @@ function PersonalInformation({
               id="profilePicture"
               className="hidden"
               onChange={(e) => {
-                console.log('onChange')
                 handleFile(e)
               }}
             />

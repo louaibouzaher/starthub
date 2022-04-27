@@ -18,9 +18,7 @@ export const Hero = () => {
             <Button
               label="Join The Community"
               btnStyle={'bg-green text-white border-2 border-green mx-2'}
-              onClick={() => {
-                console.log('Join the community')
-              }}
+              onClick={() => {}}
             />
           </Link>
         </div>

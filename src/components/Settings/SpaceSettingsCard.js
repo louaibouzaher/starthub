@@ -52,15 +52,12 @@ function SpaceSettingsCard({
       setAddSpaceState({ ...data })
       changeChild(<AddSpace space={{ ...space }} />)
       toggleOverlay()
-    } catch (error) {
-      console.log(error)
-    }
+    } catch (error) {}
   }
 
   const toggleWinners = async () => {
     try {
       const { data } = await axios.get(`${API_BASEURL}spaces/${space.id}`)
-      console.log(data)
       data.participants = data.participants.map((p) => p.user.id)
       data.judges = data.judges.map((j) => j.user.id)
       store.dispatch(

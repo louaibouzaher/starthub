@@ -18,7 +18,6 @@ export const getSpaces = () => {
     axios
       .get(API_BASEURL + `spaces/`)
       .then((result) => {
-        console.log(result)
         dispatch(getSpacesSuccess(result.data))
       })
       .catch((error) => {
@@ -34,7 +33,6 @@ export const getMySpaces = () => {
         API_BASEURL + `spaces/user-spaces/${store.getState().user.data.connectedUser.id}/`
       )
       .then((result) => {
-        console.log(result)
         dispatch(getMySpacesSuccess(result.data))
       })
       .catch((error) => {
@@ -83,7 +81,6 @@ export const putSpace = (spaceId, editedSpace) => {
     axios
       .put(API_BASEURL + `spaces/${spaceId}/`, editedSpace)
       .then((result) => {
-        console.log(result)
         dispatch(editSpaceSuccess(result.data))
         dispatch(showNotification('Space Updated Successfully ✅', true))
         store.dispatch(getMySpaces())

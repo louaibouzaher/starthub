@@ -3,12 +3,10 @@ import axios from 'axios'
 import { API_BASEURL } from '../../../../appConfig'
 
 export const ListUsers = ({ label, list }) => {
-  console.log(list)
   const [users, setUsers] = useState([])
   useEffect(() => {
     list.forEach(async (id) => {
       const { data } = await axios.get(`${API_BASEURL}profiles/${id}`)
-      console.log(data)
       setUsers([...users, data])
     })
   }, [])

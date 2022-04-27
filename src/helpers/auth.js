@@ -27,17 +27,13 @@ axios.interceptors.request.use(
     }
     return config
   },
-  (error) => {
-    console.log(error)
-  }
+  (error) => {}
 )
 axios.interceptors.response.use(
   (response) => {
     try {
       return response
-    } catch (error) {
-      console.log(`error ${error}`)
-    }
+    } catch (error) {}
   },
   (error) => {
     if (error.response?.status == 401) {

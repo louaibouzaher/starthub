@@ -26,8 +26,6 @@ export const Downloader = (fileRef) => {
     .then((url) => {
       return url
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch((error) => {})
   return url
 }

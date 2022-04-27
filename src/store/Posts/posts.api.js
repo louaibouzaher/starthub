@@ -17,7 +17,6 @@ export const getPosts = () => {
     axios
       .get(API_BASEURL + `posts/?space=${store.getState().spaces.currentSpace}`)
       .then((result) => {
-        console.log(result)
         dispatch(getPostsSuccess(result.data))
       })
       .catch((error) => {

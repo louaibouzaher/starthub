@@ -17,7 +17,6 @@ export const getReviews = (spaceId) => {
     axios
       .get(API_BASEURL + `projects/reviews/?space=${spaceId}`)
       .then((result) => {
-        console.log(result)
         dispatch(getReviewsSuccess(result.data))
       })
       .catch((error) => {

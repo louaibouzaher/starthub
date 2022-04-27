@@ -1,5 +1,4 @@
 export const parseRows = (evaluations) => {
-  console.log(evaluations)
   const rows = evaluations?.map((e) => {
     return {
       ...e,

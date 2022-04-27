@@ -16,11 +16,9 @@ export const sendEmail = async (data) => {
   await axios
     .post(API_BASEURL + 'messages/', data)
     .then((res) => {
-      console.log(res)
       store.dispatch(showNotification('Message Successfuly Sent.', true))
     })
     .catch((e) => {
-      console.log(e)
       store.dispatch(showNotification('Message was not delivered.', false))
     })
 }
