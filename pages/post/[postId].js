@@ -64,7 +64,7 @@ const Post = ({ post, connectedUser }) => {
 
         <div className="py-6 w-full">
           <Reactions />
-          <div className="mt-5 rounded-md  ">
+          {/* <div className="mt-5 rounded-md  ">
             {users
               .slice(Math.floor(Math.random() * users.length - 1), users.length)
               .map((u) => (
@@ -75,7 +75,7 @@ const Post = ({ post, connectedUser }) => {
                   }
                 />
               ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </>

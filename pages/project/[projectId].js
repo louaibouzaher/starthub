@@ -131,7 +131,7 @@ const Project = ({ toggleOverlay, changeChild, project, connectedUser }) => {
         </div>
         <div className="py-6 w-full">
           <Reactions />
-          <div className="mt-5 rounded-md  ">
+          {/* <div className="mt-5 rounded-md  ">
             {users
               .slice(Math.floor(Math.random() * users.length - 1), users.length)
               .map((u) => (
@@ -142,7 +142,7 @@ const Project = ({ toggleOverlay, changeChild, project, connectedUser }) => {
                   }
                 />
               ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </>
