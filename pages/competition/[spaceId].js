@@ -45,7 +45,7 @@ const Space = ({
 }) => {
   const startsOn = new Date(space.startsOn)
   const endsOn = new Date(space.endsOn)
-  const [canPost, setCanPost] = useState(true)
+  const [canPost, setCanPost] = useState(false)
   useEffect(() => {
     sectionsInit(spaceSections)
     setCurrentSpace(space.id)
@@ -67,30 +67,26 @@ const Space = ({
 
   const canUserPost = async () => {
     try {
-      const { data } = await axios.get(`${API_BASEURL}spaces/${currentSpace}`)
-
-      if (data?.owner.id == connectedUser.id) {
-        setCanPost(true)
-        return
-      }
-      data?.participants.forEach((p) => {
-        if (p.user.id == connectedUser.id) {
+      axios.get(`${API_BASEURL}spaces/${currentSpace}`).then((res) => {
+        if (res.data?.owner.id == connectedUser.id) {
           setCanPost(true)
-          return
         }
+        res.data?.participants.forEach((p) => {
+          if (p.user.id == connectedUser.id) {
+            setCanPost(true)
+          }
+        })
+        res.data?.judges.forEach((p) => {
+          if (p.user.id == connectedUser.id) {
+            setCanPost(true)
+          }
+        })
       })
-      data?.judges.forEach((p) => {
-        if (p.user.id == connectedUser.id) {
-          setCanPost(true)
-          return
-        }
-      })
-      setCanPost(false)
     } catch (error) {}
   }
   useEffect(() => {
     canUserPost()
-  }, sectionIndexer.selectedSection)
+  }, [sectionIndexer.selectedSection])
   return (
     <>
       <Head>
