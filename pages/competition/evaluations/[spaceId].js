@@ -32,6 +32,7 @@ import { getReviews } from '../../../src/store/Reviews/reviews.api'
 import store from '../../../src/store'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import { getSummaryOfRows, parseRows } from '../../../src/helpers/evaluations'
+import SummaryEvaluations from '../../../src/components/Projects/SummaryEvaluations'
 
 const Evaluations = ({
   space,
@@ -93,15 +94,6 @@ const Evaluations = ({
           <div className="text-2xl font-bold text-dark my-2">
             {space.title} - Projects Evaluations
           </div>
-          {/* <div className="text-dark text-xl my-1">Summary of Evaluations</div>
-          <div className="h-96 w-full">
-          <DataGrid
-              rows={rowsSummary}
-              columns={columns}
-              pageSize={10}
-              rowsPerPageOptions={[10]}
-            /> 
-          </div> */}
           <div className="text-dark text-xl my-1">All Evaluations</div>
           <div className="h-96 w-full">
             <DataGrid
@@ -111,6 +103,9 @@ const Evaluations = ({
               rowsPerPageOptions={[10]}
             />
           </div>
+          <SummaryEvaluations
+            listOfProjects={new Set(evaluations.map((e) => e.project.id))}
+          />
         </div>
       </div>
     </>
