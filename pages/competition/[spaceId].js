@@ -85,6 +85,7 @@ const Space = ({
           return
         }
       })
+      setCanPost(false)
     } catch (error) {}
   }
   useEffect(() => {
