@@ -45,7 +45,7 @@ const Space = ({
 }) => {
   const startsOn = new Date(space.startsOn)
   const endsOn = new Date(space.endsOn)
-  const [canPost, setCanPost] = useState(false)
+  const [canPost, setCanPost] = useState(true)
   useEffect(() => {
     sectionsInit(spaceSections)
     setCurrentSpace(space.id)
