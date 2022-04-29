@@ -178,7 +178,12 @@ const Project = ({
         <Location /> <span className="mx-1">{project.location}</span>
       </div>
       {project.video && (
-        <div className="w-4/5 flex justify-start items-center rounded-xl mt-6 overflow-hidden">
+        <div
+          className="flex justify-start items-center rounded-xl mt-6 overflow-hidden"
+          style={{
+            width: 500,
+          }}
+        >
           {project?.video?.includes('youtu.be') || project?.video?.includes('youtube') ? (
             <ReactPlayer url={project.video} controls />
           ) : (

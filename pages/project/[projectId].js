@@ -120,7 +120,12 @@ const Project = ({ toggleOverlay, changeChild, project, connectedUser }) => {
             </div>
           </div>
         </div>
-        <div className="rounded-xl mt-6 mb-4 overflow-hidden">
+        <div
+          className="rounded-xl mt-6 mb-4 overflow-hidden"
+          style={{
+            width: 500,
+          }}
+        >
           {project.video.includes('youtu.be') || project.video.includes('youtube') ? (
             <ReactPlayer url={project.video} muted={true} />
           ) : (
