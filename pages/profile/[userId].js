@@ -176,7 +176,7 @@ function Profile({
 export async function getServerSideProps({ params }) {
   try {
     const profile = await axios
-      .get(API_BASEURL + `profiles/${params.userId}`)
+      .get(API_BASEURL + `profiles/${params.userId}/`)
       .then((res) => {
         return res.data
       })

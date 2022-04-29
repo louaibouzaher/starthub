@@ -37,8 +37,9 @@ axios.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status == 401) {
-      store.dispatch(showNotification('Session Expired: Log in again.'))
-      store.dispatch(logout())
+      // store.dispatch(showNotification('Session Expired: Log in again.'))
+      // store.dispatch(logout())
+      console.log('Logged out')
     }
   }
 )

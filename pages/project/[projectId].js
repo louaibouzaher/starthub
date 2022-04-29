@@ -151,7 +151,7 @@ const Project = ({ toggleOverlay, changeChild, project, connectedUser }) => {
 
 export async function getServerSideProps({ params }) {
   const project = await axios
-    .get(API_BASEURL + `projects/${params.projectId}`)
+    .get(API_BASEURL + `projects/${params.projectId}/`)
     .then((res) => {
       return res.data
     })

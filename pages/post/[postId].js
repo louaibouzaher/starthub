@@ -83,7 +83,7 @@ const Post = ({ post, connectedUser }) => {
 }
 
 export async function getServerSideProps({ params }) {
-  const post = await axios.get(API_BASEURL + `posts/${params.postId}`).then((res) => {
+  const post = await axios.get(API_BASEURL + `posts/${params.postId}/`).then((res) => {
     return res.data
   })
 

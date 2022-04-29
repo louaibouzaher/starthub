@@ -399,7 +399,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export async function getServerSideProps({ params }) {
-  const space = await axios.get(API_BASEURL + `spaces/${params.spaceId}`).then((res) => {
+  const space = await axios.get(API_BASEURL + `spaces/${params.spaceId}/`).then((res) => {
     return res.data
   })
 
