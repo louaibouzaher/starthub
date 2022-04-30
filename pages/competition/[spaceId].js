@@ -355,7 +355,7 @@ const Space = ({
                   ) : (
                     <div className="p-10 flex flex-col justify-center items-center">
                       {space.secondWinnerId && (
-                        <LeaderBoardCard winnerId={space.secondWinnerId} Rank={1} />
+                        <LeaderBoardCard winnerId={space.firstWinnerId} Rank={1} />
                       )}
                       {space.secondWinnerId && (
                         <LeaderBoardCard winnerId={space.secondWinnerId} Rank={2} />

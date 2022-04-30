@@ -103,9 +103,9 @@ const Evaluations = ({
               rowsPerPageOptions={[10]}
             />
           </div>
-          <SummaryEvaluations
+          {/* <SummaryEvaluations
             listOfProjects={new Set(evaluations.map((e) => e.project.id))}
-          />
+          /> */}
         </div>
       </div>
     </>
