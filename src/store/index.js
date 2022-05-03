@@ -4,4 +4,8 @@ import rootReducer from './rootReducer'
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
+store.subscribe(() => {
+  console.log(store.getState())
+})
+
 export default store
